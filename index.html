@@ -185,13 +185,6 @@
 
                         
                         <li>
-                            <a href="/photography/">Photography</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/tags/">Tags</a>
                         </li>
                         
@@ -253,6 +246,14 @@
 
     
 
+    
+
+    
+
+    
+
+    
+
 
 
 <!-- Main Content -->
@@ -261,7 +262,7 @@
 
         <div class="post-preview">
 
-            <a href="/2022/11/02/Hexo-Theme-Snail/">
+            <a href="/2022/11/02/2019-11-01-Hexo-Theme-Snail/">
                 <h2 class="post-title">
                     博客正在进行迁移，敬请期待
                 </h2>
@@ -270,14 +271,10 @@
                 </h3>
                 <div class="post-content-preview">
                     迁移公告博客正在迁移，感兴趣的朋友可以去老博客地址
-Features
-light color theme and star theme
-diversified comment system
-notice tips
-share to other platforms (under development)
-picture sharing (under development)
 
-Quick St......
+博客还未迁移完成，
+
+...
                 </div>
             </a>
             
@@ -288,6 +285,144 @@ Quick St......
                 <div class="tags">
                     
                       <a href="/tags/#敬请期待" title="敬请期待">敬请期待</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/2022/06/26/2022-11-03-ethernaut03/">
+                <h2 class="post-title">
+                    ethernaut 题解 13-19
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Ethernaut靶场刷题记录(13-19)
+author：Thomas_Xu
+13 Gatekeeper One这关主要是考查对solidity合约基础知识的了解。先看代码：1234567891011121314151617181920212223242526272829303132&#x2F;&#x2F; SPDX-License-Identifier: MITpragma solidi......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-26
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/2022/06/24/ethernaut02/">
+                <h2 class="post-title">
+                    ethernaut 题解 07-12
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Ethernaut靶场刷题记录(7-12)
+author：Thomas_Xu
+07 Force这道题是为了考查我们对自毁函数selfdestruct的认识先看代码：123456789101112&#x2F;&#x2F; SPDX-License-Identifier: MITpragma solidity ^0.6.0;contract Force &#123;&#x2F;*        ......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-24
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/2022/06/21/ethernaut01/">
+                <h2 class="post-title">
+                    ethernaut 题解 01-06
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Ethernaut靶场刷题记录(1-6)
+author：Thomas_Xu
+01 FallBack这道题是比较简单的，合约的逻辑有问题导致出现漏洞我们先来了解一下receive和fallback的区别：
+
+receive():    一个合约只能有一个receive函数，该函数不能有参数和返回值，需设置为external，payable；fallback():    一个合约只能有一个rec......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-21
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/2022/06/15/ReentryAttack/">
+                <h2 class="post-title">
+                    ReentryAttack
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    重入攻击分析
+author：Thomas_Xu
+漏洞概述在以太坊中，智能合约能够调用其他外部合约的代码，由于智能合约可以调用外部合约或者发送以太币，这些操作需要合约提交外部的调用，所以这些合约外部的调用就可以被攻击者利用造成攻击劫持，使得被攻击合约在任意位置重新执行(回调)，绕过原代码中的限制条件，从而发生重入攻击。重入攻击本质上与编程里的递归调用类似，所以当合约将以太币发送到未知地址时就可......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-15
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                     
                 </div>
             
@@ -348,6 +483,12 @@ Quick St......
     <!-- no hr -->
     <h5><a href="/tags/">FEATURED TAGS</a></h5>
     <div class="tags">
+        
+            
+        
+            
+            <a href="/tags/#ethernaut" title="ethernaut" rel="3">ethernaut</a>
+            
         
             
         
@@ -420,7 +561,23 @@ Quick St......
     <ul>
       
         <li>
-          <a href="/2022/11/02/Hexo-Theme-Snail/">博客正在进行迁移，敬请期待</a>
+          <a href="/2022/11/02/2019-11-01-Hexo-Theme-Snail/">博客正在进行迁移，敬请期待</a>
+        </li>
+      
+        <li>
+          <a href="/2022/06/26/2022-11-03-ethernaut03/">ethernaut 题解 13-19</a>
+        </li>
+      
+        <li>
+          <a href="/2022/06/24/ethernaut02/">ethernaut 题解 07-12</a>
+        </li>
+      
+        <li>
+          <a href="/2022/06/21/ethernaut01/">ethernaut 题解 01-06</a>
+        </li>
+      
+        <li>
+          <a href="/2022/06/15/ReentryAttack/">ReentryAttack</a>
         </li>
       
     </ul>
@@ -430,26 +587,12 @@ Quick St......
     
         <!-- Friends Blog -->
 
-<h5>FRIENDS</h5>
-<ul class="list-inline">
-
-    
-        <li><a href="https://blog.csdn.net/d_Nail" target="_blank">Dusign&#39;s Blog</a></li>
-    
-        <li><a href="#" target="_blank">Dusign&#39;s Web</a></li>
-    
-        <li><a href="https://github.com/dusign" target="_blank">Dusign&#39;s Github</a></li>
-    
-        <li><a href="#" target="_blank">Other</a></li>
-    
-</ul>
-
         <hr>
     
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">4</span></li></ul>
     </div>
 
         <hr>
@@ -461,6 +604,10 @@ Quick St......
       <ul>
         
           <a href="categories/#chain-sec"><li>chain-sec</li></a>
+        
+          <a href="categories/#ethernaut"><li>ethernaut</li></a>
+        
+          <a href="categories/#基础漏洞"><li>基础漏洞</li></a>
         
       </ul>
     </div>
@@ -617,7 +764,7 @@ Quick St......
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
         
 
         <!-- background effects end -->
@@ -627,6 +774,21 @@ Quick St......
     
         <script src="/js/ribbonDynamic.js"></script>
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

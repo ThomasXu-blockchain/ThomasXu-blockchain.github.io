@@ -3,8 +3,22 @@
 
 
     <url>
+        <loc>https://dusign.net/tags/%25E5%259F%25BA%25E7%25A1%2580%25E6%25BC%258F%25E6%25B4%259E/</loc>
+        <lastmod>2022-11-03T10:06:02.828Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://dusign.net/tags/%25E6%2595%25AC%25E8%25AF%25B7%25E6%259C%259F%25E5%25BE%2585/</loc>
-        <lastmod>2022-11-03T07:07:43.420Z</lastmod>
+        <lastmod>2022-11-03T09:56:19.153Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://dusign.net/tags/ethernaut/</loc>
+        <lastmod>2022-11-03T09:08:46.081Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
