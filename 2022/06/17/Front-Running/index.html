@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          博客正在进行迁移，敬请期待 - Thomas_Xu
+          ReentryAttack - Thomas_Xu
         
     </title>
 
-    <link rel="canonical" href="https://dusign.net/2022/11/02/2019-11-01-Hexo-Theme-Snail/">
+    <link rel="canonical" href="https://dusign.net/2022/06/17/Front-Running/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -90,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('snail-bg.jpg')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
                 /*post*/
             
         
@@ -112,21 +112,21 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#敬请期待" title="敬请期待">敬请期待</a>
+                              <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                             
                         </div>
-                        <h1>博客正在进行迁移，敬请期待</h1>
-                        <h2 class="subheading">A succinct hexo theme.</h2>
+                        <h1>ReentryAttack</h1>
+                        <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Thomas_Xu on
-                            2022-11-02
+                            2022-06-17
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">32</span> and
-                                Reading Time <span class="post-count">1</span> Minutes
+                                Words <span class="post-count">2.1k</span> and
+                                Reading Time <span class="post-count">7</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -263,19 +263,64 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="迁移公告"><a href="#迁移公告" class="headerlink" title="迁移公告"></a>迁移公告</h1><p>博客正在迁移，感兴趣的朋友可以去<a href="https://thomasxu-blockchain.github.io/Conract_Attack/" target="_blank" rel="noopener">老博客地址</a></p>
+                <h1 id="抢先交易攻击（Front-Running）"><a href="#抢先交易攻击（Front-Running）" class="headerlink" title="抢先交易攻击（Front-Running）"></a>抢先交易攻击（Front-Running）</h1><hr>
 <blockquote>
-<p>博客还未迁移完成，</p>
+<p>author：Thomas_Xu</p>
 </blockquote>
+<h2 id="漏洞概述"><a href="#漏洞概述" class="headerlink" title="漏洞概述"></a>漏洞概述</h2><blockquote>
+<p>简单来说，Front-Running 是指在一笔正常交易等待打包的过程中，抢跑机器人通过设置更高 Gas 费用抢先完成攻击交易，以此攫取用户利益的攻击行为。而 Mempool（交易池） 是一组已经广播到网络中并等待被打包进区块的以太坊交易，它是 Front-Running 可以实施的前提，抢跑机器人通过不断扫描 Mempool 中的交易，来分析发现可攻击的目标。</p>
+</blockquote>
+<p><br /><br>在所有 Front-Running 中，最典型最具危害性的就是针对 AMM(自由做市商) 交易的 Sandwich Attacks （三明治攻击），除此以外还有针对套利、清算交易、闪电贷等利用系统漏洞获利的抢跑攻击，攻击者数量众多，且由自动化脚本控制，永远不知疲倦，因此任何有利可图的交易都会遭受他们的饱和攻击，几乎没有幸免的可能。<br/></p>
+<ul>
+<li><strong>Sandwich Attacks</strong><br>首先我们来看一个真实的三明治攻击案例：<br><img src="Uniswap3.png" alt=""><br>上图可见，三笔交易在同一个区块被打包，两笔攻击交易（打上了黑客标记的）中间夹着一笔正常交易。其具体流程如下：<blockquote>
+<ol>
+<li>用户首先发起一笔正常交易，用 237000.705USDC 买入 DG，设置 Gas Price 为 40.5Gwei；</li>
+<li>抢跑机器人检测到这笔有利可图的交易后，随即展开攻击，发起一笔买入交易，设定 GasPrice 为 49.9Gwei，凭借 Gas 竞争机制成功抢跑用户的正常交易；</li>
+<li>与此同时，机器人发出另一笔卖出交易，设置 GasPrice 同样为 40.5Gwei，因为时间顺序的原因，紧贴着用户正常交易完成。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>一次完美的抢跑攻击完成，算上手续费，机器人共赚取 16448.012-16310.3-15.2-10.61 = $111.9，而这种两笔攻击交易夹着一笔正常交易的攻击，就被形象的称为三明治攻击。</p>
+<h2 id="原理说明"><a href="#原理说明" class="headerlink" title="原理说明"></a>原理说明</h2><p>我们知道，现如今的主流 DEX 如 Uniswap 等，采用的都是 AMM （自动化做市商）机制，其价格遵循恒定乘积公式。例如，在 Uniswap 中建立一个 A 代币与 ETH 的流动池，A 数量为 1000，ETH 数量为 100，则两者数量乘积为 100000，当前 A 价格为 0.1ETH。当 Alice 试图用 10 个 ETH 来池子里购买 A 时，他所得到的 A 的数量 X，可以用下面的公式推导 (注：为简化计算，以下均未考虑手续费)：<br/><br><code>（1000-X）\*（100+10）= 100000，X = 90.9</code><br/><br>这笔交易中，A 的价格为 10/90.9 = 0.11，相比于原来 A 的价格，价格滑点为 :（0.11-0.1）/0.1*100% = 10%一笔交易就让币价产生了 10% 的滑点，可见越是流动性差的池子，遇到大额交易，越是容易产生滑点。而如果，能在用户正常的大额交易前（预计该交易会产生较大滑点），抢先买入 A，再在用户正常交易后，将刚买入的 A 卖出，就可以获得一笔不菲的收益。沿用刚才的例子，假设在 Alice 的交易前，Bob 抢先花 5 个 ETH 购买 A，然后在 Alice 的交易完成后，Bob 再把之前买入的 A 卖出，我们看看会有什么样的结果。<br/><br>首先是 Bob 的抢跑交易：<br/><br><code>(1000-X)\*(100+5) = 100000, X = 47.62</code><br/><br>即，Bob 用 5ETH 购得 47.62 个 A接下来是 Alice 的正常交易，注意此时流动池中 A 的数量变为 952.38，ETH 的数量变为 105：<br/><br><code>(952.38-X)\*(105+10) = 100000, X = 82.81</code><br/><br>最后 Bob 卖出 47.62 个 A 的交易，此时流动性中 A 的数量为 869.57，ETH 的数量为 115：<br/><br><code>(869.57+47.62）\*（115-Y）= 100000，Y = 5.97</code><br/><br>通过这一次抢跑攻击，Bob 净赚 5.97-5 = 0.97 个 ETH，而 Alice 净亏 90.9-82.81 = 8.09 个 A，Bob 通过使 Alice 蒙受更大的滑点损失来获得自己的收益！</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>作为一般用户，应对 Front-Running 可以有以下几种手段：</p>
+<blockquote>
+<ul>
+<li>设置较低的交易滑点，比如 0.1%，这会让抢跑机器人缺少可盈利的空间。 缺点：滑点过低导致大额交易十分容易失败，且失败的交易仍然需要支付高昂手续费。</li>
+<li>提高 gas 费用，这会增加机器人的攻击成本。缺点：这同样也增加了自己的交易成本。<br/></li>
+</ul>
+</blockquote>
+<p>可以看出，以上解决方案都是无奈之举，且有各种不足，幸运的是，有很多团队认识到了 Front-Running 的危害性，并提出了不少有建设性的解决方案。首先通过对捕猎全过程的分析，我们可以得出结论，要实现 Front-Running，需要几个要素：</p>
+<blockquote>
+<ul>
+<li>Transaction 公开性：可以在交易池中获取交易的详细信息以太坊交易执行机制：</li>
+<li>可以通过 gas 竞争的方式抢先完成交易</li>
+<li>AMM 交易曲线机制：恒定乘积机制可以造成较大滑点</li>
+</ul>
+</blockquote>
+<p>反制手段就是分别在这几个要素上做文章。</p>
+<ul>
+<li><strong>避免Transaction公开性</strong><br/><br>  既然机器人是通过分析交易池中的交易来决定是否发起攻击，那么我们将交易信息直接加密，让机器人看不到或者看不懂不就好了？<br/><br>  社区中就有人提议使用零知识证明技术 zk-SNARKs 来达成上述目标，即运用 zk-SNARKs 将每笔交易的信息都加密隐藏起来，让机器人无从下手。<br/><br>  不过，目前该方案还不够成熟，存在需要消耗更高 Gas 费用和可能被利用来进行阻塞攻击，导致系统化整体 liveness 的缺陷。<br>  <br/></li>
+<li><p><strong>更改以太坊交易执行机制</strong><br/><br>  当前的以太坊交易执行机制是通过 Gas 竞争来完成的，即谁出的 Gas 费高，矿工就优先打包谁的交易，那么我们如果绕过这种机制，把交易发给矿工让其直接打包，就杜绝了抢跑机器人在中途攻击的可能性<br/><br>  所以一种类似于 Layer 0 的方案也得到了一些应用，如星火矿池的 Taichi 服务，用户可以直接在 MetaMask 中设置 Taichi 的以太坊节点，这样交易就直接在没有出现在 Mempool 的情况下被打包了，但劣势是被打包的时效有一定的不确定性。<br/><br>  另外，如 ArcherSwap 类似理念的解决方案，构建了交易者和矿工之间的桥梁，交易者可以通过打赏的形式让矿工直接打包自己的交易，这就避免了被 Front-Running 的可能。虽然有那么点交保护费来避免被攻击的感觉，但也实实在在的降低了交易者的成本，而且有着不收取交易失败费用的优势。</p>
+</li>
+<li><p><strong>AMM 算法优化</strong><br>  在 AMM 机制下，大额交易产生过大的价格滑点（可理解为一个临时的错误价格），是 Front-Running 的利润空间，如果有一种 AMM 机制可以减少大额交易对后续交易价格的影响，就可以有效防止 Front-Running 攻击<br/><br>  早在 2018 年，Vitalik 在以太坊技术社区中提供了一个 方案，当发生兑换交易时，交易池价格不会立刻调整成真实价格，而是在若干分钟内，缓慢的趋向真实价格，这就好像交易池凭空多出了很多流动性一样，因此我们将这种技术称之为 Vitrual Balance （虚拟余额）技术。这种新机制，可大大压缩套利者的利润空间，有效防御 Front-Running 攻击，同时还可以增加流动性做市商的收益，可谓一举多得，1inch 的 mooniswap 就是这个方案的一个实现版本.</p>
+</li>
+<li><p><strong>增加流动性</strong><br>  此外，还有种思路，就是尽可能的加大交易池中特定价格区间的流动性，流动性越大，滑点越小，当流动性大到一定程度的时候，抢跑机器人就丧失了盈利空间，Uniswap 的 V3 版本的聚焦流动性特性，就是在这方面做出的努力。</p>
+</li>
+</ul>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2022/06/21/2022-11-03-ethernaut01/" data-toggle="tooltip" data-placement="top" title="ethernaut 题解 01-06">&larr; Previous Post</a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/2022/06/26/2022-11-03-ethernaut03/" data-toggle="tooltip" data-placement="top" title="ethernaut 题解 13-19">Next Post &rarr;</a>
+                        <a href="/2022/06/16/Uniswap的简介/" data-toggle="tooltip" data-placement="top" title="主流DES——Uniswap简介">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -399,7 +444,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#迁移公告"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">迁移公告</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#抢先交易攻击（Front-Running）"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">抢先交易攻击（Front-Running）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞概述"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">漏洞概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#原理说明"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">原理说明</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#解决方案"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">解决方案</span></a></li></ol>
             
           
           </div>
@@ -421,7 +466,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#敬请期待" title="敬请期待">敬请期待</a>
+                          <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                         
                     </div>
                 </section>

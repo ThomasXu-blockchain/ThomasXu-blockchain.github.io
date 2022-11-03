@@ -20,7 +20,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://dusign.net/2022/06/21/ethernaut01/">
+    <link rel="canonical" href="https://dusign.net/2022/06/21/2022-11-03-ethernaut01/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -279,11 +279,11 @@
 </li>
 <li><p>解题步骤</p>
 <ol>
-<li>在控制台中调用<code>contract.contribute({value:1)</code>在不带单位的情况下默认单位为<code>wei</code><br><img src="../images\ethernaut\e01\01.png" alt=""></li>
-<li>可以使用<code>contract.address</code>命令查看合约地址，然后使用metamask给合约地址转一笔账<br><img src="../images\ethernaut\e01\02_1.png" alt=""><br><img src="../images\ethernaut\e01\02_2.png" alt=""></li>
-<li>此时<code>owner</code>应该已经到了，我们来看一下：<br><img src="../images\ethernaut\e01\03.png" alt=""></li>
-<li>执行<code>withdraw()</code>函数进行提款<br><img src="../images\ethernaut\e01\04.png" alt=""></li>
-<li>通关<br><img src="../images\ethernaut\e01\05.png" alt=""></li>
+<li>在控制台中调用<code>contract.contribute({value:1)</code>在不带单位的情况下默认单位为<code>wei</code><br><img src="01.png" alt=""></li>
+<li>可以使用<code>contract.address</code>命令查看合约地址，然后使用metamask给合约地址转一笔账<br><img src="02_1.png" alt=""><br><img src="02_2.png" alt=""></li>
+<li>此时<code>owner</code>应该已经到了，我们来看一下：<br><img src="03.png" alt=""></li>
+<li>执行<code>withdraw()</code>函数进行提款<br><img src="04.png" alt=""></li>
+<li>通关<br><img src="05.png" alt=""></li>
 </ol>
 </li>
 </ul>
@@ -294,9 +294,9 @@
 <p>构造函数最好用<code>constructor() public {……}</code>的写法</p>
 <ul>
 <li>解题步骤<ol>
-<li>调用<code>fal1out</code>函数<br><img src="../images/ethernaut/e02/01.png" alt=""></li>
-<li>可以看到此时我们已经获得了合约的所有权<br><img src="../images/ethernaut/e02/03.png" alt=""></li>
-<li>通关<br><img src="../images/ethernaut/e02/suc.png" alt=""></li>
+<li>调用<code>fal1out</code>函数<br><img src="06.png" alt=""></li>
+<li>可以看到此时我们已经获得了合约的所有权<br><img src="07.png" alt=""></li>
+<li>通关<br><img src="suc.png" alt=""></li>
 </ol>
 </li>
 </ul>
@@ -346,7 +346,7 @@
 <ol>
 <li>将我们的攻击合约部署在测试链上</li>
 <li>执行10次<code>dosome()</code>函数</li>
-<li>通关<br><img src="../images/ethernaut/e03/01.png" alt=""></li>
+<li>通关<br><img src="11.png" alt=""></li>
 </ol>
 <h2 id="04-Telephone"><a href="#04-Telephone" class="headerlink" title="04 Telephone"></a>04 Telephone</h2><p>此题考查<code>tx.origin</code>和<code>msg.sender</code>的区别。没有什么难点<br>先看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract Telephone &#123;</span><br><span class="line"></span><br><span class="line">  address public owner;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function changeOwner(address _owner) public &#123;</span><br><span class="line">    if (tx.origin !&#x3D; msg.sender) &#123;</span><br><span class="line">      owner &#x3D; _owner;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>题目要求获得合约所有权，可以看到只要满足<code>tx.origin != msg.sender</code>就行。在此介绍一下<code>tx.origin</code>：</p>
 <blockquote>
@@ -369,8 +369,8 @@
 <li>解题思路</li>
 </ul>
 <ol>
-<li>在控制台调用transfer方法value为21即可<br><img src="../images/ethernaut/e05/01.png" alt=""></li>
-<li>此时查看我们的账户余额已经是一个相当大的值<br><img src="../images/ethernaut/e05/02.png" alt=""></li>
+<li>在控制台调用transfer方法value为21即可<br><img src="08.png" alt=""></li>
+<li>此时查看我们的账户余额已经是一个相当大的值<br><img src="09.png" alt=""></li>
 <li>通关</li>
 </ol>
 </li>
@@ -383,7 +383,7 @@
 </ul>
 <p>解题步骤：</p>
 <ol>
-<li>执行<code>contract.sendTransaction({data:web3.utils.keccak256(&quot;pwn()&quot;).slice(0,10)});</code>给当前合约赚一笔帐并指定data<br><img src="../images/ethernaut/e06/01.png" alt=""></li>
+<li>执行<code>contract.sendTransaction({data:web3.utils.keccak256(&quot;pwn()&quot;).slice(0,10)});</code>给当前合约赚一笔帐并指定data<br><img src="10.png" alt=""></li>
 <li>通关</li>
 </ol>
 
@@ -393,12 +393,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2022/06/24/ethernaut02/" data-toggle="tooltip" data-placement="top" title="ethernaut 题解 07-12">&larr; Previous Post</a>
+                        <a href="/2022/06/24/2022-11-03-ethernaut02/" data-toggle="tooltip" data-placement="top" title="ethernaut 题解 07-12">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2022/06/15/ReentryAttack/" data-toggle="tooltip" data-placement="top" title="ReentryAttack">Next Post &rarr;</a>
+                        <a href="/2022/06/17/Front-Running/" data-toggle="tooltip" data-placement="top" title="ReentryAttack">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -741,7 +741,7 @@
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
         
 
         <!-- background effects end -->
@@ -751,21 +751,6 @@
     
         <script src="/js/ribbonDynamic.js"></script>
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
