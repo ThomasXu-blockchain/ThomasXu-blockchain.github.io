@@ -264,6 +264,12 @@
 
     
 
+    
+
+    
+
+    
+
 
 
 <!-- Main Content -->
@@ -294,7 +300,41 @@
                 </p>
                 <div class="tags">
                     
-                      <a href="/tags/#敬请期待" title="敬请期待">敬请期待</a>
+                      <a href="/tags/#公告" title="公告">公告</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/uniswap-v3/">
+                <h2 class="post-title">
+                    Uniswap_V3 源码分析
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Uniswap V3 源码解析（一）author: Thomas_Xu
+之前看了v2的源码，但是感觉能写的不多，于是便决定读了v3后把v3和v2连着写一一篇博文。v3版本的实现复杂度和v2已经不是一个量级了，部分算法确实难以摸透。尝试着分析分析吧。
+写在前面强烈建议在阅读uniswap v3源码之前，先阅读官方博客对v3版本的介绍，有能力的话摸透V3的白皮书，熟悉他的实现原理。在本文中也会做......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-10-20
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#Uniswap" title="Uniswap">Uniswap</a>
                     
                 </div>
             
@@ -363,6 +403,40 @@ author：Thomas_Xu
                 <div class="tags">
                     
                       <a href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/delegatecall/">
+                <h2 class="post-title">
+                    Delegatecall
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Solidity之DelegateCall
+author：Thomas_Xu
+在Solidity中，如果只是为了代码复用，我们会把公共代码抽出来，部署到一个library中，后面就可以像调用C库、Java库一样使用了。但是library中不允许定义任何storage类型的变量，这就意味着library不能修改合约的状态。如果需要修改合约状态，我们需要部署一个新的合约，这就涉及到合约调用合约的......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-22
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#杂谈" title="杂谈">杂谈</a>
                     
                 </div>
             
@@ -550,80 +624,16 @@ author：Thomas_Xu
 
     
 
-    
-
-        <div class="post-preview">
-
-            <a href="/Uniswap的简介/">
-                <h2 class="post-title">
-                    主流DES——Uniswap简介
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    主流 DEX—Uniswap介绍
-author：Thomas_Xu
-引入以太坊 1.0 的严重限制让简便的 Uniswap 脱颖而出，但以太坊 2.0 和 L2 链下系统将使更复杂的市场蓬勃发展。“有个商业设想。开发一个AMM。不管谁来询价，我随时都能报出一个价格，我的定价算法会用 x * y = k。差不多就这些。想投资吗？”你会躲得远远的。其实，刚才描述的就是 Uniswap。Unisw......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-06-16
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Uniswap" title="Uniswap">Uniswap</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/ReentryAttack/">
-                <h2 class="post-title">
-                    ReentryAttack
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    重入攻击分析
-author：Thomas_Xu
-漏洞概述在以太坊中，智能合约能够调用其他外部合约的代码，由于智能合约可以调用外部合约或者发送以太币，这些操作需要合约提交外部的调用，所以这些合约外部的调用就可以被攻击者利用造成攻击劫持，使得被攻击合约在任意位置重新执行(回调)，绕过原代码中的限制条件，从而发生重入攻击。重入攻击本质上与编程里的递归调用类似，所以当合约将以太币发送到未知地址时就可......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-06-15
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
 
 
 <!-- Pager -->
 
 <ul class="pager">
     
+    
+        <li class="next">
+            <a href="/archives/2/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -671,13 +681,19 @@ author：Thomas_Xu
     <div class="tags">
         
             
-        
-            
             <a href="/tags/#ethernaut" title="ethernaut" rel="3">ethernaut</a>
             
         
             
             <a href="/tags/#基础漏洞" title="基础漏洞" rel="5">基础漏洞</a>
+            
+        
+            
+            <a href="/tags/#Uniswap" title="Uniswap" rel="2">Uniswap</a>
+            
+        
+            
+            <a href="/tags/#杂谈" title="杂谈" rel="2">杂谈</a>
             
         
             
@@ -755,6 +771,10 @@ author：Thomas_Xu
         </li>
       
         <li>
+          <a href="/uniswap-v3/">Uniswap_V3 源码分析</a>
+        </li>
+      
+        <li>
           <a href="/2022-11-03-ethernaut03/">ethernaut 题解 13-19</a>
         </li>
       
@@ -763,11 +783,7 @@ author：Thomas_Xu
         </li>
       
         <li>
-          <a href="/2022-11-03-ethernaut01/">ethernaut 题解 01-06</a>
-        </li>
-      
-        <li>
-          <a href="/Denial-Service/">拒绝服务漏洞</a>
+          <a href="/delegatecall/">Delegatecall</a>
         </li>
       
     </ul>
@@ -782,7 +798,7 @@ author：Thomas_Xu
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">9</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>
@@ -793,13 +809,15 @@ author：Thomas_Xu
     <div class="widget">
       <ul>
         
-          <a href="categories/#chain-sec"><li>chain-sec</li></a>
-        
-          <a href="categories/#ethernaut"><li>ethernaut</li></a>
-        
           <a href="categories/#基础漏洞"><li>基础漏洞</li></a>
         
           <a href="categories/#Uniswap"><li>Uniswap</li></a>
+        
+          <a href="categories/#杂谈"><li>杂谈</li></a>
+        
+          <a href="categories/#公告"><li>公告</li></a>
+        
+          <a href="categories/#靶场"><li>靶场</li></a>
         
       </ul>
     </div>
