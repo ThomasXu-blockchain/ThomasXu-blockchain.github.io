@@ -8,6 +8,13 @@
     </url>
 
     <url>
+        <loc>https://dusign.net/categories/%25E9%259D%25B6%25E5%259C%25BA/</loc>
+        <lastmod>2022-11-04T11:01:28.360Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://dusign.net/categories/EIP/</loc>
         <lastmod>2022-11-04T10:31:21.815Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -24,13 +31,6 @@
     <url>
         <loc>https://dusign.net/categories/%25E5%2585%25AC%25E5%2591%258A/</loc>
         <lastmod>2022-11-04T09:16:14.075Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://dusign.net/categories/%25E9%259D%25B6%25E5%259C%25BA/</loc>
-        <lastmod>2022-11-04T09:15:54.977Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

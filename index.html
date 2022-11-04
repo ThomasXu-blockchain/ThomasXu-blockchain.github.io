@@ -274,6 +274,14 @@
 
     
 
+    
+
+    
+
+    
+
+    
+
 
 
 <!-- Main Content -->
@@ -442,6 +450,144 @@ ERC-1155
 
         <div class="post-preview">
 
+            <a href="/DamnDefi-08-09/">
+                <h2 class="post-title">
+                    Damn Defi 题解 8-9
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Damn Defi靶场刷题记录(8-9)author: Thomas_Xu
+8 Puppet这个题直接通过abi引用了一个已经编译了的Uniswap v1的合约，因此，我们可以假定这个Uniswap合约没有其他漏洞。那就让我们把目光集中在PuppetPool合约其实就一个borrow()函数，但在借款时，我们需要抵押两倍的资金在池里。这个题其实就是想要我们想办法让池在我们抵押不足的情况下贷款......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-09-29
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/DamnDefi-07/">
+                <h2 class="post-title">
+                    Damn Defi 题解 7
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Damn Defi靶场刷题记录(7)author: Thomas_Xu
+7 Compromised之所以单独把这个题拉出来做一个wp是因为这个题太特殊了，也因为8，9是一套题目。这个题设置的背景就很奇怪，它给了我们一个服务器的响应片段，而这些片段是由两大串十六进制数组成的。而我们目前并不知道这串十六进制数意味着什么，那么先来看看代码吧。
+
+通过粗略阅读后我们可以发现，这其实就是三个所谓的“可......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-09-19
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/DamnDefi-05-06/">
+                <h2 class="post-title">
+                    Damn Defi 题解 5-6
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Damn Defi靶场刷题记录(5-6)author: Thomas_Xu
+the-rewarderFlashPool从一开始就获得一百万个代币，提到的4个人中的每一个人都获得100个DVT，这些DVT立即由他们存入奖励池。在此初始设置之后，时间提前5天，并支付一轮奖励：每人25个奖励代币。这道题有四个合约，是第一道多合约的题目。不过不用害怕，我们一个一个来分析。
+
+RewardToken这......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-09-19
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/DamnDefi-01-04/">
+                <h2 class="post-title">
+                    Damn Defi 题解 1-4
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Damn Defi靶场刷题记录(1-4)author: Thomas_Xu
+Unstoppable这一关没有什么太大的难度，主要是带领进入Damn的题目
+这道题是想让我们让这个闪电贷池停止工作
+我们首先看一下合约12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849 &......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-09-15
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
             <a href="/2022-11-03-ethernaut03/">
                 <h2 class="post-title">
                     ethernaut 题解 13-19
@@ -497,145 +643,6 @@ author：Thomas_Xu
                 <div class="tags">
                     
                       <a href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/delegatecall/">
-                <h2 class="post-title">
-                    Delegatecall
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Solidity之DelegateCall
-author：Thomas_Xu
-在Solidity中，如果只是为了代码复用，我们会把公共代码抽出来，部署到一个library中，后面就可以像调用C库、Java库一样使用了。但是library中不允许定义任何storage类型的变量，这就意味着library不能修改合约的状态。如果需要修改合约状态，我们需要部署一个新的合约，这就涉及到合约调用合约的......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-06-22
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#杂谈" title="杂谈">杂谈</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/2022-11-03-ethernaut01/">
-                <h2 class="post-title">
-                    ethernaut 题解 01-06
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Ethernaut靶场刷题记录(1-6)
-author：Thomas_Xu
-01 FallBack这道题是比较简单的，合约的逻辑有问题导致出现漏洞我们先来了解一下receive和fallback的区别：
-
-receive():    一个合约只能有一个receive函数，该函数不能有参数和返回值，需设置为external，payable；fallback():    一个合约只能有一个rec......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-06-21
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#ethernaut" title="ethernaut">ethernaut</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/Denial-Service/">
-                <h2 class="post-title">
-                    拒绝服务漏洞
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    合约中的拒绝服务漏洞：
-author：Thomas_Xu
-何为DosDoS 是DenialOfService，拒绝服务的缩写[3]，从字面上来理解，就是用户所需要的服务请求无法被系统处理。打个比方来形容DoS，火车站是为大家提供乘车服务的，如果想要DoS火车站的话，方法有很多，可以占用过道不上车，堵住售票点不付钱，阻挠列车员或者司机不让开车，甚至用破坏铁轨等更加极端的手段来影响车站服务的正常......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-06-20
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/CallAttack/">
-                <h2 class="post-title">
-                    Call注入漏洞
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Call注入漏洞刷题实践
-author：Thomas_Xu
-写在前面写本文是为了总结一下博主在这两天中做一个靶场题目时遇到的一些问题，以及对call注入的一些见解。
-Call函数首先我们先了解一下call函数：合约之间的调用有2种方式： 底层的call方式和 new 合约的方式solidity 提供了 call()、delegatecall()、callcode() 三个函数来实现合约直接的......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-06-19
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                     
                 </div>
             
@@ -723,6 +730,10 @@ Call函数首先我们先了解一下call函数：合约之间的调用有2种�
             <a href="/tags/#EIP" title="EIP" rel="2">EIP</a>
             
         
+            
+            <a href="/tags/#Damn Defi" title="Damn Defi" rel="4">Damn Defi</a>
+            
+        
     </div>
 </section>
 
@@ -808,7 +819,7 @@ Call函数首先我们先了解一下call函数：合约之间的调用有2种�
         </li>
       
         <li>
-          <a href="/2022-11-03-ethernaut03/">ethernaut 题解 13-19</a>
+          <a href="/DamnDefi-08-09/">Damn Defi 题解 8-9</a>
         </li>
       
     </ul>
@@ -823,7 +834,7 @@ Call函数首先我们先了解一下call函数：合约之间的调用有2种�
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>
@@ -1001,7 +1012,7 @@ Call函数首先我们先了解一下call函数：合约之间的调用有2种�
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
         
 
         <!-- background effects end -->
@@ -1011,6 +1022,21 @@ Call函数首先我们先了解一下call函数：合约之间的调用有2种�
     
         <script src="/js/ribbonDynamic.js"></script>
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

