@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          ERC777-1820 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/ERC777-1820/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#EIP" title="EIP">EIP</a>
+                            
+                        </div>
+                        <h1>ERC777-1820</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-11-02
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">5.2k</span> and
+                                Reading Time <span class="post-count">22</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="ERC777，1820协议分析"><a href="#ERC777，1820协议分析" class="headerlink" title="ERC777，1820协议分析"></a>ERC777，1820协议分析</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h2 id="ERC777"><a href="#ERC777" class="headerlink" title="ERC777"></a>ERC777</h2><p>与以太坊生态系统中广泛采用的ERC20标准不同，ERC777标准通常被称为城里的新生儿。一个潜力巨大的孩子。有些人甚至声称ERC777标准是ERC20标准的有效继承者。ERC777标准规范在<a href="https://link.zhihu.com/?target=https%3A//github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md">EIP777（以太坊改进提案</a>文件中有详尽描述。</p>
+<h2 id="ERC777解决了哪些ERC20的问题"><a href="#ERC777解决了哪些ERC20的问题" class="headerlink" title="ERC777解决了哪些ERC20的问题?"></a>ERC777解决了哪些ERC20的问题?</h2><h3 id="转账通知机制"><a href="#转账通知机制" class="headerlink" title="转账通知机制"></a><strong>转账通知机制</strong></h3><p>由于<strong>ERC20 标准没有一个转账通知机制</strong>，很多ERC20代币误转到合约之后，再也没有办法把币转移出来，已经有大量的ERC20 因为这个原因被锁死，如<a href="https://etherscan.io/address/0x9a642d6b3368ddc662CA244bAdf32cDA716005BC" target="_blank" rel="noopener">锁死的QTUM</a>，<a href="https://etherscan.io/address/0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0" target="_blank" rel="noopener">锁死的EOS</a> 。</p>
+<h3 id="运营商机制"><a href="#运营商机制" class="headerlink" title="运营商机制"></a>运营商机制</h3><p>假设您希望允许第三方帐户（或合约）使用您的代币。最常见的需求是在使用去中心化交易所智能合约交易代币时。</p>
+<p>此过程中的第一步是你需要通过调用ERC20智能合约上的<code>approve</code>方法函数来批准转账账户并设置他们有权获得的资金限额。除了用你的资金信任第三方之外，你还需要确保支出限额始终足以满足所需的交易，还需考虑gas等因素对交易的影响。</p>
+<p>在ERC777的运营商机制下，你只需要转移操作权限后就什么都不用操心了。</p>
+<h3 id="交易额外信息"><a href="#交易额外信息" class="headerlink" title="交易额外信息"></a>交易额外信息</h3><p>另外一个问题是<strong>ERC20 转账时，无法携带额外的信息</strong>，例如：我们有一些客户希望让用户使用 ERC20 代币购买商品，因为转账没法携带额外的信息， 用户的代币转移过来，不知道用户具体要购买哪件商品，从而展加了线下额外的沟通成本。</p>
+<p>ERC777很好的解决了这些问题，同时ERC777 也兼容 ERC20 标准。因此强烈建议新开发的代币使用ERC777标准。</p>
+<p>ERC777 在 ERC20的基础上定义了 <code>send(dest, value, data)</code> 来转移代币， send函数额外的参数用来携带其他的信息，send函数会检查持有者和接收者是否实现了相应的钩子函数，如果有实现（不管是普通用户地址还是合约地址都可以实现钩子函数），则调用相应的钩子函数。</p>
+<h3 id="交易监听"><a href="#交易监听" class="headerlink" title="交易监听"></a>交易监听</h3><p>由于ERC1820接口的实现，使ERC777具有很完备的交易监听机制，利用这种监听可以完成许多功能，例如慈善机构的捐款记录，支出情况监听，等等。</p>
+<blockquote>
+<p>ERC20 标准下，可以通过一个变通的办法，采用两个交易组合完成，方法是：第1步：先让用户把要转移的金额用 ERC20 的approve 授权的存币合约（这步通常称为解锁），第2步：再次让用户调用存币合约的计息函数，目标函数中通过 transferFrom 把代币从用户手里转移的合约内，并开始监听到交易后的操作。</p>
+</blockquote>
+<h2 id="ERC1820-接口注册表合约"><a href="#ERC1820-接口注册表合约" class="headerlink" title="ERC1820 接口注册表合约"></a>ERC1820 接口注册表合约</h2><p>即便是一个普通用户地址，同样可以实现对 ERC777 转账的监听， 听起来有点神奇，其实这是通过 ERC1820 接口注册表合约来是实现的。</p>
+<blockquote>
+<p>ERC1820 相当的重要，以至于ERC777单独把它拆出来作为一个EIP。</p>
+</blockquote>
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>在以太坊上有很多方法定义伪自省，<a href="https://learnblockchain.cn/docs/eips/eip-165.html" target="_blank" rel="noopener">ERC165</a>不能由普通用户帐户使用。 <a href="https://github.com/ethereum/EIPs/issues/672" target="_blank" rel="noopener">ERC672</a> 则使用了反向 <a href="https://ens.domains/" target="_blank" rel="noopener">ENS</a>，反向 <a href="https://ens.domains/" target="_blank" rel="noopener">ENS</a> 有两个问题：增加了不必要的复杂度，其次，<a href="https://ens.domains/" target="_blank" rel="noopener">ENS</a> 是由多签控制的中心化合约。 从理论上讲，这种多签能够修改系统。</p>
+<p>ERC1820标准比 <a href="https://github.com/ethereum/EIPs/issues/672" target="_blank" rel="noopener">ERC672</a> 简单得多，并且完全去中心化。</p>
+<p>此标准还为所有链提供一个唯一（相同的）地址<code>0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24</code>。从而解决了解决不同链的查找注册表地址的问题。</p>
+<h3 id="ERC1820规范"><a href="#ERC1820规范" class="headerlink" title="ERC1820规范"></a>ERC1820规范</h3><p>以下是ERC1820的源码及解释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.5.3;</span><br><span class="line">&#x2F;&#x2F; IV is value needed to have a vanity address starting with &#39;0x1820&#39;.</span><br><span class="line">&#x2F;&#x2F; IV: 53759</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x2F; @dev 如果合约为其他的地址实现了接口， 则必须实现这个接口。</span><br><span class="line">interface ERC1820ImplementerInterface &#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 指示合约是否为地址 “addr” 实现接口 “interfaceHash”。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param interfaceHash 接口名称的 keccak256 哈希值</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param addr 为哪一个地址实现接口</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @return 只有当合约为地址&#39;addr&#39;实现&#39;interfaceHash&#39;时返回 ERC1820_ACCEPT_MAGIC</span><br><span class="line">    function canImplementInterfaceForAddress(bytes32 interfaceHash, address addr) external view returns(bytes32);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x2F; @title ERC1820 伪自省注册表合约</span><br><span class="line">&#x2F;&#x2F;&#x2F; @notice 该合约是ERC1820注册表的官方实现。</span><br><span class="line">contract ERC1820Registry &#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice ERC165 无效 ID.</span><br><span class="line">    bytes4 constant internal INVALID_ID &#x3D; 0xffffffff;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice ERC165 的 supportsInterface 接口ID (&#x3D; &#96;bytes4(keccak256(&#39;supportsInterface(bytes4)&#39;))&#96;).</span><br><span class="line">    bytes4 constant internal ERC165ID &#x3D; 0x01ffc9a7;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 如果合约代表某个其他地址实现接口，则返回Magic值。</span><br><span class="line">    bytes32 constant internal ERC1820_ACCEPT_MAGIC &#x3D; keccak256(abi.encodePacked(&quot;ERC1820_ACCEPT_MAGIC&quot;));</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 映射地址及接口到对应的实现合约地址</span><br><span class="line">    mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; address)) internal interfaces;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 映射地址到管理者</span><br><span class="line">    mapping(address &#x3D;&gt; address) internal managers;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 每个地址和erc165接口的flag，指示是否被缓存。</span><br><span class="line">    mapping(address &#x3D;&gt; mapping(bytes4 &#x3D;&gt; bool)) internal erc165Cached;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 表示合约是&#39;addr&#39;的&#39;interfaceHash&#39;的&#39;实现者&#39;。</span><br><span class="line">    event InterfaceImplementerSet(address indexed addr, bytes32 indexed interfaceHash, address indexed implementer);</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 表示&#39;newManager&#39;是&#39;addr&#39;的新管理者的地址。</span><br><span class="line">    event ManagerChanged(address indexed addr, address indexed newManager);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 查询地址是否实现了接口以及通过哪个合约实现的。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _addr 查询地址（如果&#39;_addr&#39;是零地址，则假定为&#39;msg.sender&#39;）。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _interfaceHash 查询接口，它是接口名称字符串的 keccak256 哈希值</span><br><span class="line">    &#x2F;&#x2F;&#x2F; 例如: &#39;web3.utils.keccak256(&quot;ERC777TokensRecipient&quot;)&#39; 表示 &#39;ERC777TokensRecipient&#39; 接口.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @return 返回实现者的地址，没有实现返回 ‘0’</span><br><span class="line">    function getInterfaceImplementer(address _addr, bytes32 _interfaceHash) external view returns (address) &#123;</span><br><span class="line">        address addr &#x3D; _addr &#x3D;&#x3D; address(0) ? msg.sender : _addr;</span><br><span class="line">        if (isERC165Interface(_interfaceHash)) &#123;</span><br><span class="line">            bytes4 erc165InterfaceHash &#x3D; bytes4(_interfaceHash);</span><br><span class="line">            return implementsERC165Interface(addr, erc165InterfaceHash) ? addr : address(0);</span><br><span class="line">        &#125;</span><br><span class="line">        return interfaces[addr][_interfaceHash];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 设置某个地址的接口由哪个合约实现，需要由管理员来设置。（每个地址是他自己的管理员，直到设置了一个新的地址）。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _addr 待设置的关联接口的地址（如果&#39;_addr&#39;是零地址，则假定为&#39;msg.sender&#39;）</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _interfaceHash 接口，它是接口名称字符串的 keccak256 哈希值</span><br><span class="line">    &#x2F;&#x2F;&#x2F; 例如: &#39;web3.utils.keccak256(&quot;ERC777TokensRecipient&quot;)&#39; 表示 &#39;ERC777TokensRecipient&#39; 接口。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _implementer 为地址&#39;_addr&#39;实现了 &#39;_interfaceHash&#39;接口的合约地址</span><br><span class="line">    function setInterfaceImplementer(address _addr, bytes32 _interfaceHash, address _implementer) external &#123;</span><br><span class="line">        address addr &#x3D; _addr &#x3D;&#x3D; address(0) ? msg.sender : _addr;</span><br><span class="line">        require(getManager(addr) &#x3D;&#x3D; msg.sender, &quot;Not the manager&quot;);</span><br><span class="line"></span><br><span class="line">        require(!isERC165Interface(_interfaceHash), &quot;Must not be an ERC165 hash&quot;);</span><br><span class="line">        if (_implementer !&#x3D; address(0) &amp;&amp; _implementer !&#x3D; msg.sender) &#123;</span><br><span class="line">            require(</span><br><span class="line">                ERC1820ImplementerInterface(_implementer)</span><br><span class="line">                    .canImplementInterfaceForAddress(_interfaceHash, addr) &#x3D;&#x3D; ERC1820_ACCEPT_MAGIC,</span><br><span class="line">                &quot;Does not implement the interface&quot;</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">        interfaces[addr][_interfaceHash] &#x3D; _implementer;</span><br><span class="line">        emit InterfaceImplementerSet(addr, _interfaceHash, _implementer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 为地址_addr 设置新的管理员地址_newManager， 新的管理员能给&#39;_addr&#39; 调用 &#39;setInterfaceImplementer&#39; 设置是实现者。</span><br><span class="line">    &#x2F;&#x2F;&#x2F;  (传 &#39;0x0&#39; 为地址_addr 重置管理员)</span><br><span class="line"></span><br><span class="line">    function setManager(address _addr, address _newManager) external &#123;</span><br><span class="line">        require(getManager(_addr) &#x3D;&#x3D; msg.sender, &quot;Not the manager&quot;);</span><br><span class="line">        managers[_addr] &#x3D; _newManager &#x3D;&#x3D; _addr ? address(0) : _newManager;</span><br><span class="line">        emit ManagerChanged(_addr, _newManager);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 获取地址 _addr的管理员</span><br><span class="line">    function getManager(address _addr) public view returns(address) &#123;</span><br><span class="line">        &#x2F;&#x2F; By default the manager of an address is the same address</span><br><span class="line">        if (managers[_addr] &#x3D;&#x3D; address(0)) &#123;</span><br><span class="line">            return _addr;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return managers[_addr];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 计算给定名称的接口的keccak256哈希值。</span><br><span class="line">    function interfaceHash(string calldata _interfaceName) external pure returns(bytes32) &#123;</span><br><span class="line">        return keccak256(abi.encodePacked(_interfaceName));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; ERC165 相关方法</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 更新合约是否实现了ERC165接口的缓存。</span><br><span class="line">    function updateERC165Cache(address _contract, bytes4 _interfaceId) external &#123;</span><br><span class="line">        interfaces[_contract][_interfaceId] &#x3D; implementsERC165InterfaceNoCache(</span><br><span class="line">            _contract, _interfaceId) ? _contract : address(0);</span><br><span class="line">        erc165Cached[_contract][_interfaceId] &#x3D; true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 检查合约是否实现ERC165接口。</span><br><span class="line">    &#x2F;&#x2F;  如果未缓存结果，则对合约地址进行查找。 如果结果未缓存或缓存已过期，则必须通过使用合约地址调用“updateERC165Cache”手动更新缓存。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _contract 要检查的合约地址。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _interfaceId 要检查ERC165接口。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @return True 如果合约实现了接口返回 true, 否则false.</span><br><span class="line">    function implementsERC165Interface(address _contract, bytes4 _interfaceId) public view returns (bool) &#123;</span><br><span class="line">        if (!erc165Cached[_contract][_interfaceId]) &#123;</span><br><span class="line">            return implementsERC165InterfaceNoCache(_contract, _interfaceId);</span><br><span class="line">        &#125;</span><br><span class="line">        return interfaces[_contract][_interfaceId] &#x3D;&#x3D; _contract;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 在不使用或更新缓存的情况下检查合约是否实现ERC165接口。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _contract 要检查的合约地址。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _interfaceId 要检查ERC165接口。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @return True 如果合约实现了接口返回 true, 否则false.</span><br><span class="line">    function implementsERC165InterfaceNoCache(address _contract, bytes4 _interfaceId) public view returns (bool) &#123;</span><br><span class="line">        uint256 success;</span><br><span class="line">        uint256 result;</span><br><span class="line"></span><br><span class="line">        (success, result) &#x3D; noThrowCall(_contract, ERC165ID);</span><br><span class="line">        if (success &#x3D;&#x3D; 0 || result &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        (success, result) &#x3D; noThrowCall(_contract, INVALID_ID);</span><br><span class="line">        if (success &#x3D;&#x3D; 0 || result !&#x3D; 0) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        (success, result) &#x3D; noThrowCall(_contract, _interfaceId);</span><br><span class="line">        if (success &#x3D;&#x3D; 1 &amp;&amp; result &#x3D;&#x3D; 1) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 检查_interfaceHash 是否是ERC165接口（以28个零结尾）。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param _interfaceHash 要检查接口 hash。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @return  如果 &#39;_interfaceHash&#39;是ERC165接口返回 True, 否则返回false</span><br><span class="line">    function isERC165Interface(bytes32 _interfaceHash) internal pure returns (bool) &#123;</span><br><span class="line">        return _interfaceHash &amp; 0x00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF &#x3D;&#x3D; 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; @dev 调用合约接口，如果函数不存在也不抛出异常。</span><br><span class="line">    function noThrowCall(address _contract, bytes4 _interfaceId)</span><br><span class="line">        internal view returns (uint256 success, uint256 result)</span><br><span class="line">    &#123;</span><br><span class="line">        bytes4 erc165ID &#x3D; ERC165ID;</span><br><span class="line"></span><br><span class="line">        assembly &#123;</span><br><span class="line">            let x :&#x3D; mload(0x40)               &#x2F;&#x2F; Find empty storage location using &quot;free memory pointer&quot;</span><br><span class="line">            mstore(x, erc165ID)                &#x2F;&#x2F; Place signature at beginning of empty storage</span><br><span class="line">            mstore(add(x, 0x04), _interfaceId) &#x2F;&#x2F; Place first argument directly next to signature</span><br><span class="line"></span><br><span class="line">            success :&#x3D; staticcall(</span><br><span class="line">                30000,                         &#x2F;&#x2F; 30k gas</span><br><span class="line">                _contract,                     &#x2F;&#x2F; To addr</span><br><span class="line">                x,                             &#x2F;&#x2F; Inputs are stored at location x</span><br><span class="line">                0x24,                          &#x2F;&#x2F; Inputs are 36 (4 + 32) bytes long</span><br><span class="line">                x,                             &#x2F;&#x2F; Store output over input (saves space)</span><br><span class="line">                0x20                           &#x2F;&#x2F; Outputs are 32 bytes long</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            result :&#x3D; mload(x)                 &#x2F;&#x2F; Load the result</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="部署方法"><a href="#部署方法" class="headerlink" title="部署方法"></a>部署方法</h3><p>ERC1820的部署方式相当巧妙，使用了无密钥部署方法（<a href="https://github.com/Arachnid/" target="_blank" rel="noopener">Nick</a>的方法），该方法依赖于一次性地址。</p>
+<p>有兴趣的朋友可以去看<a href="https://learnblockchain.cn/docs/eips/eip-1820.html#%E8%A7%84%E8%8C%83" target="_blank" rel="noopener">EIP1820官方文档</a></p>
+<h3 id="主要接口"><a href="#主要接口" class="headerlink" title="主要接口"></a>主要接口</h3><p>ERC1820合约提过了两个主要接口：</p>
+<ul>
+<li><code>setInterfaceImplementer(address _addr, bytes32 _interfaceHash, address _implementer)</code><br>用来设置地址（_addr）的接口（_interfaceHash 接口名称的 keccak256 ）由哪个合约实现（_implementer）。</li>
+<li><code>getInterfaceImplementer(address _addr, bytes32 _interfaceHash) external view returns (address)</code><br>这个函数用来查询地址（_addr）的接口由哪个合约实现。</li>
+</ul>
+<p>setInterfaceImplementer函数会参数信息记录到下面这个interfaces映射里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 记录 地址(第一个键) 的接口（第二个键）的实现地址（第二个值）</span><br><span class="line">mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; address)) interfaces;</span><br></pre></td></tr></table></figure>
+<p>相对应的 getInterfaceImplementer() 通过 interfaces 这个mapping 来获得接口的实现。</p>
+<p>ERC777 使用 send转账时会分别在持有者和接收者地址上使用ERC1820 的getInterfaceImplementer函数进行查询，查看是否有对应的实现合约，ERC777 标准规范里预定了接口及函数名称，如果有实现则进行相应的调用。</p>
+<h2 id="ERC777-标准规范"><a href="#ERC777-标准规范" class="headerlink" title="ERC777 标准规范"></a>ERC777 标准规范</h2><h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>ERC777 为了在实现上可以兼容ERC20，除了查询函数和ERC20一致外，操作接口均采用的独立的命名（避免相同的命令无法分辨是哪个标准），ERC777的接口定义如下，要求所有的ERC777代币合约都必须实现这些接口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">interface ERC777Token &#123;</span><br><span class="line">    function name() external view returns (string memory);</span><br><span class="line">    function symbol() external view returns (string memory);</span><br><span class="line">    function totalSupply() external view returns (uint256);</span><br><span class="line">    function balanceOf(address holder) external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 定义代币最小的划分粒度</span><br><span class="line">    function granularity() external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 操作员 相关的操作（操作员是可以代表持有者发送和销毁代币的账号地址）</span><br><span class="line">    function defaultOperators() external view returns (address[] memory);</span><br><span class="line">    function isOperatorFor(</span><br><span class="line">        address operator,</span><br><span class="line">        address holder</span><br><span class="line">    ) external view returns (bool);</span><br><span class="line">    function authorizeOperator(address operator) external;</span><br><span class="line">    function revokeOperator(address operator) external;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 发送代币</span><br><span class="line">    function send(address to, uint256 amount, bytes calldata data) external;</span><br><span class="line">    function operatorSend(</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes calldata data,</span><br><span class="line">        bytes calldata operatorData</span><br><span class="line">    ) external;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 销毁代币</span><br><span class="line">    function burn(uint256 amount, bytes calldata data) external;</span><br><span class="line">    function operatorBurn(</span><br><span class="line">        address from,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes calldata data,</span><br><span class="line">        bytes calldata operatorData</span><br><span class="line">    ) external;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 发送代币事件</span><br><span class="line">    event Sent(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed from,</span><br><span class="line">        address indexed to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes data,</span><br><span class="line">        bytes operatorData</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 铸币事件</span><br><span class="line">    event Minted(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes data,</span><br><span class="line">        bytes operatorData</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 销毁代币事件</span><br><span class="line">    event Burned(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed from,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes data,</span><br><span class="line">        bytes operatorData</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 授权运营商事件</span><br><span class="line">    event AuthorizedOperator(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed holder</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 撤销运营商事件</span><br><span class="line">    event RevokedOperator(address indexed operator, address indexed holder);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="接口说明与实现约定"><a href="#接口说明与实现约定" class="headerlink" title="接口说明与实现约定"></a>接口说明与实现约定</h3><p>ERC777 合约必须要通过 ERC1820 注册 <code>ERC777Token</code> 接口，这样任何人都可以查询合约是否是ERC777标准的合约，注册方法是: 调用ERC1820 注册合约的 <code>setInterfaceImplementer</code> 方法，参数 _addr 及 _implementer 均是合约的地址，_interfaceHash 是 <code>ERC777Token</code> 的 keccak256 哈希值（0xac7fbab5…177054）</p>
+<p>如果 ERC777 要实现ERC20标准，还必须通过ERC1820 注册<code>ERC20Token</code>接口。</p>
+<h3 id="ERC777-信息说明函数"><a href="#ERC777-信息说明函数" class="headerlink" title="ERC777 信息说明函数"></a>ERC777 信息说明函数</h3><p>name()，symbol()，totalSupply()，balanceOf(address) 和含义和在ERC20 中完全一样。</p>
+<p>唯一不一样的是granularity()，用来定义代币最小的划分粒度（&gt;=1）， 要求必须在创建时设定，之后不可以更改，不管是在铸币、发送还是销毁操作的代币数量，必需是粒度的整数倍。</p>
+<blockquote>
+<p>granularity 和 ERC20 的 decimals 不一样，decimals用来定义小数位数，decimals 是ERC20 可选函数，为了兼容 ERC20 代币, decimals 函数要求必须返回18。而 granularity 表示的是基于最小位数(内部存储)的划分粒度。例如：0.5个代币存储为 <code>500,000,000,000,000,000</code> (0.5 X 10^18)，如果粒度为2，则最小转账单位是2（相对于<code>500,000,000,000,000,000</code>）。</p>
+</blockquote>
+<h3 id="ERC777运营商"><a href="#ERC777运营商" class="headerlink" title="ERC777运营商"></a>ERC777运营商</h3><p>ERC777 定义了一个新的运营商角色，运营商被作为移动代币的地址。 每个地址直观地移动自己的代币，将持有人和运营商的概念分开可以提供更大的灵活性。</p>
+<p>此外，ERC777还可以定义默认操作员（默认操作员列表只能在代币创建时定义的，并且不能更改），默认操作员是被所有持有人授权的操作员，这可以为项目方管理代币带来方便，当然认何持有人仍然有权撤销默认操作员。</p>
+<p>相关函数：</p>
+<ul>
+<li>defaultOperators(): 获取代币合约默认的操作员列表.</li>
+<li>authorizeOperator(address operator): 设置一个地址作为msg.sender 的操作员，需要触发AuthorizedOperator事件。</li>
+<li>revokeOperator(address operator): 移除 msg.sender 上 operator 操作员的权限， 需要触发RevokedOperator事件。</li>
+<li>isOperatorFor(address operator, address holder)： 是否是某个持有者的操作员。</li>
+</ul>
+<p>利用运营商功能的另一个小的（并且不太明显的）好处是用户不再需要担心交易费Gas价格。现在可以将其委托给运营商。</p>
+<h3 id="发送代币"><a href="#发送代币" class="headerlink" title="发送代币"></a>发送代币</h3><p>ERC777主要通过两个函数发送代币</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">send(address to, uint256 amount, bytes calldata data) external</span><br><span class="line"></span><br><span class="line">function operatorSend(</span><br><span class="line">    address from,</span><br><span class="line">    address to,</span><br><span class="line">    uint256 amount,</span><br><span class="line">    bytes calldata data,</span><br><span class="line">    bytes calldata operatorData</span><br><span class="line">) external</span><br></pre></td></tr></table></figure>
+<p>operatorSend 可以通过参数<code>operatorData</code>携带操作者的信息，发送代币除了执行对应账户的余额加减和触发事件之外，还有<strong>额外的规定</strong>：</p>
+<ol>
+<li>如果持有者有通过 ERC1820 注册 <code>ERC777TokensSender</code> 实现接口， 代币合约必须调用其 <code>tokensToSend</code> 钩子函数。</li>
+<li>如果接收者有通过 ERC1820 注册 <code>ERC777TokensRecipient</code> 实现接口， 代币合约必须调用其 <code>tokensReceived</code> 钩子函数。</li>
+<li>如果有 <code>tokensToSend</code> 钩子函数，必须在修改余额状态之前调用。</li>
+<li>如果有 <code>tokensReceived</code> 钩子函数，必须在修改余额状态之后调用。</li>
+<li>调用钩子函数及触发事件时， <code>data</code> 和 <code>operatorData</code>必须原样传递，因为 tokensToSend 和 tokensReceived 函数可能根据这个数据取消转账（触发 <code>revert</code>）。</li>
+</ol>
+<p>让我们来看看<code>_send</code>函数就能理解ERC777设计的巧妙之处了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function _send(</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes memory userData,</span><br><span class="line">        bytes memory operatorData,</span><br><span class="line">        bool requireReceptionAck</span><br><span class="line">    ) internal virtual &#123;</span><br><span class="line">        require(from !&#x3D; address(0), &quot;ERC777: transfer from the zero address&quot;);</span><br><span class="line">        require(to !&#x3D; address(0), &quot;ERC777: transfer to the zero address&quot;);</span><br><span class="line"></span><br><span class="line">        address operator &#x3D; _msgSender();</span><br><span class="line"></span><br><span class="line">        _callTokensToSend(operator, from, to, amount, userData, operatorData);</span><br><span class="line"></span><br><span class="line">        _move(operator, from, to, amount, userData, operatorData);</span><br><span class="line"></span><br><span class="line">        _callTokensReceived(operator, from, to, amount, userData, operatorData, requireReceptionAck);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这里将交易分成了三个部分</p>
+<h4 id="callTokensToSend"><a href="#callTokensToSend" class="headerlink" title="_callTokensToSend"></a>_callTokensToSend</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function _callTokensToSend(</span><br><span class="line">        address operator,</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes memory userData,</span><br><span class="line">        bytes memory operatorData</span><br><span class="line">    ) private &#123;</span><br><span class="line">        address implementer &#x3D; _ERC1820_REGISTRY.getInterfaceImplementer(from, _TOKENS_SENDER_INTERFACE_HASH);</span><br><span class="line">        &#x2F;&#x2F; 执行钩子函数</span><br><span class="line">        if (implementer !&#x3D; address(0)) &#123;</span><br><span class="line">            IERC777Sender(implementer).tokensToSend(operator, from, to, amount, userData, operatorData);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>​        此函数会检查<code>from</code>合约是否在ERC1820注册表上注册了<code>tokensToSend</code>接口，如果注册了，就会触发钩子函数。</p>
+<p>​    <strong>ERC777TokensSender 接口</strong>定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface ERC777TokensSender &#123;</span><br><span class="line">    function tokensToSend(</span><br><span class="line">        address operator,</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes calldata userData,</span><br><span class="line">        bytes calldata operatorData</span><br><span class="line">    ) external;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上，如果持有者希望在转账时收到代币转移通知，就需要在ERC1820合约上注册及实现 <code>ERC777TokensSender</code> 接口。</p>
+<blockquote>
+<p>有一个地方需要注意: 对于所有的 ERC777 合约， 一个持有者地址只能注册一个ERC777TokensSender接口实现。因此 ERC777TokensSender 实现会被多个ERC777合约调用，在ERC777TokensSender接口的实现合约里， msg.sender 是ERC777合约地址，而不是操作者。</p>
+</blockquote>
+<h4 id="move"><a href="#move" class="headerlink" title="_move"></a>_move</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">function _move(</span><br><span class="line">       address operator,</span><br><span class="line">       address from,</span><br><span class="line">       address to,</span><br><span class="line">       uint256 amount,</span><br><span class="line">       bytes memory userData,</span><br><span class="line">       bytes memory operatorData</span><br><span class="line">   ) private &#123;</span><br><span class="line">       _beforeTokenTransfer(operator, from, to, amount);</span><br><span class="line"></span><br><span class="line">       uint256 fromBalance &#x3D; _balances[from];</span><br><span class="line">       require(fromBalance &gt;&#x3D; amount, &quot;ERC777: transfer amount exceeds balance&quot;);</span><br><span class="line">       unchecked &#123;</span><br><span class="line">           _balances[from] &#x3D; fromBalance - amount;</span><br><span class="line">       &#125;</span><br><span class="line">       _balances[to] +&#x3D; amount;</span><br><span class="line"></span><br><span class="line">       emit Sent(operator, from, to, amount, userData, operatorData);</span><br><span class="line">       emit Transfer(from, to, amount);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>​        执行代币发送，实现和ERC20并无区别。在这里不过多介绍</p>
+<h4 id="callTokensReceived"><a href="#callTokensReceived" class="headerlink" title="_callTokensReceived"></a>_callTokensReceived</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function _callTokensReceived(</span><br><span class="line">        address operator,</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes memory userData,</span><br><span class="line">        bytes memory operatorData,</span><br><span class="line">        bool requireReceptionAck</span><br><span class="line">    ) private &#123;</span><br><span class="line">        address implementer &#x3D; _ERC1820_REGISTRY.getInterfaceImplementer(to, _TOKENS_RECIPIENT_INTERFACE_HASH);</span><br><span class="line">        if (implementer !&#x3D; address(0)) &#123;</span><br><span class="line">            IERC777Recipient(implementer).tokensReceived(operator, from, to, amount, userData, operatorData);</span><br><span class="line">        &#125; else if (requireReceptionAck) &#123;</span><br><span class="line">            require(!to.isContract(), &quot;ERC777: token recipient contract has no implementer for ERC777TokensRecipient&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>此函数会检查<code>to</code>合约是否在ERC1820注册表上注册<code>tokensReceived</code>接口,若注册，则触发钩子函数。</p>
+<p><strong>ERC777TokensRecipient 接口</strong>定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface ERC777TokensRecipient &#123;</span><br><span class="line">    function tokensReceived(</span><br><span class="line">        address operator,</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes calldata data,</span><br><span class="line">        bytes calldata operatorData</span><br><span class="line">    ) external;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果接收者希望在转账时收到代币转移通知，就需要在ERC1820合约上注册及实现 <code>ERC777TokensRecipient</code> 接口。</p>
+<h2 id="普通账户地址监听代币转出"><a href="#普通账户地址监听代币转出" class="headerlink" title="普通账户地址监听代币转出"></a>普通账户地址监听代币转出</h2><p>在这里贴出一个Tiny熊写的监听示例，我觉得非常适合小白去理解监听机制。</p>
+<p>监听代币的转出可以让持有者对发出去的代币有更多的控制，例如持有者可以设置一些黑名单，禁止操作员对黑名单内账号转账，</p>
+<p>根据 ERC1820 标准，只有账号的管理者才可以为账号注册接口实现合约，<br>如果一个合约要为某个地址（或自身）实现某个接口， 则需要实现下面这个接口:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface ERC1820ImplementerInterface &#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @notice 指示合约是否为地址 “addr” 实现接口 “interfaceHash”。</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param interfaceHash 接口名称的 keccak256 哈希值</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @param addr 为哪一个地址实现接口</span><br><span class="line">    &#x2F;&#x2F;&#x2F; @return 只有当合约为地址&#39;addr&#39;实现&#39;interfaceHash&#39;时返回 ERC1820_ACCEPT_MAGIC</span><br><span class="line">    function canImplementInterfaceForAddress(bytes32 interfaceHash, address addr) external view returns(bytes32);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过在 <code>canImplementInterfaceForAddress</code> 返回 <code>ERC1820_ACCEPT_MAGIC</code> 以声明实现了 interfaceHash 对应的接口。在调用ERC1820的 setInterfaceImplementer 函数设置接口实现时，会通过 <code>canImplementInterfaceForAddress</code> 检查合约时候实现了接口。</p>
+<p>因此实现监听转出会和功德箱合约有些不一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.5.0;</span><br><span class="line"></span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;token&#x2F;ERC777&#x2F;IERC777Sender.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;token&#x2F;ERC777&#x2F;IERC777.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;introspection&#x2F;IERC1820Registry.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;introspection&#x2F;IERC1820Implementer.sol&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract SenderControl is IERC777Sender, IERC1820Implementer &#123;</span><br><span class="line"></span><br><span class="line">  IERC1820Registry private _erc1820 &#x3D; IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);</span><br><span class="line">  bytes32 constant private ERC1820_ACCEPT_MAGIC &#x3D; keccak256(abi.encodePacked(&quot;ERC1820_ACCEPT_MAGIC&quot;));</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;    keccak256(&quot;ERC777TokensSender&quot;)</span><br><span class="line">  bytes32 constant private TOKENS_SENDER_INTERFACE_HASH &#x3D;</span><br><span class="line">        0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895;</span><br><span class="line"></span><br><span class="line">  mapping(address &#x3D;&gt; bool) blacklist;</span><br><span class="line">  address _owner;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    _owner &#x3D; msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;  account call erc1820.setInterfaceImplementer</span><br><span class="line">  function canImplementInterfaceForAddress(bytes32 interfaceHash, address account) external view returns (bytes32) &#123;</span><br><span class="line">    if (interfaceHash &#x3D;&#x3D; TOKENS_SENDER_INTERFACE_HASH) &#123;</span><br><span class="line">      return ERC1820_ACCEPT_MAGIC;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      return bytes32(0x00);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function setBlack(address account, bool b) external &#123;</span><br><span class="line">    require(msg.sender &#x3D;&#x3D; _owner, &quot;no premission&quot;);</span><br><span class="line">    blacklist[account] &#x3D; b;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function tokensToSend(</span><br><span class="line">      address operator,</span><br><span class="line">      address from,</span><br><span class="line">      address to,</span><br><span class="line">      uint amount,</span><br><span class="line">      bytes calldata userData,</span><br><span class="line">      bytes calldata operatorData</span><br><span class="line">  ) external &#123;</span><br><span class="line">    if (blacklist[to]) &#123;</span><br><span class="line">      revert(&quot;ohh... on blacklist&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约实现 canImplementInterfaceForAddress 函数，以声明对 ERC777TokensSender 接口的实现，返回 ERC1820_ACCEPT_MAGIC。</p>
+<p>函数setBlack用来设置黑名单，它使用一个blacklist映射来管理黑名单， 在 tokensToSend函数的实现里，先检查接收者是否在黑名单内，如果在则revert 回退交易阻止转账。</p>
+<p>给发送者账号(假设为A）设置代理合约的方法为：先部署代理合约，获得代理合约地址， 然后用A账号去调用 ERC1820 的 setInterfaceImplementer函数，参数分别是 A的地址、接口的 keccak256 即0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895 以及 代理合约地址。</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019-11-01-Hexo-Theme-Snail/" data-toggle="tooltip" data-placement="top" title="博客正在进行迁移，敬请期待">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/ERC20-721-1155-998/" data-toggle="tooltip" data-placement="top" title="ERC20-721-1155-998">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#ERC777，1820协议分析"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">ERC777，1820协议分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ERC777"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">ERC777</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ERC777解决了哪些ERC20的问题"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">ERC777解决了哪些ERC20的问题?</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#转账通知机制"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">转账通知机制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#运营商机制"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">运营商机制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#交易额外信息"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">交易额外信息</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#交易监听"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">交易监听</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ERC1820-接口注册表合约"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">ERC1820 接口注册表合约</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#动机"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">动机</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ERC1820规范"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">ERC1820规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#部署方法"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">部署方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#主要接口"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">主要接口</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ERC777-标准规范"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">ERC777 标准规范</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接口"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">接口</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接口说明与实现约定"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">接口说明与实现约定</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ERC777-信息说明函数"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">ERC777 信息说明函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ERC777运营商"><span class="toc-nav-number">1.4.4.</span> <span class="toc-nav-text">ERC777运营商</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#发送代币"><span class="toc-nav-number">1.4.5.</span> <span class="toc-nav-text">发送代币</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#callTokensToSend"><span class="toc-nav-number">1.4.5.1.</span> <span class="toc-nav-text">_callTokensToSend</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#move"><span class="toc-nav-number">1.4.5.2.</span> <span class="toc-nav-text">_move</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#callTokensReceived"><span class="toc-nav-number">1.4.5.3.</span> <span class="toc-nav-text">_callTokensReceived</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#普通账户地址监听代币转出"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">普通账户地址监听代币转出</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#EIP" title="EIP">EIP</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>

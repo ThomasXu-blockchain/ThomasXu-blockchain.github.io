@@ -270,9 +270,86 @@
 
     
 
+    
+
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/Front-Running/">
+                <h2 class="post-title">
+                    ReentryAttack
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    抢先交易攻击（Front-Running）
+
+author：Thomas_Xu
+
+漏洞概述
+简单来说，Front-Running 是指在一笔正常交易等待打包的过程中，抢跑机器人通过设置更高 Gas 费用抢先完成攻击交易，以此攫取用户利益的攻击行为。而 Mempool（交易池） 是一组已经广播到网络中并等待被打包进区块的以太坊交易，它是 Front-Running 可以实施的前提，抢跑机器人通......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-17
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/OverflowAttack/">
+                <h2 class="post-title">
+                    OverflowAttack
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    溢出攻击
+author：Thomas_Xu
+在介绍溢出攻击前，让我们先来了解一下solidity中溢出和下溢。
+
+溢出  假设我们有一个 uint8, 只能存储8 bit数据。这意味着我们能存储的最大数字就是二进制 11111111 (或者说十进制的 2^8 - 1 = 255).  来看看下面的代码。最后 number 将会是什么值？  12uint8 number &#x3D; 255;......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-17
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -450,6 +527,10 @@ Solidity中， uint 实际上是 uint256代名词， 一个256位的无符号整
         
             
         
+            
+            <a href="/tags/#EIP" title="EIP" rel="2">EIP</a>
+            
+        
     </div>
 </section>
 
@@ -523,19 +604,19 @@ Solidity中， uint 实际上是 uint256代名词， 一个256位的无符号整
         </li>
       
         <li>
+          <a href="/ERC777-1820/">ERC777-1820</a>
+        </li>
+      
+        <li>
+          <a href="/ERC20-721-1155-998/">ERC20-721-1155-998</a>
+        </li>
+      
+        <li>
           <a href="/uniswap-v3/">Uniswap_V3 源码分析</a>
         </li>
       
         <li>
           <a href="/2022-11-03-ethernaut03/">ethernaut 题解 13-19</a>
-        </li>
-      
-        <li>
-          <a href="/2022-11-03-ethernaut02/">ethernaut 题解 07-12</a>
-        </li>
-      
-        <li>
-          <a href="/delegatecall/">Delegatecall</a>
         </li>
       
     </ul>
@@ -550,7 +631,7 @@ Solidity中， uint 实际上是 uint256代名词， 一个256位的无符号整
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>
@@ -570,6 +651,8 @@ Solidity中， uint 实际上是 uint256代名词， 一个256位的无符号整
           <a href="categories/#公告"><li>公告</li></a>
         
           <a href="categories/#靶场"><li>靶场</li></a>
+        
+          <a href="categories/#EIP"><li>EIP</li></a>
         
       </ul>
     </div>
@@ -726,7 +809,7 @@ Solidity中， uint 实际上是 uint256代名词， 一个256位的无符号整
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
         
 
         <!-- background effects end -->
@@ -736,21 +819,6 @@ Solidity中， uint 实际上是 uint256代名词， 一个256位的无符号整
     
         <script src="/js/ribbonDynamic.js"></script>
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
