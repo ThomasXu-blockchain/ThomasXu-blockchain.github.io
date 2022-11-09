@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Foundry-很牛逼的框架 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/Foundry/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Foundry" title="Foundry">Foundry</a>
+                            
+                        </div>
+                        <h1>Foundry-很牛逼的框架</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-11-09
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Foundry-很牛逼的框架"><a href="#Foundry-很牛逼的框架" class="headerlink" title="Foundry-很牛逼的框架"></a>Foundry-很牛逼的框架</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><p>最近在做CTF的时候发现题目使用了Foundry来部署，于是抱着好奇心研究了一下Foundry。不得不说，这个框架真的很牛逼，最直观的是他的测试速度。其次是其再测试时可以输出很多详细信息（以后碰到revert再也不用一行代码一行代码的去找错了）</p>
+<p>下面咱们来细说Foundry：</p>
+<h2 id="为什么用Foundry？"><a href="#为什么用Foundry？" class="headerlink" title="为什么用Foundry？"></a>为什么用Foundry？</h2><ul>
+<li>Foundry使用solidity来编写单元测试，而不是JavaScript或python</li>
+<li>编译和测试的速度快</li>
+<li>内置模糊测试</li>
+<li>Gas优化工具</li>
+<li>很详尽的Traces信息</li>
+<li>支持主网分叉</li>
+<li>Etherscan 代码验证</li>
+<li>硬件钱包兼容</li>
+<li>通过作弊代码操纵区块链状态</li>
+</ul>
+<p>展示一段测试结果，大家就能明白foundry的强大<br><img src="Foundry.png" alt=""></p>
+<h2 id="Foundry简介"><a href="#Foundry简介" class="headerlink" title="Foundry简介"></a>Foundry简介</h2><p>Foundry 是一个新出的由rust写的合约开发框架。</p>
+<p>rust一直在改变编程界的格局，btc C语言开发，eth go主导，也有 rust 的eth<br>波卡链 直接rust，兴起跨链的生态。</p>
+<p>快和安全，就是rust 优势吧。在foundry中也体现出了这点。</p>
+<p><a href="https://book.getfoundry.sh/" target="_blank" rel="noopener">Foundry Book</a></p>
+<h2 id="Foundry安装"><a href="#Foundry安装" class="headerlink" title="Foundry安装"></a>Foundry安装</h2><p>由于Foundry是基于Rust开发的，所以在linux下安装会非常方便。</p>
+<h3 id="Linux-Mac"><a href="#Linux-Mac" class="headerlink" title="Linux/Mac:"></a><strong>Linux/Mac</strong>:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -L https:&#x2F;&#x2F;foundry.paradigm.xyz | bash;</span><br><span class="line">foundryup</span><br></pre></td></tr></table></figure>
+<p>两行命令搞定</p>
+<p><strong>Windows</strong>: (需要rust环境，再次不多赘述)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo install --git https:&#x2F;&#x2F;github.com&#x2F;foundry-rs&#x2F;foundry --bins --locked</span><br></pre></td></tr></table></figure>
+<p><strong>Docker</strong>:</p>
+<p>你还可以通过docker安装foundry</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ghcr.io&#x2F;foundry-rs&#x2F;foundry:latest</span><br></pre></td></tr></table></figure>
+<p>但是我在win10上执行<code>cargo install --git https://github.com/foundry-rs/foundry --bins --locked</code>命令时遇到了一点问题，foundry-cli一直安装不成功。最后我发现居然可以直接可以在github上下载exe文件 <a href="https://github.com/foundry-rs/foundry/releases" target="_blank" rel="noopener">github地址</a>，下载完了之后配置一下环境变量，即可正常使用forge,cast,anvil三个核心组件。</p>
+<h2 id="Foundry包含的组件"><a href="#Foundry包含的组件" class="headerlink" title="Foundry包含的组件"></a>Foundry包含的组件</h2><h3 id="forge"><a href="#forge" class="headerlink" title="forge"></a>forge</h3><p>Forge是一个CLI工具，用于构建、测试、模糊测试、部署和验证Solidity合约。Forge同样有很多的子命令。</p>
+<h4 id="init"><a href="#init" class="headerlink" title="init"></a>init</h4><p>它可以初始化一个新的版本库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge init my_gigabrain_protocol</span><br></pre></td></tr></table></figure>
+<h4 id="install"><a href="#install" class="headerlink" title="install"></a>install</h4><p><code>install</code>子命令允许你安装指定版本的依赖项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge install Rari-Capital&#x2F;solmate@v6</span><br></pre></td></tr></table></figure>
+<p>这将安装由<code>Rari-Capital</code>拥有的<code>solmate</code>软件库</p>
+<h4 id="test"><a href="#test" class="headerlink" title="test"></a>test</h4><p>为了运行测试，我们可以使用以下方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge test</span><br></pre></td></tr></table></figure>
+<p>和hardhat类似，我们也可以通过路径去唯一指定test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge test --match-contract testname</span><br></pre></td></tr></table></figure>
+<h3 id="Cast"><a href="#Cast" class="headerlink" title="Cast"></a>Cast</h3><p>Cast是一个CLI工具，用于对兼容以太坊虚拟机（EVM）的区块链进行RPC调用。使用<code>cast</code>，我们可以进行合约调用，查询数据，并处理编码和解码。<code>cast</code>有很多的子命令，所以要想获得完整的参考，请看Foundry书中的<a href="https://book.getfoundry.sh/reference/cast/" target="_blank" rel="noopener">cast</a>一节.</p>
+<p>cast给我们提供了一个很方便的和EVM交互的工具</p>
+<h3 id="Anvil"><a href="#Anvil" class="headerlink" title="Anvil"></a>Anvil</h3><p>Anvil是一个CLI工具，用于运行本地EVM区块链。它可以与ganache和hardhat节点相媲美，但好像更快。</p>
+<p>要启动Anvil，只需使用avil命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anvil</span><br></pre></td></tr></table></figure>
+<p>你也可以指定一些参数， 用<code>-v</code>来显示详细日志，如果用<code>-fork-url &lt;FORK_URL&gt;</code>指定URL来分叉一个公共网络，等等。要查看 <code>anvil</code>选项的完整列表，可以使用以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anvil -h</span><br></pre></td></tr></table></figure>
+<h2 id="Foundry作弊码"><a href="#Foundry作弊码" class="headerlink" title="Foundry作弊码"></a>Foundry作弊码</h2><p>Foundry有一套作弊代码，它可以对区块链的状态进行修改，以方便在测试时使用。这些代码可以直接执行合约：0x7109709ECfa91a80626fF3989D68f67F5b1DD12D 进行调用，但更多时候是通过标准库和vm对象执行。</p>
+<p>你可以通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">address(bytes20(uint160(uint256(keccak256(&quot;hevm cheat code&quot;)))))</span><br></pre></td></tr></table></figure>
+<p>来获取这个地址</p>
+<p><strong>重要的作弊代码有：</strong></p>
+<ul>
+<li><strong>vm.warp(uint256) external;</strong> 设置 block.timestamp</li>
+<li><strong>vm.roll(uint256) external;</strong> 设置 block.height.</li>
+<li><strong>vm.prank(address) external;</strong> 设置地址作为下一次调用的msg.sender</li>
+<li><strong>vm.startPrank(address) external;</strong> 设置地址作为所有后续调用的msg.sender</li>
+<li><strong>vm.stopPrank() external;</strong> 重置后续调用msg.sender为<code>address(this)</code>。</li>
+<li><strong>vm.deal(address, uint256) external;</strong> 设置一个地址的余额，参数：（who，newBalance）。</li>
+<li><strong>vm.expectRevert(bytes calldata) external;</strong> 期待下次调用时出现错误。</li>
+<li><strong>vm.record() external;</strong> 记录所有存储的读和写。</li>
+<li><strong>vm.expectEmit(true, false, false, false); emit Transfer(address(this)); transfer();</strong> 检查事件主题1在两个事件中是否相等</li>
+<li><strong>vm.load(address,bytes32)外部返回(bytes32);</strong> 从一个地址加载一个存储槽</li>
+<li><strong>vm.store(address,bytes32,bytes32) external;</strong> 将一个值存储到一个地址的存储槽中，参数（who, slot, value）。</li>
+</ul>
+<p>这些可以用来改变测试的过程，如在这个例子中，告诉测试套件在调用时期望一个标准的算术错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.expectRevert(stdError.arithmeticError);</span><br></pre></td></tr></table></figure>
+<p>完整的列表在这里：<a href="https://github.com/foundry-rs/forge-std/blob/master/src/Vm.sol" target="_blank" rel="noopener">https://github.com/foundry-rs/forge-std/blob/master/src/Vm.sol</a></p>
+<h2 id="Gas优化"><a href="#Gas优化" class="headerlink" title="Gas优化"></a>Gas优化</h2><p>编译时的合约Gas报告可以通过foundry.toml配置来设置</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">gas_reports</span> = [<span class="string">"MyContract"</span>, <span class="string">"MyContractFactory"</span>]</span><br></pre></td></tr></table></figure>
+<p>然后用<em>forge test -gas-report</em>选项执行命令。</p>
+<p>优化函数的一个方法是使用测试合约，并在修改前后进行快照对比：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">forge snapshot --snap gas1.txt</span><br><span class="line">&#x2F;&#x2F; make some changes</span><br><span class="line">forge snapshot --diff gas1.txt</span><br></pre></td></tr></table></figure>
+<p>这将提供之前的Gas报告和当前快照之间的差异。</p>
+<h2 id="部署和使用合约"><a href="#部署和使用合约" class="headerlink" title="部署和使用合约"></a>部署和使用合约</h2><p>Foundry也可以用来部署并与智能合约交互。</p>
+<p>要部署一个合约，我们可以使用下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge create --rpc-url https://mainnet.infura.io --private-key abc123456789 src/MyContract.sol:MyContract --constructor-args <span class="string">"Hello Foundry"</span> <span class="string">"Arg2"</span></span><br></pre></td></tr></table></figure>
+<p>注意我们在生产中部署时不应该使用硬编码的私钥。一个选择是使用-ledger或-trezor来通过硬件钱包执行。另外，也可以使用环境变量来存储私钥。</p>
+<p>我们还可以使用forge命令<strong>在etherscan上验证合约</strong>，以便我们能够使用Etherscan的UI和Metamask与之交互。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge verify-contract --chain-id 1 --num-of-optimizations 200 --constructor-args (cast abi-encode &quot;constructor(string)&quot; &quot;Hello Foundry&quot; --compiler-version v0.8.10+commit.fc410830 0xContractAddressHere src&#x2F;MyContract.sol:MyContract ABCetherscanApiKey123</span><br></pre></td></tr></table></figure>
+<p>要生成ABI，可以使用以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge inspect src&#x2F;MyContract.sol abi</span><br></pre></td></tr></table></figure>
+<p>注意任何ABI都可以转换为接口并直接在solidity中使用： <a href="https://gnidan.github.io/abi-to-sol/" target="_blank" rel="noopener">https://gnidan.github.io/abi-to-sol/</a></p>
+<p>如果合约已经被验证，我们也可以使用以下命令来生成一个接口。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cast <span class="keyword">interface</span> <span class="number">0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984</span></span><br></pre></td></tr></table></figure>
+<h2 id="用-Cast-与链上合约交互"><a href="#用-Cast-与链上合约交互" class="headerlink" title="用 Cast 与链上合约交互"></a>用 Cast 与链上合约交互</h2><p>我们可以call 方式调用合约请求链上数据。我们也可以提供凭证（私钥）来发送一个交易，就像我们在metamask中签署一个交易一样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cast call 0xabc123 &quot;totalSupply()(uint256)&quot; --rpc-url https:&#x2F;&#x2F;eth-mainnet.alchemyapi.io</span><br><span class="line"></span><br><span class="line">cast send 0xabc123 &quot;mint(uint256)&quot; 3 --rpc-url https:&#x2F;&#x2F;eth-mainnet.alchemyapi.io --private-key&#x3D;abc123</span><br></pre></td></tr></table></figure>
+<p>一旦区块被确认，也可以获取交易本身的信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cast tx 0xa1588a7c58a0ac632a9c7389b205f3999b7caee67ecb918d07b80f859aa605fd</span><br></pre></td></tr></table></figure>
+<h2 id="Foundry编写Damn-Defi测试用例"><a href="#Foundry编写Damn-Defi测试用例" class="headerlink" title="Foundry编写Damn_Defi测试用例"></a>Foundry编写Damn_Defi测试用例</h2><p>这是我在油管上看到一个大佬重写的Damn_Defi，我通过跟着此<a href="https://github.com/nicolasgarcia214/damn-vulnerable-defi-foundry" target="_blank" rel="noopener">此测试</a>重做Damn_Defi学到很多</p>
+<p>注：forge install如果失败，把镜像换成国内镜像，然后把lib下的所有文件夹删了再试。</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/ERC777-1820/" data-toggle="tooltip" data-placement="top" title="ERC777-1820">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Foundry-很牛逼的框架"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Foundry-很牛逼的框架</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#为什么用Foundry？"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">为什么用Foundry？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry简介"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Foundry简介</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry安装"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Foundry安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Linux-Mac"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Linux&#x2F;Mac:</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry包含的组件"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Foundry包含的组件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#forge"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">forge</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#init"><span class="toc-nav-number">1.4.1.1.</span> <span class="toc-nav-text">init</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#install"><span class="toc-nav-number">1.4.1.2.</span> <span class="toc-nav-text">install</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#test"><span class="toc-nav-number">1.4.1.3.</span> <span class="toc-nav-text">test</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Cast"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">Cast</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Anvil"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">Anvil</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry作弊码"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Foundry作弊码</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Gas优化"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">Gas优化</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#部署和使用合约"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">部署和使用合约</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#用-Cast-与链上合约交互"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">用 Cast 与链上合约交互</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry编写Damn-Defi测试用例"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">Foundry编写Damn_Defi测试用例</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Foundry" title="Foundry">Foundry</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>
