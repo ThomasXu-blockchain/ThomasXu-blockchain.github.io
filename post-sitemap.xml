@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://thomasxu-blockchain.github.io/Trace-2022-10/</loc>
+        <lastmod>2022-11-21T11:26:56.974Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://thomasxu-blockchain.github.io/eventListen/</loc>
         <lastmod>2022-11-16T02:55:48.630Z</lastmod>
         <changefreq>weekly</changefreq>

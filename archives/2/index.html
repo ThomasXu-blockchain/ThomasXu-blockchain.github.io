@@ -290,9 +290,44 @@
 
     
 
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/DamnDefi-08-09/">
+                <h2 class="post-title">
+                    Damn Defi 题解 8-9
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Damn Defi靶场刷题记录(8-9)author: Thomas_Xu
+8 Puppet这个题直接通过abi引用了一个已经编译了的Uniswap v1的合约，因此，我们可以假定这个Uniswap合约没有其他漏洞。那就让我们把目光集中在PuppetPool合约其实就一个borrow()函数，但在借款时，我们需要抵押两倍的资金在池里。这个题其实就是想要我们想办法让池在我们抵押不足的情况下贷款......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-09-29
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -606,42 +641,6 @@ Call函数首先我们先了解一下call函数：合约之间的调用有2种�
 
     
 
-    
-
-        <div class="post-preview">
-
-            <a href="/OverflowAttack/">
-                <h2 class="post-title">
-                    OverflowAttack
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    溢出攻击
-author：Thomas_Xu
-在介绍溢出攻击前，让我们先来了解一下solidity中溢出和下溢。
-
-溢出  假设我们有一个 uint8, 只能存储8 bit数据。这意味着我们能存储的最大数字就是二进制 11111111 (或者说十进制的 2^8 - 1 = 255).  来看看下面的代码。最后 number 将会是什么值？  12uint8 number &#x3D; 255;......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-06-18
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
 
 
 <!-- Pager -->
@@ -732,6 +731,8 @@ author：Thomas_Xu
         
             
         
+            
+        
     </div>
 </section>
 
@@ -801,6 +802,10 @@ author：Thomas_Xu
     <ul>
       
         <li>
+          <a href="../../Trace-2022-10/">攻击事件追踪10月————持续更新</a>
+        </li>
+      
+        <li>
           <a href="../../paradigm22-trapdoor/">Paradigm 题解 trapdoor</a>
         </li>
       
@@ -816,10 +821,6 @@ author：Thomas_Xu
           <a href="../../ERC777-1820/">ERC777-1820</a>
         </li>
       
-        <li>
-          <a href="../../ERC20-721-1155-998/">ERC20-721-1155-998</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -832,7 +833,7 @@ author：Thomas_Xu
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2022/11/">十一月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2022/11/">十一月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>
@@ -854,6 +855,8 @@ author：Thomas_Xu
           <a href="categories/#EIP"><li>EIP</li></a>
         
           <a href="categories/#Foundry"><li>Foundry</li></a>
+        
+          <a href="categories/#攻击事件追踪"><li>攻击事件追踪</li></a>
         
       </ul>
     </div>
