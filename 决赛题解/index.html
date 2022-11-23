@@ -253,7 +253,9 @@
 
                 <hr>
 <pre><code>author：Thomas_Xu
-</code></pre><h1 id="中国可信区块链攻防大赛——决赛solidity题解"><a href="#中国可信区块链攻防大赛——决赛solidity题解" class="headerlink" title="中国可信区块链攻防大赛——决赛solidity题解"></a>中国可信区块链攻防大赛——决赛solidity题解</h1><h2 id="ApproveMain"><a href="#ApproveMain" class="headerlink" title="ApproveMain"></a>ApproveMain</h2><h2 id="漏洞点：grant导致任意的slot覆盖"><a href="#漏洞点：grant导致任意的slot覆盖" class="headerlink" title="漏洞点：grant导致任意的slot覆盖"></a>漏洞点：grant导致任意的slot覆盖</h2><h3 id="题意分析："><a href="#题意分析：" class="headerlink" title="题意分析："></a>题意分析：</h3><p>此题的Cert是一个实现了所有基础功能的代币合约，在创建此token时，自动获得100ETH</p>
+</code></pre><h1 id="中国可信区块链攻防大赛——决赛solidity题解"><a href="#中国可信区块链攻防大赛——决赛solidity题解" class="headerlink" title="中国可信区块链攻防大赛——决赛solidity题解"></a>中国可信区块链攻防大赛——决赛solidity题解</h1><p>前一段时间没有更新，其实是去参加中国可信链攻防大赛了，作为本届大赛唯一的本科生队伍，我们已经做得足够好了，初赛满分，决赛一天时间 9个题解出5个题。如果时间足够，我认为是有可能全解的。</p>
+<p>这里我只分析我做的两个chanllenge</p>
+<h2 id="ApproveMain"><a href="#ApproveMain" class="headerlink" title="ApproveMain"></a>ApproveMain</h2><h2 id="漏洞点：grant导致任意的slot覆盖"><a href="#漏洞点：grant导致任意的slot覆盖" class="headerlink" title="漏洞点：grant导致任意的slot覆盖"></a>漏洞点：grant导致任意的slot覆盖</h2><h3 id="题意分析："><a href="#题意分析：" class="headerlink" title="题意分析："></a>题意分析：</h3><p>此题的Cert是一个实现了所有基础功能的代币合约，在创建此token时，自动获得100ETH</p>
 <p><img src="complete.png" alt=""></p>
 <p>目标是使cert.balanceOf(address(this))==0</p>
 <p>此合约还有一个getToken公开函数，每次只能向调用者发送自己一半的余额。（没用）</p>
@@ -292,7 +294,16 @@
 <p>uint256: admin参数的slot地址</p>
 <p><img src="Transfer.png" alt=""></p>
 <p>由于题目中的transferfrom要求to的地址必须是EOA账户，所以我们只能在最后手动调用transferfrom函数掏空合约的token。</p>
-<h2 id="第四题："><a href="#第四题：" class="headerlink" title="第四题："></a>第四题：</h2><h3 id="漏洞点：cheapswap缺少k值检查"><a href="#漏洞点：cheapswap缺少k值检查" class="headerlink" title="漏洞点：cheapswap缺少k值检查"></a>漏洞点：cheapswap缺少k值检查</h3><p>漏洞分析</p>
+<h2 id="第四题："><a href="#第四题：" class="headerlink" title="第四题："></a>第四题：</h2><h3 id="漏洞点：cheapswap缺少k值检查"><a href="#漏洞点：cheapswap缺少k值检查" class="headerlink" title="漏洞点：cheapswap缺少k值检查"></a>漏洞点：cheapswap缺少k值检查</h3><h3 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>这个题实现了一个简单的DEX，重写的Uniswapv2部分代码，并提供了一个闪电贷。</p>
+<p>这个题的漏洞是出现在pair合约中改写了uniswapv2中的swap基础函数，实现了一个cheapswap。</p>
+<p><strong>但是这个cheapswap没有进行k值检查</strong>，他是通过<strong>onlyRouter</strong>来防止有人直接调用cheapswap从而直接获利。</p>
+<p><strong>这个合约最大的问题就是改写swap的同时，没有把以前的swap给删掉</strong></p>
+<p>通过以上分析我们可以知道攻击者在一次代币兑换过程中分别通过调用 swap 函数与 cheapSwap 函数进行两次代币兑换操作，理论上每次兑换操作都将导致 K 值的变化，最终使得用户无法获得预期的代币。但是这个cheapswap并没有进行k值检查，导致我们可以在一次兑换中获得额外的token。</p>
+<h3 id="攻击过程"><a href="#攻击过程" class="headerlink" title="攻击过程"></a>攻击过程</h3><p>1 、先通过 config的 闪电贷借出 TTtoken</p>
+<p>2、创建恶意的代币合约 Mytoken，并在 Dex 中添加了 Mytoken 代币与 ttToken 代币流动性。</p>
+<p>3、通过 Mytoken -&gt; TTtoken -&gt; USDT 路径进行 Mytoken 代币到 USDT 代币的兑换，并在 Mytoken 代币转入 Pair 合约兑换成 TTtoken 代币的过程中进行了一次 TTtoken 代币与 USDT 的兑换操作，随后再进行正常的 cheapSwap 操作。最终获得了额外的token。</p>
+<p><img src="TTCall.png" alt=""></p>
+<p>顺带提一句，这个题其实是真实的攻击事件Impossible token的bsc被盗的改编。</p>
 
                 
                 <hr>
@@ -425,7 +436,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#中国可信区块链攻防大赛——决赛solidity题解"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">中国可信区块链攻防大赛——决赛solidity题解</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ApproveMain"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">ApproveMain</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞点：grant导致任意的slot覆盖"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">漏洞点：grant导致任意的slot覆盖</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#题意分析："><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">题意分析：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#漏洞分析"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">漏洞分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">Exploit</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#第四题："><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">第四题：</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#漏洞点：cheapswap缺少k值检查"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">漏洞点：cheapswap缺少k值检查</span></a></li></ol></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#中国可信区块链攻防大赛——决赛solidity题解"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">中国可信区块链攻防大赛——决赛solidity题解</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ApproveMain"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">ApproveMain</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞点：grant导致任意的slot覆盖"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">漏洞点：grant导致任意的slot覆盖</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#题意分析："><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">题意分析：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#漏洞分析"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">漏洞分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">Exploit</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#第四题："><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">第四题：</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#漏洞点：cheapswap缺少k值检查"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">漏洞点：cheapswap缺少k值检查</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#漏洞分析-1"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">漏洞分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#攻击过程"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">攻击过程</span></a></li></ol></li></ol></li></ol>
             
           
           </div>
