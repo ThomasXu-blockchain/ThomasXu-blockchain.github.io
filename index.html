@@ -292,9 +292,48 @@
 
     
 
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/决赛题解/">
+                <h2 class="post-title">
+                    可信链攻防ctf——决赛solidity题解
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    
+author：Thomas_Xu
+中国可信区块链攻防大赛——决赛solidity题解ApproveMain漏洞点：grant导致任意的slot覆盖题意分析：此题的Cert是一个实现了所有基础功能的代币合约，在创建此token时，自动获得100ETH
+
+目标是使cert.balanceOf(address(this))==0
+此合约还有一个getToken公开函数，每次只能向调用者发送自己一......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-11-23
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#可信链攻防ctf" title="可信链攻防ctf">可信链攻防ctf</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -634,43 +673,6 @@ Resucue首先先来看一下这道题目的描述:I accidentally sent some WETH 
 
     
 
-    
-
-        <div class="post-preview">
-
-            <a href="/DamnDefi-10-11/">
-                <h2 class="post-title">
-                    Damn Defi 题解 10-11
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Damn Defi靶场刷题记录(10-11)author: Thomas_Xu
-10 Free rider这又是一道利用闪电贷来获取利益的题目。可见Defi平台要预防可能的闪电攻击是个难题。
-题目要求我们偷走买家的的45个ETH，并且还要市场失去一些比特币。
-Code Review首先我们从头来看这个Challenge
-
-FreeRiderNFTMarketplace这是交易市场的合约,主要......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-10-10
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
 
 
 <!-- Pager -->
@@ -759,6 +761,8 @@ FreeRiderNFTMarketplace这是交易市场的合约,主要......
         
             
         
+            
+        
     </div>
 </section>
 
@@ -828,6 +832,10 @@ FreeRiderNFTMarketplace这是交易市场的合约,主要......
     <ul>
       
         <li>
+          <a href="%E5%86%B3%E8%B5%9B%E9%A2%98%E8%A7%A3/">可信链攻防ctf——决赛solidity题解</a>
+        </li>
+      
+        <li>
           <a href="Trace-2022-10/">攻击事件追踪10月————持续更新</a>
         </li>
       
@@ -843,10 +851,6 @@ FreeRiderNFTMarketplace这是交易市场的合约,主要......
           <a href="Foundry/">Foundry-很牛逼的框架</a>
         </li>
       
-        <li>
-          <a href="ERC777-1820/">ERC777-1820</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -859,7 +863,7 @@ FreeRiderNFTMarketplace这是交易市场的合约,主要......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/11/">十一月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/11/">十一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>
@@ -883,6 +887,8 @@ FreeRiderNFTMarketplace这是交易市场的合约,主要......
           <a href="categories/#Foundry"><li>Foundry</li></a>
         
           <a href="categories/#攻击事件追踪"><li>攻击事件追踪</li></a>
+        
+          <a href="categories/#可信链攻防ctf"><li>可信链攻防ctf</li></a>
         
       </ul>
     </div>
@@ -1039,7 +1045,7 @@ FreeRiderNFTMarketplace这是交易市场的合约,主要......
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
         
 
         <!-- background effects end -->
@@ -1049,6 +1055,21 @@ FreeRiderNFTMarketplace这是交易市场的合约,主要......
     
         <script src="/js/ribbonDynamic.js"></script>
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

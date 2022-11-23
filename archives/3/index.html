@@ -292,9 +292,46 @@
 
     
 
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/CallAttack/">
+                <h2 class="post-title">
+                    Call注入漏洞
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Call注入漏洞刷题实践
+author：Thomas_Xu
+写在前面写本文是为了总结一下博主在这两天中做一个靶场题目时遇到的一些问题，以及对call注入的一些见解。
+Call函数首先我们先了解一下call函数：合约之间的调用有2种方式： 底层的call方式和 new 合约的方式solidity 提供了 call()、delegatecall()、callcode() 三个函数来实现合约直接的......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-19
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -525,6 +562,8 @@ author：Thomas_Xu
         
             
         
+            
+        
     </div>
 </section>
 
@@ -594,6 +633,10 @@ author：Thomas_Xu
     <ul>
       
         <li>
+          <a href="../../%E5%86%B3%E8%B5%9B%E9%A2%98%E8%A7%A3/">可信链攻防ctf——决赛solidity题解</a>
+        </li>
+      
+        <li>
           <a href="../../Trace-2022-10/">攻击事件追踪10月————持续更新</a>
         </li>
       
@@ -609,10 +652,6 @@ author：Thomas_Xu
           <a href="../../Foundry/">Foundry-很牛逼的框架</a>
         </li>
       
-        <li>
-          <a href="../../ERC777-1820/">ERC777-1820</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -625,7 +664,7 @@ author：Thomas_Xu
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2022/11/">十一月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2022/11/">十一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>
@@ -649,6 +688,8 @@ author：Thomas_Xu
           <a href="categories/#Foundry"><li>Foundry</li></a>
         
           <a href="categories/#攻击事件追踪"><li>攻击事件追踪</li></a>
+        
+          <a href="categories/#可信链攻防ctf"><li>可信链攻防ctf</li></a>
         
       </ul>
     </div>
@@ -805,7 +846,7 @@ author：Thomas_Xu
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
         
 
         <!-- background effects end -->
@@ -815,6 +856,21 @@ author：Thomas_Xu
     
         <script src="/js/ribbonDynamic.js"></script>
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
