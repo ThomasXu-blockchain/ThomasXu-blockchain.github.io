@@ -265,7 +265,7 @@
 <p><img src="invest.png" alt=""></p>
 <p>经过分析发现，该假币漏洞是由于invest函数只判断了msg.tokenvalue，而没有判断msg.tokenid是否为真实BTT代币的ID：1002000所导致。</p>
 <p>TRC10标准是波场本身支持的技术代币标准，标准规定了两个重要参数：msg.tokenvalue和msg.tokenid。其中msg.tokenvalue表示当前msg调用的代币数量，而msg.tokenid表示当前调用者使用的代币种类标记ID。每种TRC10标准的代币都有一个独一无二的标记ID作为代币种类证明。</p>
-<p>这个invest函数如果放在以太坊当中，没有一点问题，但是在波场的token机制当中，这样写是有严重漏洞的，此invest函数没有对收到代币的资质（tokenid）进行检查，这导致攻击者可以自己发行一个通证，通过自己这个没有实际价值的token去调用invest函数，导致BTT合约误认为攻击者的FakeToken是具有价值的BTTToken，从而为其</p>
+<p>这个invest函数如果放在以太坊当中，没有一点问题，但是在波场的token机制当中，这样写是有严重漏洞的，此invest函数没有对收到代币的资质（tokenid）进行检查，这导致攻击者可以自己发行一个通证，通过自己这个没有实际价值的token去调用invest函数，导致BTT合约误认为攻击者的FakeToken是具有价值的BTTToken</p>
 
                 
                 <hr>
