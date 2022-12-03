@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          EVM_Puzzle - Thomas_Xu
+          Compound_introduce - Thomas_Xu
         
     </title>
 
-    <link rel="canonical" href="https://thomasxu-blockchain.github.io/EVM-Puzzle/">
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/Compound-introduce/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -90,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('')
                 /*post*/
             
         
@@ -112,14 +112,12 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
-                            
                         </div>
-                        <h1>EVM_Puzzle</h1>
+                        <h1>Compound_introduce</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Thomas_Xu on
-                            2022-11-27
+                            2022-12-03
                         </span>
 
                         
@@ -251,104 +249,15 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="EVM-Puzzle"><a href="#EVM-Puzzle" class="headerlink" title="EVM_Puzzle"></a>EVM_Puzzle</h1><hr>
-<pre><code>author：Thomas_Xu
-</code></pre><p>EVM_puzzle是一个可以很好的EVM入门阶段的一个可以上手的题库，正好最近在研究操作码的反编译，正好巩固熟练一下。</p>
-<h2 id="Puzzle-1"><a href="#Puzzle-1" class="headerlink" title="Puzzle 1"></a>Puzzle 1</h2><p><img src="puzzle1.png" alt=""></p>
-<p>我们只需要键入输入，使程序正常跳转到<code>JUMPDEST</code>即可，这道题里出现的所有操作码都只占一个字节，所以<code>JUMPDEST</code>应当位于8的位置上。</p>
-<p>我们只需要键入8即可通关。</p>
-<h2 id="Puzzle-2"><a href="#Puzzle-2" class="headerlink" title="Puzzle 2"></a>Puzzle 2</h2><p><img src="puzzle2.png" alt=""></p>
-<p>同上一题一样，我们只需要键入输入，使程序正常跳转到<code>JUMPDEST</code>即可。</p>
-<p><a href="https://www.evm.codes/?ref=hackernoon.com#38" target="_blank" rel="noopener"><strong>CODESIZE</strong></a> 获取在当前环境中运行的代码的大小，并入栈。在此示例中，我们可以通过查看序列中有多少操作码来手动检查代码的大小。此题中出现操作码都是1个字节。</p>
-<p>在这个谜题中，我们有10个操作码，这意味着代码的大小是10个字节。注意，EVM 使用十六进制数来表示字节码。所以这里是a</p>
-<p><a href="https://www.evm.codes/?ref=hackernoon.com#03" target="_blank" rel="noopener"><strong>SUB</strong></a> 会把第一个堆栈元素减去第二个堆栈元素，并将结果推送到堆栈的顶部。</p>
-<p>根据<code>JUMP</code>的条件我们这里只需要让执行<code>JUMP</code>时栈顶的元素为6即可。</p>
-<p>即 0a - input = 6</p>
-<p>所以输入4即可通关。</p>
-<h2 id="Puzzle-3"><a href="#Puzzle-3" class="headerlink" title="Puzzle 3"></a>Puzzle 3</h2><p><img src="puzzle3.png" alt=""></p>
-<p>根据<code>JUMP</code>的条件我们这里只需要让执行<code>JUMP</code>时栈顶的元素为4即可。</p>
-<p>即<code>CALLDATASIZE</code>等于4即可。</p>
-<p>这里输入0x11223344即可通关</p>
-<p>需要注意的是<code>CALLDATASIZE</code>统计的是字节数，而一个字节可以储存2个16进制数。所以我们应该输入8位十六进制数</p>
-<h2 id="Puzzle-4"><a href="#Puzzle-4" class="headerlink" title="Puzzle 4"></a>Puzzle 4</h2><p><img src="puzzle4.png" alt=""></p>
-<p>根据<code>JUMP</code>的条件我们这里只需要让执行<code>JUMP</code>时栈顶的元素为0a即可。</p>
-<p>而此题中<code>CODESIZE</code>为12，<code>XOR</code>为二进制异或运算，我们只需要进行一次简单的计算即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0000 1010 &#x2F;&#x2F;JUMP执行时栈顶所需  0a</span><br><span class="line"></span><br><span class="line">0000 1100 &#x2F;&#x2F;12  CODESIZE </span><br><span class="line">0000 0110 &#x2F;&#x2F;input</span><br></pre></td></tr></table></figure>
-<p>因此，我们只需要输入<code>0000 0110</code>即 6 就可以通关</p>
-<h2 id="Puzzle5"><a href="#Puzzle5" class="headerlink" title="Puzzle5"></a>Puzzle5</h2><p><img src="puzzle5.png" alt=""></p>
-<p>根据EQ条件，我们只需要使value等于0x0100即可（256）</p>
-<p>所以我们输入16，解决</p>
-<h2 id="Puzzle6"><a href="#Puzzle6" class="headerlink" title="Puzzle6"></a>Puzzle6</h2><p><img src="puzzle6.png" alt=""></p>
-<p>此题考查<code>CALLDATALOAD</code>，由于偏移量为0，我们只需要输入<code>0a</code>来使JUMP正常跳转即可</p>
-<p>因此，输入为<code>0x000000000000000000000000000000000000000000000000000000000000000A</code></p>
-<h2 id="Puzzle7"><a href="#Puzzle7" class="headerlink" title="Puzzle7"></a>Puzzle7</h2><p><img src="puzzle7.png" alt=""></p>
-<p>这个题会稍微复杂一点，我们把这些字节码分开来看。</p>
-<h3 id="part1"><a href="#part1" class="headerlink" title="part1"></a>part1</h3><p>此时的栈状态为空</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">00      36        CALLDATASIZE</span><br><span class="line">01      6000      PUSH1 00</span><br><span class="line">03      80        DUP1</span><br><span class="line">04      37        CALLDATACOPY</span><br></pre></td></tr></table></figure>
-<p>者四个操作码为第一部分，前三个字节码均为<code>CALLDATACOPY</code>的参数，此操作码会将当前环境中的输入数据复制到内存</p>
-<p>三个堆栈输入分别是</p>
-<ol>
-<li><code>destOffset</code>：将复制结果的<a href="https://www.evm.codes/about" target="_blank" rel="noopener">内存</a>中的字节偏移量。</li>
-<li><code>offset</code>：要复制的<a href="https://www.evm.codes/about" target="_blank" rel="noopener">调用数据</a>中的字节偏移量。</li>
-<li><code>size</code>：要复制的字节大小。</li>
-</ol>
-<p>因此我们可以分析出，当part1执行完之后，堆栈里的数据应该是完整的<code>calldata</code></p>
-<h3 id="part2"><a href="#part2" class="headerlink" title="part2"></a>part2</h3><p>此时的栈状态为：<code>calldata</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">05      36        CALLDATASIZE</span><br><span class="line">06      6000      PUSH1 00</span><br><span class="line">08      6000      PUSH1 00</span><br><span class="line">0A      F0        CREATE</span><br></pre></td></tr></table></figure>
-<p>这里三个操作码都为<code>CREATE</code>的入参，<code>CREATE</code>操作会为我们创建一个创建具有关联代码的新帐户</p>
-<p>它的堆栈输入分别是：</p>
-<ol>
-<li><code>value</code>：以<a href="https://www.investopedia.com/terms/w/wei.asp" target="_blank" rel="noopener">Wei</a>为单位的值发送到新帐户。</li>
-<li><code>offset</code>：<a href="https://www.evm.codes/about" target="_blank" rel="noopener">内存</a>中的字节偏移量（以字节为单位），新帐户的初始化代码。</li>
-<li><code>size</code>：要复制的字节大小（初始化代码的大小）。</li>
-</ol>
-<p>堆栈输出：</p>
-<ol>
-<li><code>address</code>：已部署合约的地址，如果部署失败，则为 0。</li>
-</ol>
-<p>有关于create创建合约地址的更多信息可以看<a href="https://blog.openzeppelin.com/deconstructing-a-solidity-contract-part-ii-creation-vs-runtime-6b9d60ecb44c/" target="_blank" rel="noopener">这篇文章</a>，写的比较明白。</p>
-<p>当执行 theopcode 时，只有 theopcode 返回的代码才是将来调用已部署合约时将执行的“运行时代码”。字节码的另一部分只使用一次，仅用于该部分。<code>CREATE``RETURN``constructor</code></p>
-<p>因此，我们可以在里面拥有我们想要的所有代码，但我们需要确保返回的代码（运行时代码）只有 1 条指令，因此将返回 1（字节）。<code>calldata``EXTCODESIZE</code></p>
-<p>让我们看看<a href="https://www.evm.codes/#f3" target="_blank" rel="noopener">RETURN</a>操作码是如何工作的：它从堆栈中弹出 2 个值以将它们用作以下操作的输入：</p>
-<ul>
-<li>从开始读取的位置开始的内存偏移</li>
-<li>要读取和返回的内存大小（以字节为单位）</li>
-</ul>
-<p>因此，无论内存中有什么，我们都只想返回 1 条 1 字节的指令。我们的目标是执行。<code>RETURN(offset=0, size=1)</code></p>
-<p>用字节码翻译是。<code>600060005360016000F3</code></p>
-<p>因此，如果我们传递拼图的调用数据，它将使用该调用数据来创建和部署一个新合约，该合约的运行时代码仅为：theopcode！<code>600160005360016000F3``00``STOP</code></p>
-<p>其实只要让RETURN为一个字节就行，也就是以60016000F3结尾的字节码</p>
-<p>最终输入0x60ff60005360016000F3通关</p>
-<h2 id="Puzzle-8"><a href="#Puzzle-8" class="headerlink" title="Puzzle 8"></a>Puzzle 8</h2><p><img src="puzzle8.png" alt=""></p>
-<p>这个题的操作码也比较多，我们仍然把他们拆分着看</p>
-<h3 id="part1-1"><a href="#part1-1" class="headerlink" title="part1"></a>part1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">00      36        CALLDATASIZE</span><br><span class="line">01      6000      PUSH1 00</span><br><span class="line">03      80        DUP1</span><br><span class="line">04      37        CALLDATACOPY</span><br></pre></td></tr></table></figure>
-<p>这一部分和上一题一样，返回栈顶的是calldata的值</p>
-<h3 id="part2-1"><a href="#part2-1" class="headerlink" title="part2"></a>part2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">05      36        CALLDATASIZE</span><br><span class="line">06      6000      PUSH1 00</span><br><span class="line">08      6000      PUSH1 00</span><br><span class="line">0A      F0        CREATE</span><br></pre></td></tr></table></figure>
-<p>这里也是一样，创建一个合约</p>
-<h3 id="part3"><a href="#part3" class="headerlink" title="part3"></a>part3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0B      6000      PUSH1 00</span><br><span class="line">0D      80        DUP1</span><br><span class="line">0E      80        DUP1</span><br><span class="line">0F      80        DUP1</span><br><span class="line">10      80        DUP1</span><br><span class="line">11      94        SWAP5</span><br><span class="line">12      5A        GAS</span><br><span class="line">13      F1        CALL</span><br></pre></td></tr></table></figure>
-<p>这里调用了之前创建出来的合约</p>
-<p>等价于：<code>CALL(gas=ALL_THE_GAS_AVAILABLE, address=ADDRESS_FROM_CREATE, value: 0, argsOffset=0, argsSize=0, retOffset=0, retSize=0)</code></p>
-<p>在这里，我们只是调用部署的合约，没有任何 calldata 参数，也没有从返回值中读取任何内容。</p>
-<p>执行堆栈后将只有一个值。如果已<strong>还原</strong>，则为 0，否则为 1。<code>CALL</code></p>
-<h3 id="part4"><a href="#part4" class="headerlink" title="part4"></a>part4</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">14      6000      PUSH1 00</span><br><span class="line">16      14        EQ</span><br><span class="line">17      601B      PUSH1 1B</span><br><span class="line">19      57        JUMPI</span><br><span class="line">1A      FD        REVERT</span><br><span class="line">1B      5B        JUMPDEST</span><br><span class="line">1C      00        STOP</span><br></pre></td></tr></table></figure>
-<p>这里是通关条件，很显然，我们需要使Call调用的入栈值为00</p>
-<p>因此我们只需要构造一个这样的合约：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; store in memory the REVERT opcode as the only “code” of the contract</span><br><span class="line">PUSH1 01</span><br><span class="line">PUSH1 00</span><br><span class="line">MSTORE8</span><br><span class="line">&#x2F;&#x2F; make the constructor return the stored runtime code</span><br><span class="line">PUSH1 01</span><br><span class="line">PUSH1 00</span><br><span class="line">RETURN</span><br></pre></td></tr></table></figure>
-<p>字节码为:<code>600160005360016000F3</code></p>
-<p>那么这就将成为我们calldata的传入内容</p>
-
+                
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/Compound-introduce/" data-toggle="tooltip" data-placement="top" title="Compound_introduce">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/Trace-2022-10/" data-toggle="tooltip" data-placement="top" title="攻击事件追踪10月————持续更新">Next Post &rarr;</a>
+                        <a href="/EVM-Puzzle/" data-toggle="tooltip" data-placement="top" title="EVM_Puzzle">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -465,21 +374,6 @@
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
-    
-      
-        <aside id="sidebar">
-          <div id="toc" class="toc-article">
-          <strong class="toc-title">Contents</strong>
-          
-            
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#EVM-Puzzle"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">EVM_Puzzle</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-1"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Puzzle 1</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-2"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Puzzle 2</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-3"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Puzzle 3</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-4"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Puzzle 4</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle5"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Puzzle5</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle6"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">Puzzle6</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle7"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">Puzzle7</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part1"><span class="toc-nav-number">1.7.1.</span> <span class="toc-nav-text">part1</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part2"><span class="toc-nav-number">1.7.2.</span> <span class="toc-nav-text">part2</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-8"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">Puzzle 8</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part1-1"><span class="toc-nav-number">1.8.1.</span> <span class="toc-nav-text">part1</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part2-1"><span class="toc-nav-number">1.8.2.</span> <span class="toc-nav-text">part2</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part3"><span class="toc-nav-number">1.8.3.</span> <span class="toc-nav-text">part3</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part4"><span class="toc-nav-number">1.8.4.</span> <span class="toc-nav-text">part4</span></a></li></ol></li></ol></li></ol>
-            
-          
-          </div>
-        </aside>
-      
-    
-
                 
             <!-- Sidebar Container -->
             <div class="
@@ -494,8 +388,6 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
-                        
                     </div>
                 </section>
                 
