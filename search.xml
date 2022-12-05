@@ -29,6 +29,31 @@
     
     
     <entry>
+      <title>Compound系列（2）</title>
+      <link href="/compound-government/"/>
+      <url>/compound-government/</url>
+      
+        <content type="html"><![CDATA[<hr><pre><code>author：Thomas_Xu</code></pre><h1 id="Compound系列（2）-治理"><a href="#Compound系列（2）-治理" class="headerlink" title="Compound系列（2） 治理"></a>Compound系列（2） 治理</h1><p>我们都知道很多Defi项目都有治理机制，来看看Compound的治理有什么独特之处吧！</p><p>COMP是Coumpound发行的官方代币。而COMP是一个治理代币。Compound作为一个完全去中心化的系统(或者至少是在走向它的路上)，基于COMP实现了一个去中心化的治理机制。</p><h2 id="什么是Compound治理？"><a href="#什么是Compound治理？" class="headerlink" title="什么是Compound治理？"></a>什么是Compound治理？</h2><p>Compound 协议由 COMP Token 持有者管理和升级，使用三个不同的组件； COMP Token、治理模块（Governor Alpha）和 Timelock。这些合约一起，允许社区通过 cToken 或 Comproller 的管理功能提出、投票和实时更改。提案可以包括调整利率模型，到增加对新资产的支持等改变。</p><p>任何授权超过 10 万 COMP Token 的地址都可以提出治理活动，这些活动都是可执行的代码。提案产生后，社区可以在 3 天的投票期内提交投票。如果投票获得多数、且至少 40 万票以上，就会在 Timlock 中排队，2 天后可以实施。</p><h2 id="合约"><a href="#合约" class="headerlink" title="合约"></a>合约</h2><p>现在让我们详细研究一下治理合约，包括：</p><ul><li>核心治理合约（<code>GovernorAlpha.sol</code>）</li><li>时间锁合约（<code>Timelock.sol</code>）。</li><li>和COMP代币合约本身</li></ul><h3 id="GovernorAlpha-sol"><a href="#GovernorAlpha-sol" class="headerlink" title="GovernorAlpha.sol"></a>GovernorAlpha.sol</h3><p>核心治理合约为<a href="https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/GovernorAlpha.sol" target="_blank" rel="noopener">GovernorAlpha</a>，它包含了创建和执行提案的所有逻辑。</p><h4 id="propose-提案函数"><a href="#propose-提案函数" class="headerlink" title="propose-提案函数"></a>propose-提案函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function propose(</span><br><span class="line">    address[] memory targets, &#x2F;&#x2F; 所执动作作的目标地址。</span><br><span class="line">    uint[] memory values,     &#x2F;&#x2F; </span><br><span class="line">    要传递给调用的&#96;msg.value&#96;。</span><br><span class="line">    string[] memory signatures, &#x2F;&#x2F; 调用的函数签名，例如：&#96;transfer(address, amount)&#96;。</span><br><span class="line">    bytes[] memory calldatas, &#x2F;&#x2F; 要传递给函数调用的数据（参数）</span><br><span class="line">    string memory description</span><br><span class="line">) returns (uint)</span><br></pre></td></tr></table></figure><ul><li><code>target</code>: 所执动作作的目标地址。</li><li><code>value</code>: 要传递给调用的<code>msg.value</code>。</li><li><code>signature</code>: 调用的函数签名，例如：<code>transfer(address, amount)</code>。</li><li><code>calldata</code>: 要传递给函数调用的数据（参数）</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Coumpound </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Coumpound </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>EVM_Puzzle</title>
       <link href="/EVM-Puzzle/"/>
       <url>/EVM-Puzzle/</url>
