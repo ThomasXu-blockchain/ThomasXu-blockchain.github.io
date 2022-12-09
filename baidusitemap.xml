@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://thomasxu-blockchain.github.io/Compound-more/</loc>
+    <lastmod>2022-12-09</lastmod>
+  </url>
+  <url>
+    <loc>https://thomasxu-blockchain.github.io/Front-Running/</loc>
+    <lastmod>2022-12-09</lastmod>
+  </url>
+  <url>
     <loc>https://thomasxu-blockchain.github.io/compound-government/</loc>
-    <lastmod>2022-12-08</lastmod>
+    <lastmod>2022-12-09</lastmod>
   </url>
   <url>
     <loc>https://thomasxu-blockchain.github.io/Compound-introduce/</loc>
@@ -106,10 +114,6 @@
   </url>
   <url>
     <loc>https://thomasxu-blockchain.github.io/ReentryAttack/</loc>
-    <lastmod>2022-11-03</lastmod>
-  </url>
-  <url>
-    <loc>https://thomasxu-blockchain.github.io/Front-Running/</loc>
     <lastmod>2022-11-03</lastmod>
   </url>
   <url>
