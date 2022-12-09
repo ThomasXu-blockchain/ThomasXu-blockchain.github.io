@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://thomasxu-blockchain.github.io/Trace-2022-10/</loc>
+    <lastmod>2022-12-09</lastmod>
+  </url>
+  <url>
     <loc>https://thomasxu-blockchain.github.io/Compound-more/</loc>
     <lastmod>2022-12-09</lastmod>
   </url>
@@ -23,10 +27,6 @@
   <url>
     <loc>https://thomasxu-blockchain.github.io/eventListen/</loc>
     <lastmod>2022-11-29</lastmod>
-  </url>
-  <url>
-    <loc>https://thomasxu-blockchain.github.io/Trace-2022-10/</loc>
-    <lastmod>2022-11-27</lastmod>
   </url>
   <url>
     <loc>https://thomasxu-blockchain.github.io/TRC10TRC20-%E5%81%87%E5%B8%81%E6%94%BB%E5%87%BB/</loc>
