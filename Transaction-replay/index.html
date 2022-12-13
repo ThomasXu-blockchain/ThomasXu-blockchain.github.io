@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          EVM_Puzzle - Thomas_Xu
+          交易重放 - Thomas_Xu
         
     </title>
 
-    <link rel="canonical" href="https://thomasxu-blockchain.github.io/EVM-Puzzle/">
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/Transaction-replay/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -112,14 +112,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
+                              <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                             
                         </div>
-                        <h1>EVM_Puzzle</h1>
+                        <h1>交易重放</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Thomas_Xu on
-                            2022-11-27
+                            2022-12-03
                         </span>
 
                         
@@ -251,91 +251,23 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="EVM-Puzzle"><a href="#EVM-Puzzle" class="headerlink" title="EVM_Puzzle"></a>EVM_Puzzle</h1><hr>
+                <hr>
 <pre><code>author：Thomas_Xu
-</code></pre><p>EVM_puzzle是一个可以很好的EVM入门阶段的一个可以上手的题库，正好最近在研究操作码的反编译，正好巩固熟练一下。</p>
-<h2 id="Puzzle-1"><a href="#Puzzle-1" class="headerlink" title="Puzzle 1"></a>Puzzle 1</h2><p><img src="puzzle1.png" alt=""></p>
-<p>我们只需要键入输入，使程序正常跳转到<code>JUMPDEST</code>即可，这道题里出现的所有操作码都只占一个字节，所以<code>JUMPDEST</code>应当位于8的位置上。</p>
-<p>我们只需要键入8即可通关。</p>
-<h2 id="Puzzle-2"><a href="#Puzzle-2" class="headerlink" title="Puzzle 2"></a>Puzzle 2</h2><p><img src="puzzle2.png" alt=""></p>
-<p>同上一题一样，我们只需要键入输入，使程序正常跳转到<code>JUMPDEST</code>即可。</p>
-<p><a href="https://www.evm.codes/?ref=hackernoon.com#38" target="_blank" rel="noopener"><strong>CODESIZE</strong></a> 获取在当前环境中运行的代码的大小，并入栈。在此示例中，我们可以通过查看序列中有多少操作码来手动检查代码的大小。此题中出现操作码都是1个字节。</p>
-<p>在这个谜题中，我们有10个操作码，这意味着代码的大小是10个字节。注意，EVM 使用十六进制数来表示字节码。所以这里是a</p>
-<p><a href="https://www.evm.codes/?ref=hackernoon.com#03" target="_blank" rel="noopener"><strong>SUB</strong></a> 会把第一个堆栈元素减去第二个堆栈元素，并将结果推送到堆栈的顶部。</p>
-<p>根据<code>JUMP</code>的条件我们这里只需要让执行<code>JUMP</code>时栈顶的元素为6即可。</p>
-<p>即 0a - input = 6</p>
-<p>所以输入4即可通关。</p>
-<h2 id="Puzzle-3"><a href="#Puzzle-3" class="headerlink" title="Puzzle 3"></a>Puzzle 3</h2><p><img src="puzzle3.png" alt=""></p>
-<p>根据<code>JUMP</code>的条件我们这里只需要让执行<code>JUMP</code>时栈顶的元素为4即可。</p>
-<p>即<code>CALLDATASIZE</code>等于4即可。</p>
-<p>这里输入0x11223344即可通关</p>
-<p>需要注意的是<code>CALLDATASIZE</code>统计的是字节数，而一个字节可以储存2个16进制数。所以我们应该输入8位十六进制数</p>
-<h2 id="Puzzle-4"><a href="#Puzzle-4" class="headerlink" title="Puzzle 4"></a>Puzzle 4</h2><p><img src="puzzle4.png" alt=""></p>
-<p>根据<code>JUMP</code>的条件我们这里只需要让执行<code>JUMP</code>时栈顶的元素为0a即可。</p>
-<p>而此题中<code>CODESIZE</code>为12，<code>XOR</code>为二进制异或运算，我们只需要进行一次简单的计算即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0000 1010 &#x2F;&#x2F;JUMP执行时栈顶所需  0a</span><br><span class="line"></span><br><span class="line">0000 1100 &#x2F;&#x2F;12  CODESIZE </span><br><span class="line">0000 0110 &#x2F;&#x2F;input</span><br></pre></td></tr></table></figure>
-<p>因此，我们只需要输入<code>0000 0110</code>即 6 就可以通关</p>
-<h2 id="Puzzle5"><a href="#Puzzle5" class="headerlink" title="Puzzle5"></a>Puzzle5</h2><p><img src="puzzle5.png" alt=""></p>
-<p>根据EQ条件，我们只需要使value等于0x0100即可（256）</p>
-<p>所以我们输入16，解决</p>
-<h2 id="Puzzle6"><a href="#Puzzle6" class="headerlink" title="Puzzle6"></a>Puzzle6</h2><p><img src="puzzle6.png" alt=""></p>
-<p>此题考查<code>CALLDATALOAD</code>，由于偏移量为0，我们只需要输入<code>0a</code>来使JUMP正常跳转即可</p>
-<p>因此，输入为<code>0x000000000000000000000000000000000000000000000000000000000000000A</code></p>
-<h2 id="Puzzle7"><a href="#Puzzle7" class="headerlink" title="Puzzle7"></a>Puzzle7</h2><p><img src="puzzle7.png" alt=""></p>
-<p>这个题会稍微复杂一点，我们把这些字节码分开来看。</p>
-<h3 id="part1"><a href="#part1" class="headerlink" title="part1"></a>part1</h3><p>此时的栈状态为空</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">00      36        CALLDATASIZE</span><br><span class="line">01      6000      PUSH1 00</span><br><span class="line">03      80        DUP1</span><br><span class="line">04      37        CALLDATACOPY</span><br></pre></td></tr></table></figure>
-<p>者四个操作码为第一部分，前三个字节码均为<code>CALLDATACOPY</code>的参数，此操作码会将当前环境中的输入数据复制到内存</p>
-<p>三个堆栈输入分别是</p>
-<ol>
-<li><code>destOffset</code>：将复制结果的<a href="https://www.evm.codes/about" target="_blank" rel="noopener">内存</a>中的字节偏移量。</li>
-<li><code>offset</code>：要复制的<a href="https://www.evm.codes/about" target="_blank" rel="noopener">调用数据</a>中的字节偏移量。</li>
-<li><code>size</code>：要复制的字节大小。</li>
-</ol>
-<p>因此我们可以分析出，当part1执行完之后，堆栈里的数据应该是完整的<code>calldata</code></p>
-<h3 id="part2"><a href="#part2" class="headerlink" title="part2"></a>part2</h3><p>此时的栈状态为：<code>calldata</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">05      36        CALLDATASIZE</span><br><span class="line">06      6000      PUSH1 00</span><br><span class="line">08      6000      PUSH1 00</span><br><span class="line">0A      F0        CREATE</span><br></pre></td></tr></table></figure>
-<p>这里三个操作码都为<code>CREATE</code>的入参，<code>CREATE</code>操作会为我们创建一个创建具有关联代码的新帐户</p>
-<p>它的堆栈输入分别是：</p>
-<ol>
-<li><code>value</code>：以<a href="https://www.investopedia.com/terms/w/wei.asp" target="_blank" rel="noopener">Wei</a>为单位的值发送到新帐户。</li>
-<li><code>offset</code>：<a href="https://www.evm.codes/about" target="_blank" rel="noopener">内存</a>中的字节偏移量（以字节为单位），新帐户的初始化代码。</li>
-<li><code>size</code>：要复制的字节大小（初始化代码的大小）。</li>
-</ol>
-<p>堆栈输出：</p>
-<ol>
-<li><code>address</code>：已部署合约的地址，如果部署失败，则为 0。</li>
-</ol>
-<p>有关于create创建合约地址的更多信息可以看<a href="https://blog.openzeppelin.com/deconstructing-a-solidity-contract-part-ii-creation-vs-runtime-6b9d60ecb44c/" target="_blank" rel="noopener">这篇文章</a>，写的比较明白。</p>
-<p>当执行 theopcode 时，只有 theopcode 返回的代码才是将来调用已部署合约时将执行的“运行时代码”。字节码的另一部分只使用一次，仅用于该部分。<code>CREATE``RETURN``constructor</code></p>
-<p>因此，我们可以在里面拥有我们想要的所有代码，但我们需要确保返回的代码（运行时代码）只有 1 条指令，因此将返回 1（字节）。<code>calldata``EXTCODESIZE</code></p>
-<p>让我们看看<a href="https://www.evm.codes/#f3" target="_blank" rel="noopener">RETURN</a>操作码是如何工作的：它从堆栈中弹出 2 个值以将它们用作以下操作的输入：</p>
-<ul>
-<li>从开始读取的位置开始的内存偏移</li>
-<li>要读取和返回的内存大小（以字节为单位）</li>
-</ul>
-<p>因此，无论内存中有什么，我们都只想返回 1 条 1 字节的指令。我们的目标是执行。<code>RETURN(offset=0, size=1)</code></p>
-<p>用字节码翻译是。<code>600060005360016000F3</code></p>
-<p>因此，如果我们传递拼图的调用数据，它将使用该调用数据来创建和部署一个新合约，该合约的运行时代码仅为：theopcode！<code>600160005360016000F3``00``STOP</code></p>
-<p>其实只要让RETURN为一个字节就行，也就是以60016000F3结尾的字节码</p>
-<p>最终输入0x60ff60005360016000F3通关</p>
-<h2 id="Puzzle-8"><a href="#Puzzle-8" class="headerlink" title="Puzzle 8"></a>Puzzle 8</h2><p><img src="puzzle8.png" alt=""></p>
-<p>这个题的操作码也比较多，我们仍然把他们拆分着看</p>
-<h3 id="part1-1"><a href="#part1-1" class="headerlink" title="part1"></a>part1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">00      36        CALLDATASIZE</span><br><span class="line">01      6000      PUSH1 00</span><br><span class="line">03      80        DUP1</span><br><span class="line">04      37        CALLDATACOPY</span><br></pre></td></tr></table></figure>
-<p>这一部分和上一题一样，返回栈顶的是calldata的值</p>
-<h3 id="part2-1"><a href="#part2-1" class="headerlink" title="part2"></a>part2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">05      36        CALLDATASIZE</span><br><span class="line">06      6000      PUSH1 00</span><br><span class="line">08      6000      PUSH1 00</span><br><span class="line">0A      F0        CREATE</span><br></pre></td></tr></table></figure>
-<p>这里也是一样，创建一个合约</p>
-<h3 id="part3"><a href="#part3" class="headerlink" title="part3"></a>part3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0B      6000      PUSH1 00</span><br><span class="line">0D      80        DUP1</span><br><span class="line">0E      80        DUP1</span><br><span class="line">0F      80        DUP1</span><br><span class="line">10      80        DUP1</span><br><span class="line">11      94        SWAP5</span><br><span class="line">12      5A        GAS</span><br><span class="line">13      F1        CALL</span><br></pre></td></tr></table></figure>
-<p>这里调用了之前创建出来的合约</p>
-<p>等价于：<code>CALL(gas=ALL_THE_GAS_AVAILABLE, address=ADDRESS_FROM_CREATE, value: 0, argsOffset=0, argsSize=0, retOffset=0, retSize=0)</code></p>
-<p>在这里，我们只是调用部署的合约，没有任何 calldata 参数，也没有从返回值中读取任何内容。</p>
-<p>执行堆栈后将只有一个值。如果已<strong>还原</strong>，则为 0，否则为 1。<code>CALL</code></p>
-<h3 id="part4"><a href="#part4" class="headerlink" title="part4"></a>part4</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">14      6000      PUSH1 00</span><br><span class="line">16      14        EQ</span><br><span class="line">17      601B      PUSH1 1B</span><br><span class="line">19      57        JUMPI</span><br><span class="line">1A      FD        REVERT</span><br><span class="line">1B      5B        JUMPDEST</span><br><span class="line">1C      00        STOP</span><br></pre></td></tr></table></figure>
-<p>这里是通关条件，很显然，我们需要使Call调用的入栈值为00</p>
-<p>因此我们只需要构造一个这样的合约：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; store in memory the REVERT opcode as the only “code” of the contract</span><br><span class="line">PUSH1 01</span><br><span class="line">PUSH1 00</span><br><span class="line">MSTORE8</span><br><span class="line">&#x2F;&#x2F; make the constructor return the stored runtime code</span><br><span class="line">PUSH1 01</span><br><span class="line">PUSH1 00</span><br><span class="line">RETURN</span><br></pre></td></tr></table></figure>
-<p>字节码为:<code>600160005360016000F3</code></p>
-<p>那么这就将成为我们calldata的传入内容</p>
+</code></pre><h1 id="重放攻击及解决方案"><a href="#重放攻击及解决方案" class="headerlink" title="重放攻击及解决方案"></a>重放攻击及解决方案</h1><h2 id="传统重放攻击："><a href="#传统重放攻击：" class="headerlink" title="传统重放攻击："></a>传统重放攻击：</h2><p>攻击者将拦截到的数据再次原封不动发送给接收方的情况。只要攻击者知晓自己所拦截信息的用途，哪怕信息经过加密，其仍然可以发起重放攻击达到恶意目的，例如窃取存款、窃取账号等</p>
+<h2 id="区块链重放攻击"><a href="#区块链重放攻击" class="headerlink" title="区块链重放攻击"></a>区块链重放攻击</h2><p>在区块链中的重放攻击和传统安全行业里的重放攻击，不是一回事。它<strong>一般</strong>指的是主链分叉时候出现的一种特殊情况。</p>
+<p>分叉是区块链中常见的状况，不论是网络升级发起的主动分叉，还是恶意攻击者发起的被动分叉，分叉发生后在一段时间内区块链网络都是出于“<strong>原链+新链</strong>”的双链状态。正常来说，以升级为目的分叉发生后，随着旧客户端的升级，算力回归新链，原链会被逐渐废弃；以攻击为目的发起的分叉，如果全网算力能及时切换到正确的分叉链上，那么恶意区块会无法得到确认，最终无法跟上最长链节奏被废弃。但有一些分叉最终保留了一条以上的区块链，最典型的为The DAO事件后以太坊分叉出ETH和ETC，算力大战后比特币分叉为BTC和BCH，BCH分叉处BCH与BSV这三件分叉大事，对重放攻击讨论最热烈的时间点也集中在上述三大分叉前后。</p>
+<p>由于分叉后的两条区块链，分叉前共用同一规格的地址、密钥对与交易结构等，为了保证分叉后能继承原链的算力与资产，一般都会支持原链的钱包与地址，但为了与竞争链做出区别，分叉后两者的交易结构和原生代币都会发生变化。</p>
+<blockquote>
+<p>通俗的讲就是常见的”发糖果“——以太坊The DAO分叉后，分叉前钱包中有以太坊的账户都获得了同等数量的ETH和ETC。如果分叉后的两条链都支持分叉前的代币和账户（例如ETC和ETH分叉后代码差异仅仅只有涉及The DAO的部分其他代码完全相同），而他们又都有同样的区块账本，那么本质上，分叉前拥有以太坊的账户发起的交易，广播到分叉后的两条区块链上都是完全合法的，这就导致了重放攻击问题。</p>
+</blockquote>
+<h2 id="重放攻击剖析"><a href="#重放攻击剖析" class="headerlink" title="重放攻击剖析"></a>重放攻击剖析</h2><p>我们设分叉前用户A的地址上有10个以太坊，用户B的地址上有20个以太坊，分叉后用户A的地址上有10个ETH和ETC，用户B则有20个ETH和ETC。如果用户A在分叉后向用户B发起10ETH的交易，之后用户B再向用户A发起15ETH的交易，那么这两笔交易将会原封不动地呈现在ETC区块链上，表现为A向B发送10ETC，B向A发送15ETC，看起来似乎是没有问题的。</p>
+<p>然而如果ETC区块链上的用户A没有ETC，那么上述交易将会让用户B在没有收到A发送的ETC的情况下向A发送15ETC，白白损失了自己的资金。这就是区块链上的重放攻击，而这常常发生在交易所中。恶意用户可以通过监听用户A和用户B的交易情况来猜测二者身份，如果两位用户均没有防范重放攻击的意识或者分叉链本身不具备防重放攻击能力，恶意用户就可以通过映射交易窃取通常用户的账户资金。</p>
+<h3 id="合约的交易重放"><a href="#合约的交易重放" class="headerlink" title="合约的交易重放"></a>合约的交易重放</h3><p>除了对分叉链条发起的重放攻击外，对智能合约也可发起重放攻击，其形式更类似传统的重放攻击定义——恶意者窃听了某一智能合约的交易请求，不断向该智能合约发送窃听到的交易信息（哪怕不知道交易情况也不重要），直到智能合约中预存的用于执行的Gas被消耗殆尽，智能合约被迫暂停。</p>
+<h2 id="防止重放攻击"><a href="#防止重放攻击" class="headerlink" title="防止重放攻击"></a>防止重放攻击</h2><p>首先最常用的方式便是完善交易格式，让分叉点之前即存在的资金所关联的交易只能在一条链上生效，这就要让分叉后的链条在交易结构上做出区别。</p>
+<p>对于以<strong>升级为目</strong>的的分叉而言很容易就能达到，因为硬分叉升级将采用不同的客户端版本，交易的前缀中通常包含有发起交易客户端的版本信息。分叉后矿工为了避免打包旧客户端的“非法交易”（并非恶意交易，仅仅只是版本号过低不被其他节点所承认），通常会拒绝一定版本号以前的交易，保证恶意攻击者很难在硬分叉升级时通过重放攻击窃取资金。</p>
+<p>对于<strong>非升级目的</strong>发起的分叉，不论是算力战争导致的项目分裂，还是恶意攻击者发起的分叉攻击，由于交易发起版本大概率是不会变化的，分叉后的链条无法通过版本验证来防止重放攻击，需要在其他方向做出努力。常见的方式之一是为每一个交易附加上随机数Nonce，尽管Nonce一般被认为是用于防止重复交易与双花交易的，但防止重放攻击方面，Nonce也功不可没。</p>
+<p><img src="nouce.png" alt=""></p>
+<p>重放攻击需要监听一条链上的交易情况并转发至另一分叉链上以窃取资金，交易随机数的使用可以在一定程度上避免分叉情况下的重放攻击。如果在一条分叉链上发起的交易，其使用的随机数已被另一条分叉链中的相同用户发起的交易所使用，那么节点将不会广播该交易，矿工也不会打包此可疑交易。对于普通用户而言只需要重新设立随机数并用私钥签名即可恢复交易。Nonce最重要的用途在于防止事务/智能合约被重放攻击。只需要在事务中设立一段验证随机数的代码，即可保证事务不被窃听者通过重放攻击耗尽Gas。</p>
 
                 
                 <hr>
@@ -343,12 +275,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/Transaction-replay/" data-toggle="tooltip" data-placement="top" title="交易重放">&larr; Previous Post</a>
+                        <a href="/Compound-introduce/" data-toggle="tooltip" data-placement="top" title="Compound系列（1）">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/TRC10TRC20-假币攻击/" data-toggle="tooltip" data-placement="top" title="TRC10 TRC20 && 假币攻击">Next Post &rarr;</a>
+                        <a href="/EVM-Puzzle/" data-toggle="tooltip" data-placement="top" title="EVM_Puzzle">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -472,7 +404,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#EVM-Puzzle"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">EVM_Puzzle</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-1"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Puzzle 1</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-2"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Puzzle 2</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-3"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Puzzle 3</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-4"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Puzzle 4</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle5"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Puzzle5</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle6"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">Puzzle6</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle7"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">Puzzle7</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part1"><span class="toc-nav-number">1.7.1.</span> <span class="toc-nav-text">part1</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part2"><span class="toc-nav-number">1.7.2.</span> <span class="toc-nav-text">part2</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Puzzle-8"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">Puzzle 8</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part1-1"><span class="toc-nav-number">1.8.1.</span> <span class="toc-nav-text">part1</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part2-1"><span class="toc-nav-number">1.8.2.</span> <span class="toc-nav-text">part2</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part3"><span class="toc-nav-number">1.8.3.</span> <span class="toc-nav-text">part3</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#part4"><span class="toc-nav-number">1.8.4.</span> <span class="toc-nav-text">part4</span></a></li></ol></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#重放攻击及解决方案"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">重放攻击及解决方案</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#传统重放攻击："><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">传统重放攻击：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#区块链重放攻击"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">区块链重放攻击</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重放攻击剖析"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">重放攻击剖析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#合约的交易重放"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">合约的交易重放</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#防止重放攻击"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">防止重放攻击</span></a></li></ol></li></ol>
             
           
           </div>
@@ -494,7 +426,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
+                          <a class="tag" href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                         
                     </div>
                 </section>

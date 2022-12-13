@@ -20,7 +20,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://thomasxu-blockchain.github.io/archives/2/">
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/archives/4/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -314,364 +314,27 @@
 
         <div class="post-preview">
 
-            <a href="/Foundry/">
+            <a href="/ReentryAttack/">
                 <h2 class="post-title">
-                    Foundry-很牛逼的框架
+                    ReentryAttack
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    Foundry-很牛逼的框架
+                    重入攻击分析
 author：Thomas_Xu
-最近在做CTF的时候发现题目使用了Foundry来部署，于是抱着好奇心研究了一下Foundry。不得不说，这个框架真的很牛逼，最直观的是他的测试速度。其次是其再测试时可以输出很多详细信息（以后碰到revert再也不用一行代码一行代码的去找错了）
-下面咱们来细说Foundry：
-为什么用Foundry？
-Foundry使用soli......
+漏洞概述在以太坊中，智能合约能够调用其他外部合约的代码，由于智能合约可以调用外部合约或者发送以太币，这些操作需要合约提交外部的调用，所以这些合约外部的调用就可以被攻击者利用造成攻击劫持，使得被攻击合约在任意位置重新执行(回调)，绕过原代码中的限制条件，从而发生重入攻击。重入攻击本质上与编程里的递归调用类似，所以当合约将以太币发送到未知地址时就可......
                 </div>
             </a>
             
                 <p class="post-meta" style="margin: 10px 0;">
                     Posted by Thomas_Xu on
-                    2022-11-09
+                    2022-06-15
                 </p>
                 <div class="tags">
                     
-                      <a href="/tags/#Foundry" title="Foundry">Foundry</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/ERC777-1820/">
-                <h2 class="post-title">
-                    ERC777-1820
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    ERC777，1820协议分析
-author：Thomas_Xu
-ERC777与以太坊生态系统中广泛采用的ERC20标准不同，ERC777标准通常被称为城里的新生儿。一个潜力巨大的孩子。有些人甚至声称ERC777标准是ERC20标准的有效继承者。ERC777标准规范在EIP777（以太坊改进提案文件中有详尽描述。
-ERC777解决了哪些ERC20的问题?转账通知机制由于ERC20 标准没有一......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-11-02
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#EIP" title="EIP">EIP</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/ERC20-721-1155-998/">
-                <h2 class="post-title">
-                    ERC20-721-1155-998
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    ERC20,721,1155，998协议分析
-author：Thomas_Xu
-最近在总结归纳代币协议，所以把EIP20,721,1155,998首先拿出来对比分析一下。
-首先归纳总结一下这三者的区别：
-
-
-
-
-标准
-ERC-20
-ERC-721
-ERC-1155
-
-
-
-
-代币类型
-同质化代币
-非同质化代币
-同质化代币、非同质化代币、介于同质化和非同质化代币之间可以互相切换的代币
-
-
-特点
-......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-10-31
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#EIP" title="EIP">EIP</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/paradigm22-merkleDrop/">
-                <h2 class="post-title">
-                    Paradigm 题解 MerkleDrop
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    paradigm 2022 ctf 题解——MerkleDrop
-author：Thomas_Xu
-环境配置:由于题目环境需要使用docker，环境配置有点繁琐。我重新搭了一个hardhat框架的测试环境,而由于题目出在以太坊的主链上,并使用Alchemyfork了一个主网节点进行测试
-题目分析首先先来看一下这道题目的描述Were you whitelisted?你是否在白名单里？显而易见，......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-10-28
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Paradigm" title="Paradigm">Paradigm</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/paradigm22-rescue/">
-                <h2 class="post-title">
-                    Paradigm 题解 Rescue
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    paradigm 2022 ctf 题解——Rescue
-author：Thomas_Xu
-环境配置:由于题目环境需要使用docker，环境配置有点繁琐。我重新搭了一个hardhat框架的测试环境,而由于题目出在以太坊的主链上,并使用Alchemyfork了一个主网节点进行测试.
-Resucue首先先来看一下这道题目的描述:I accidentally sent some WETH to a......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-10-25
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Paradigm" title="Paradigm">Paradigm</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/uniswap-v3/">
-                <h2 class="post-title">
-                    Uniswap_V3 源码分析
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Uniswap V3 源码解析（一）author: Thomas_Xu
-之前看了v2的源码，但是感觉能写的不多，于是便决定读了v3后把v3和v2连着写一一篇博文。v3版本的实现复杂度和v2已经不是一个量级了，部分算法确实难以摸透。尝试着分析分析吧。
-写在前面强烈建议在阅读uniswap v3源码之前，先阅读官方博客对v3版本的介绍，有能力的话摸透V3的白皮书，熟悉他的实现原理。在本文中也会做......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-10-20
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Uniswap" title="Uniswap">Uniswap</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/DamnDefi-10-11/">
-                <h2 class="post-title">
-                    Damn Defi 题解 10-11
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Damn Defi靶场刷题记录(10-11)author: Thomas_Xu
-10 Free rider这又是一道利用闪电贷来获取利益的题目。可见Defi平台要预防可能的闪电攻击是个难题。
-题目要求我们偷走买家的的45个ETH，并且还要市场失去一些比特币。
-Code Review首先我们从头来看这个Challenge
-
-FreeRiderNFTMarketplace这是交易市场的合约,主要......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-10-10
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/DamnDefi-08-09/">
-                <h2 class="post-title">
-                    Damn Defi 题解 8-9
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Damn Defi靶场刷题记录(8-9)author: Thomas_Xu
-8 Puppet这个题直接通过abi引用了一个已经编译了的Uniswap v1的合约，因此，我们可以假定这个Uniswap合约没有其他漏洞。那就让我们把目光集中在PuppetPool合约其实就一个borrow()函数，但在借款时，我们需要抵押两倍的资金在池里。这个题其实就是想要我们想办法让池在我们抵押不足的情况下贷款......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-09-29
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/DamnDefi-07/">
-                <h2 class="post-title">
-                    Damn Defi 题解 7
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Damn Defi靶场刷题记录(7)author: Thomas_Xu
-7 Compromised之所以单独把这个题拉出来做一个wp是因为这个题太特殊了，也因为8，9是一套题目。这个题设置的背景就很奇怪，它给了我们一个服务器的响应片段，而这些片段是由两大串十六进制数组成的。而我们目前并不知道这串十六进制数意味着什么，那么先来看看代码吧。
-
-通过粗略阅读后我们可以发现，这其实就是三个所谓的“可......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-09-19
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/DamnDefi-05-06/">
-                <h2 class="post-title">
-                    Damn Defi 题解 5-6
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Damn Defi靶场刷题记录(5-6)author: Thomas_Xu
-the-rewarderFlashPool从一开始就获得一百万个代币，提到的4个人中的每一个人都获得100个DVT，这些DVT立即由他们存入奖励池。在此初始设置之后，时间提前5天，并支付一轮奖励：每人25个奖励代币。这道题有四个合约，是第一道多合约的题目。不过不用害怕，我们一个一个来分析。
-
-RewardToken这......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-09-19
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Damn Defi" title="Damn Defi">Damn Defi</a>
+                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                     
                 </div>
             
@@ -688,13 +351,9 @@ RewardToken这......
 <ul class="pager">
     
         <li class="previous">
-            <a href="/">&larr; Newer Posts</a>
+            <a href="/archives/3/">&larr; Newer Posts</a>
         </li>
     
-    
-        <li class="next">
-            <a href="/archives/3/">Older Posts &rarr;</a>
-        </li>
     
 </ul>
 
