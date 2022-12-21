@@ -416,10 +416,12 @@
 <p><code>myth analyze  contracts/overflow.sol</code></p>
 <p>可以看到，分析出了107也就是重入漏洞</p>
 <p><img src="myth_reentrancy.png" alt=""></p>
+<blockquote>
 <p>ps：吐槽一下Mythril，目前没有发现这个工具和hardhat，truffle等主流框架兼容。使用起来有点麻烦。</p>
+</blockquote>
 <p>让我意外的是myth给我这个重入合约还检测出来一个漏洞，SWC104，我去一翻文档，好家伙，居然是没有检查call的返回值。不能说是误报吧，但确实没有必要，这也让我怀疑myth底层是不是检测到call调用就会返回去看你检查返回值没有。</p>
 <p><img src="myth_callreturn.png" alt=""></p>
-<p>你还可以选择 -o json来指定json格式输出，我这里换了一个有溢出漏洞的合约测试：</p>
+<h4 id="更多选项"><a href="#更多选项" class="headerlink" title="更多选项"></a>更多选项</h4><p>你还可以选择 -o json来指定json格式输出，我这里换了一个有溢出漏洞的合约测试：</p>
 <p><img src="overflow.png" alt=""></p>
 <p>可以看到检测出了101溢出。</p>
 <p>还有更多的选项，如下:</p>
@@ -432,15 +434,17 @@
 <li>leveldb-search，从本地leveldb中检索</li>
 <li>function-to-hash，计算合约方法的函数标识码</li>
 <li>hash-to-address，将hash转换为以太坊地址</li>
-<li>version，版本号</li>
-</ul>
-<ul>
-<li>o 输出格式，可选text/markdown/json/jsonv2</li>
+<li><p>version，版本号</p>
+</li>
+<li><p>o 输出格式，可选text/markdown/json/jsonv2</p>
+</li>
 <li>t 交易个数</li>
 </ul>
 <ul>
 <li>solv 是指定solidity编译版本</li>
 </ul>
+<h4 id="交易数t"><a href="#交易数t" class="headerlink" title="交易数t"></a>交易数t</h4><p>在这里特别说一下-t 也就是交易个数，默认情况下交易数是2。刚刚讲过了符号执行的原理，我们就应该知道，myth是通过探索路径来检测漏洞的，而solidity漏洞许多需要进行复杂的交易，也就是路径会特别深，一般情况下两次交易足够检查出基础的漏洞，特殊的逻辑漏洞还是需要人工进行合约审计的。</p>
+<p>由于每个交易可以具有多个有效的最终状态，在理论上，要探索的状态空间与交易数量成指数关系，交易个数越大，执行时间也越长。Mythril在处理多个交易方面通过分析程序路径在读写状态变量的过程关联关系，可以缩小交易个数。</p>
 
                 
                 <hr>
@@ -577,7 +581,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#符号执行以及Mythril工具"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">符号执行以及Mythril工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#引言"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">引言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#经典的符号执行技术"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">经典的符号执行技术</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#现代符号执行技术"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">现代符号执行技术</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#主要挑战"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">主要挑战</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#路径爆炸-Path-Explosion"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">路径爆炸(Path Explosion)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#约束求解"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">约束求解</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内存建模"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">内存建模</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Mythril工具"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Mythril工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Mythril-on-Ubuntu"><span class="toc-nav-number">1.5.1.1.</span> <span class="toc-nav-text">Mythril on Ubuntu</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Mythril-on-Docker"><span class="toc-nav-number">1.5.1.2.</span> <span class="toc-nav-text">Mythril on Docker</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Mythril工作原理"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">Mythril工作原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用方法"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">使用方法</span></a></li></ol></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#符号执行以及Mythril工具"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">符号执行以及Mythril工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#引言"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">引言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#经典的符号执行技术"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">经典的符号执行技术</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#现代符号执行技术"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">现代符号执行技术</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#主要挑战"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">主要挑战</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#路径爆炸-Path-Explosion"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">路径爆炸(Path Explosion)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#约束求解"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">约束求解</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内存建模"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">内存建模</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Mythril工具"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Mythril工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Mythril-on-Ubuntu"><span class="toc-nav-number">1.5.1.1.</span> <span class="toc-nav-text">Mythril on Ubuntu</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Mythril-on-Docker"><span class="toc-nav-number">1.5.1.2.</span> <span class="toc-nav-text">Mythril on Docker</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Mythril工作原理"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">Mythril工作原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用方法"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">使用方法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#更多选项"><span class="toc-nav-number">1.5.3.1.</span> <span class="toc-nav-text">更多选项</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#交易数t"><span class="toc-nav-number">1.5.3.2.</span> <span class="toc-nav-text">交易数t</span></a></li></ol></li></ol></li></ol></li></ol>
             
           
           </div>
