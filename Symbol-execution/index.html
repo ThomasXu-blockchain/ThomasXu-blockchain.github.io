@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          符号执行以及Mythril工具 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/Symbol-execution/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#static-analysis" title="static-analysis">static-analysis</a>
+                            
+                        </div>
+                        <h1>符号执行以及Mythril工具</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-12-18
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h1 id="符号执行以及Mythril工具"><a href="#符号执行以及Mythril工具" class="headerlink" title="符号执行以及Mythril工具"></a>符号执行以及Mythril工具</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>符号执行是一种程序静态分析的技术，被认为非常有前途。近年利用符号执行进行分析的论文在安全的顶会中出现也较为频繁，还是非常值得去学习的。</p>
+<p>那么今天先从静态分析说起：</p>
+<p><strong>程序静态分析（Program Static Analysis）</strong>是指在不运行代码的方式下，通过词法分析、语法分析、控制流、数据流分析等技术对程序代码进行扫描，验证代码是否满足规范性、安全性、可靠性、可维护性等指标的一种代码分析技术。 程序静态分析的历史几乎与程序的历史一样长, 自从有了程序就有了程序分析。特别是随着编译技术的发展，大大带动了程序的自动分析技术。目前静态分析技术向模拟执行的技术发展以能够发现更多传统意义上动态测试才能发现的缺陷，例如符号执行、抽象解释、值依赖分析等等并采用数学约束求解工具进行路径约减或者可达性分析以发现更多的问题、减少误报、提高效率。</p>
+<h2 id="经典的符号执行技术"><a href="#经典的符号执行技术" class="headerlink" title="经典的符号执行技术"></a>经典的符号执行技术</h2><p>符号执行被看作是最有前途的静态分析技术之一，它可以通过分析技术得到让特定区域执行的输入。最初在1976年由King JC在ACM上提出。即通过使用抽象的符号代替具体值来模拟程序的执行，当遇到分支语句时，它会探索每一个分支, 将分支条件加入到相应的路径约束中，若约束可解，则说明该路径是可达的。符号执行的目的是在给定的时间内，尽可能的探索更多的路径。根据运行的目的来分，主要有两个：</p>
+<ul>
+<li>从测试的角度来看，它可以模拟出各个路径的输入值，从而创建高覆盖率的测试套件。这里是静态的分析程序得到测试需要的输入，与动态执行程序的测试不同，动态执行程序的测试更多的是依赖完备的测试用例来提升测试的覆盖率，达到发现问题的目的。比如曾经使用过的IBM的Purify 来检测代码的内存泄露问题。就需要人工的看代码，编制大量的测试用例，然后通过让程序执行分别执行这些输入，来提高代码的覆盖率，从而尽可能的发现内存泄漏的问题。</li>
+<li>从缺陷查找的角度来看，它为开发人员提供了触发的缺陷的具体输入，利用该输入，程序可用于缺陷的确认或调试。符号执行不仅限于查找诸如缓冲区溢出之类的问题，而且可以通过根据缺陷发现的条件，生成复杂的断言，来判断缺陷发生的可能性。</li>
+</ul>
+<p>还是用这个经典的例子，来说明符号执行的具体过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int twice(int v)&#123;</span><br><span class="line">     return 2*v;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> void testme(int x, int y)&#123;</span><br><span class="line">     z &#x3D; twice(y);</span><br><span class="line">     if (z &#x3D;&#x3D; x)&#123;</span><br><span class="line">         if (x &gt; y+10)</span><br><span class="line">             ERROR;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;   </span><br><span class="line">   </span><br><span class="line">int main()&#123;</span><br><span class="line">   x &#x3D; sym_input();</span><br><span class="line">   y &#x3D; sym_input();</span><br><span class="line">   testme(x, y);</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码中的函数testme()有三条执行路径。符号执行的目的，就是在给定的时间预算内，生成一组输入，并通过这些输入尽可能多的探索执行路径。</p>
+<ul>
+<li>执行路径(execution path)：一个true和false的序列seq ={p0, p1, …, pn}。其中，如果是一个条件语句，那么pi=ture则表示条件语句的取值为：true，否则取false；</li>
+<li>执行树(execution tree)：一个程序的所有执行路径则可表征成一棵执行树。<br>下图是样例代码的执行树：</li>
+</ul>
+<p><img src="sybolcode.png" alt=""> </p>
+<p>符号执行维护了<strong>符号状态**</strong>σ（<strong><strong>symbolic state</strong></strong>）和符号路径约束<strong> </strong>PC<strong><strong>（</strong></strong>path constraint (or path condition)<strong>**）</strong>，其中 σ 表示变量到符号表达式的映射，PC 是符号表示的不含量词的一阶表达式。在符号执行的初始化阶段，σ 被初始化为空映射，而 PC 被初始化为 true，并随着符号执行的过程不断变化。在对程序的某一路径分支进行符号执行的终点，把 <strong>PC</strong> <strong>输入约束求解器（**</strong>constraint solver<strong>**）</strong>以获得求解，生成<strong>实际的输入值</strong>。如果程序把生成的具体值作为输入执行，它将会和符号执行运行在同一路径，即此时PC的公式所表示的路径，并且以同一种方式结束。</p>
+<p>对于样例代码，具体的过程如下</p>
+<ul>
+<li><p>初始化：初始化符号状态σ为空，符号路径约束PC为true；</p>
+</li>
+<li><p>在每个赋值v = e处，符号执行都通过将 v 映射到σ(e)来更新σ，该映射是通过对当前符号状态求值, 而获得的符号表达式。 例如：</p>
+</li>
+<li><ul>
+<li>main（）函数的前两行（第14-15行）的符号执行导致σ= {x ↦x0，y ↦ y0}，其中x0，y0是两个初始不受约束的符号值；</li>
+<li>在执行第6行之后，σ = {x ↦x0，y ↦y0，z ↦ 2y0}。</li>
+</ul>
+</li>
+<li><p>对于每个条件语句：if（e） then S1 else S2。</p>
+</li>
+<li><ul>
+<li>在第7行之后，分别创建了两个符号执行实例，分别具有路径约束x0 = 2y0和x ≠ 2y0;</li>
+<li>在第8行之后，分别创建两个具有路径约束的符号执行实例（x0 = 2y0）∧（x0 &gt; y0 + 10）和（x0 = 2y0）∧（x0 ≤ y0 + 10）。</li>
+<li>“then”分支： PC被更新为PC ∧ σ(e)；</li>
+<li>“else”分支： 生成一个新的PC’, PC’被初始化为：PC∧¬ σ(e)；</li>
+<li>如果分支的状态σ的PC可满足，则符号执行沿着分支继续，否则路径终止。<br>例如:</li>
+</ul>
+</li>
+<li><p>如果一个符号执行实例碰到了exit或error时，当前符号执行实例就会被终止，并利用一个现成的约束求解器来生成一个可满足当前路径约束的赋值。 例如：</p>
+</li>
+<li><ul>
+<li>三条路径按照约束求解后，分别得到我们期望的三组输入：{x=0, y=1}，{x=2, y=1}和{x=30, y=15}。</li>
+</ul>
+</li>
+<li><p>若代码中包含循环或递归结构，且它们的终止条件是符号化的，则可能导致有无穷多条路径。在实践过程中，需要对路径搜索设置一个限制，例如timeout，限制路径数量，循环迭代次数或探测深度。</p>
+</li>
+</ul>
+<p>经典的符号执行有一个关键的缺点，若符合执行路径的符号路径约束无法使用约束求解器进行有效的求解，则无法生成输入。</p>
+<h2 id="现代符号执行技术"><a href="#现代符号执行技术" class="headerlink" title="现代符号执行技术"></a>现代符号执行技术</h2><p>经典的符号执行，过度的依赖了符号执行的约束求解能力，这就限制了传统符号执行的能力发挥。很快大家发现在分析过程中，如果能加入具体值进行分析，将大大简化分析过程，降低分析的难度和提升效率；但分析过程中，仍不可避免的还是需要将各种条件表达式，进行符号化抽象后变成约束条件参与执行。将程序语句转换为符号约束的精度，对符号执行所达到的覆盖率以及约束求解的可伸缩性会产生重大影响。所以如何做好混合具体(Concrete)执行和符号(Symbolic)执行的能力的平衡，就成为现代符号执行的关键点。</p>
+<p><img src="symbol_now.png" alt=""></p>
+<p>混合执行测试和执行生成测试这两种现代符号执行的代表都是基于这个思想发展而来的。下面以混合执行测试为例说明下现代符号执行的主要过程。</p>
+<p>与经典的符号执行不同，由于混合执行在整个执行过程中，需要维护程序的具体状态，因此其输入需要初始具体值。 混合执行测试从一个给定的输入或随机输入开始执行程序，沿着执行的条件语句在输入上收集符号约束，然后使用约束求解推断先前输入的变化，以便引导程序接下来的执行该走向哪一个执行路径。重复此过程，直到探索了所有执行路径，或者满足用户定义的覆盖标准、时间设置到期为止。</p>
+<p>混合执行测试会同时维护两个状态：</p>
+<ul>
+<li><p>具体状态：映射所有有具体值的变量；</p>
+</li>
+<li><p>符号状态：仅映射没有具体值的变量。</p>
+</li>
+</ul>
+<p>对于样例代码，执行过程如下：</p>
+<ul>
+<li><p>混合执行会生成一些随机的输入值，比如{x=22, y=7}，然后符号化和具体化地一起来执行程序。</p>
+</li>
+<li><p>依据{x=22, y=7}，程序在第7行，这个具体的执行会走向else分支；符号执行沿着执行路径会生成x ≠ 2y0的路径约束；</p>
+</li>
+<li><p>混合测试将路径约束中的连接（x ≠ 2y0）取反，生成一个新的约束x0=2y0，并求解得到测试输入{x=2, y=1}。这个新的输入会强制让程序执行then路径。</p>
+</li>
+<li><p>依据{x=2, y=1}，程序在第8行执行else分支。混合测试会沿着具体执行来进行符号执行，并生成路径约束（x0 = 2y0）∧（x0 &gt; y0 + 10）；</p>
+</li>
+<li><p>混合测试将路径约束中的连接（（x0 &gt; y0 + 10））取反，会生成一个新约束（x0 = 2y0）∧（x0 ≤ y0 + 10）的测试，求解得到测试输入{x=30, y=15}。在这个输入下程序走到ERROR语句。</p>
+</li>
+<li><p>混合测试报告所有被探索的执行路径，并终止测试输入的生成。</p>
+</li>
+</ul>
+<p>比较混合执行测试和传统的符号执行，不难发现由于具体值的引入，简化了约束求解的难度。</p>
+<h2 id="主要挑战"><a href="#主要挑战" class="headerlink" title="主要挑战"></a>主要挑战</h2><h3 id="路径爆炸-Path-Explosion"><a href="#路径爆炸-Path-Explosion" class="headerlink" title="路径爆炸(Path Explosion)"></a>路径爆炸(Path Explosion)</h3><p>符号执行在过程处理中默认已经过滤了以下两种路径：</p>
+<ul>
+<li><p>不依赖于符号输入的路径；</p>
+</li>
+<li><p>对于当前的路径约束，不可解的路径。 但是，尽管符号执行已经做了这些过滤，路径爆炸依旧是符号执行的最大挑战。路径爆炸不是符号执行特有的挑战，是整个程序分析都需要考虑的最大的问题。</p>
+</li>
+</ul>
+<p>解决路径爆炸的方案，可以从以下两个角度来考虑：</p>
+<ul>
+<li><p>减少路径总数（优先的考虑最有希望的路径， 路径合并，剪枝）；</p>
+</li>
+<li><p>相似的路径不再分析（函数摘要，缓存）；</p>
+</li>
+</ul>
+<p>依据这个思路业界提出了两种解决方案。</p>
+<ul>
+<li>启发式（Heuristic)： 大多数启发式方法侧重于实现较高的语句和分支覆盖率。</li>
+</ul>
+<ol>
+<li><p>特别有效的方法是使用静态控制流图（CFG）来指导探索，向最接近的路径或优先选择先前执行次数最少的语句；</p>
+</li>
+<li><p>在每个可行的符号分支，随机选择要探索的一侧； 或者将符号检验与随机检验进行交错进行；</p>
+</li>
+<li><p>采用先验知识，探索以往容易出错的函数；目前也有研究通过AI的方式得到这些推荐的分析路径；</p>
+</li>
+</ol>
+<ul>
+<li>利用完善的程序分析技术 : 这种方法主要是使用程序分析和软件验证中的各种思想，以合理的方式降低路径探索的复杂性。</li>
+</ul>
+<ol>
+<li><p>静态地合并路径，然后再求解；</p>
+</li>
+<li><p>通过函数摘要，缓存或重用已经计算过的信息用于后续的计算中；</p>
+</li>
+<li><p>通过剪枝，去除无关的变量对路径的求解的影响；</p>
+</li>
+</ol>
+<h3 id="约束求解"><a href="#约束求解" class="headerlink" title="约束求解"></a>约束求解</h3><p>尽管在过去的几年中，约束解决方案技术取得了长足的进步，但约束求解是符号执行的技术瓶颈。</p>
+<ul>
+<li><p>减少不相关的约束(Irrelevant constraint elimination) 符号执行中的绝大多数查询是为了确定某个分支的可行性，一种有效的优化方法是从路径条件中删除与当前分支的结果无关的那些约束。</p>
+</li>
+<li><p>增量求解(incremental solving) 符号执行期间生成的约束集的一个重要特征是，它们根据来自程序源代码的一组固定的静态分支来表示。因此，许多路径具有相似的约束集，因此可以采用相似的解决方案。</p>
+</li>
+</ul>
+<ol>
+<li><p>通过重用先前类似查询的结果，来提高约束求解的速度；</p>
+</li>
+<li><p>通过约束集的超集，减少无解的情况出现； </p>
+</li>
+</ol>
+<h3 id="内存建模"><a href="#内存建模" class="headerlink" title="内存建模"></a>内存建模</h3><p>在符号执行中我们将变量映射到了一个内存模型，来表示这个变量的类型、值或者值域。这个对变量的抽象模式对程序语句转化成符号约束的精度和对符号执行的覆盖率有着很大的影响。太过精确，往往容易陷入复杂的计算，而不能得到具体的解；太过笼统，又会造成漏报。所以精度和可扩展性之间是需要权衡的。</p>
+<p>目前这个权衡的主要参考依据是：</p>
+<ol>
+<li><p>具体分析问题的性质；</p>
+</li>
+<li><p>采用的约束求解器的限制；</p>
+</li>
+</ol>
+<h2 id="Mythril工具"><a href="#Mythril工具" class="headerlink" title="Mythril工具"></a>Mythril工具</h2><p>Mythril是一个基于符号执行技术的以太坊智能合约安全工具， 其预置的检测模块可以发现合约中存在的一些安全问题。</p>
+<p>官方文档<a href="https://mythril-classic.readthedocs.io/" target="_blank" rel="noopener">https://mythril-classic.readthedocs.io/</a></p>
+<p>github仓库<a href="https://github.com/ConsenSys/mythril" target="_blank" rel="noopener">ConsenSys/mythril: Security analysis tool for EVM bytecode. Supports smart contracts built for Ethereum, Hedera, Quorum, Vechain, Roostock, Tron and other EVM-compatible blockchains. (github.com)</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>目前Mythril虽然没有明确说不支持Windows，但我在windows上安装Mythril遇到了困难，转而在Ubuntu上安装。</p>
+<h4 id="Mythril-on-Ubuntu"><a href="#Mythril-on-Ubuntu" class="headerlink" title="Mythril on Ubuntu"></a>Mythril on Ubuntu</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Update</span><br><span class="line">sudo apt update</span><br><span class="line"></span><br><span class="line"># Install solc</span><br><span class="line">sudo apt install software-properties-common</span><br><span class="line">sudo add-apt-repository ppa:ethereum&#x2F;ethereum</span><br><span class="line">sudo apt install solc</span><br><span class="line"></span><br><span class="line"># Install libssl-dev, python3-dev, and python3-pip</span><br><span class="line">sudo apt install libssl-dev python3-dev python3-pip</span><br><span class="line"></span><br><span class="line"># Install mythril</span><br><span class="line">pip3 install mythril</span><br><span class="line">myth version</span><br></pre></td></tr></table></figure>
+<h4 id="Mythril-on-Docker"><a href="#Mythril-on-Docker" class="headerlink" title="Mythril on Docker"></a>Mythril on Docker</h4><p>所有 Mythril 版本，从 v0.18.3 开始，都以 Docker 镜像的形式发布到 DockerHub。<code>mythril/myth</code></p>
+<p>安装 <a href="https://docs.docker.com/install/" target="_blank" rel="noopener">Docker CE</a> 后：</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Pull the latest release of mythril&#x2F;myth</span><br><span class="line">$ docker pull mythril&#x2F;myth</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>使用与使用命令相同的方式<code>docker run mythril/myth``myth</code></p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run mythril&#x2F;myth --help</span><br><span class="line">docker run mythril&#x2F;myth disassemble -c &quot;0x6060&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>要将文件从主机传递到 dockerized Mythril，必须将其包含文件夹正确挂载到容器中。对于在当前工作目录中，执行以下操作：<code>contract.sol</code></p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v $(pwd):&#x2F;tmp mythril&#x2F;myth analyze &#x2F;tmp&#x2F;contract.sol</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="Mythril工作原理"><a href="#Mythril工作原理" class="headerlink" title="Mythril工作原理"></a>Mythril工作原理</h3><p>Mythril通过在一个特制的以太坊虚拟机里运行智能合约字节码来检查 合约的安全问题，它使用<a href="http://blog.hubwiz.com/2020/05/08/mythril-symbolic-execution/" target="_blank" rel="noopener">符号执行</a> 技术来检查程序可能的状态，分析过程包含以下步骤：</p>
+<p>1、获取合约字节码 2、初始化合约账户的状态 3、利用n个交易来探索合约的状态空间，n默认为2，但可以设置为任意值 4、当发现不希望的状态时，证明或否定其在特定假设下的可到达性</p>
+<p>当发现一个漏洞状态时，我们可以计算到达该状态所需的交易。这不仅有助于 确定问题的根源，而且也可以用于漏洞利用。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>Mythril最基本的安全分析命令是<code>myth analyze</code>，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myth analyze &lt;Solidity file&gt;</span><br><span class="line">myth analyze -a &lt;contract address&gt;</span><br></pre></td></tr></table></figure>
+<p>没有其他参数的话，myth analyze命令将执行适合大多数情况的通用分析。</p>
+<p>依旧是准备了一个重入漏洞的合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.19</span>;</span><br><span class="line"></span><br><span class="line">contract Reentrance&#123;</span><br><span class="line">    address _owner;</span><br><span class="line">    mapping (<span class="function"><span class="params">address</span> =&gt;</span> uint256) balances;</span><br><span class="line">    uint256 public score;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始状态：0.001ether</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Reentrance</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">payable</span> </span>&#123;</span><br><span class="line">        _owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">withdraw</span>(<span class="params">uint256 amount</span>) <span class="title">public</span> <span class="title">payable</span></span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(balances[msg.sender] &gt;= amount);</span><br><span class="line">        <span class="built_in">require</span>(address(<span class="keyword">this</span>).balance &gt;= amount);</span><br><span class="line">        <span class="comment">// 发送以太</span></span><br><span class="line">        msg.sender.call.value(amount)();</span><br><span class="line">        <span class="comment">// 状态变量修改</span></span><br><span class="line">        balances[msg.sender] -= amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">deposit</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">payable</span></span>&#123;</span><br><span class="line">        balances[msg.sender] += msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">balanceOf</span>(<span class="params">address adre</span>) <span class="title">constant</span> <span class="title">returns</span>(<span class="params">uint256</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> balances[adre];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">wallet</span>(<span class="params"></span>) <span class="title">constant</span> <span class="title">returns</span>(<span class="params">uint256 result</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> address(<span class="keyword">this</span>).balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">isCompleted</span>(<span class="params"></span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        score = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(isContract(msg.sender))&#123;</span><br><span class="line">            score = <span class="number">25</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(address(<span class="keyword">this</span>).balance == <span class="number">0</span>)&#123;</span><br><span class="line">            score = <span class="number">100</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">isContract</span>(<span class="params">address addr</span>) <span class="title">private</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">        uint size;</span><br><span class="line">        assembly &#123; <span class="attr">size</span> := extcodesize(addr) &#125;</span><br><span class="line">        <span class="keyword">return</span> size &gt; <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以下语句，即可对合约进行分析。</p>
+<p><code>myth analyze  contracts/overflow.sol</code></p>
+<p>可以看到，分析出了107也就是重入漏洞</p>
+<p><img src="myth_reentrancy.png" alt=""></p>
+<p>ps：吐槽一下Mythril，目前没有发现这个工具和hardhat，truffle等主流框架兼容。使用起来有点麻烦。</p>
+<p>让我意外的是myth给我这个重入合约还检测出来一个漏洞，SWC104，我去一翻文档，好家伙，居然是没有检查call的返回值。不能说是误报吧，但确实没有必要，这也让我怀疑myth底层是不是检测到call调用就会返回去看你检查返回值没有。</p>
+<p><img src="myth_callreturn.png" alt=""></p>
+<p>你还可以选择 -o json来指定json格式输出，我这里换了一个有溢出漏洞的合约测试：</p>
+<p><img src="overflow.png" alt=""></p>
+<p>可以看到检测出了101溢出。</p>
+<p>还有更多的选项，如下:</p>
+<ul>
+<li>analyze (a)，分析智能合约</li>
+<li>disassemble (d)，拆解合约，返回合约对应的Opcodes</li>
+<li>pro (p)，使用Mythril 专业版（收费）</li>
+<li>list-detectors，列出可用的安全检测模型</li>
+<li>read-storage，通过rpc读取指定地址的存储插槽</li>
+<li>leveldb-search，从本地leveldb中检索</li>
+<li>function-to-hash，计算合约方法的函数标识码</li>
+<li>hash-to-address，将hash转换为以太坊地址</li>
+<li>version，版本号</li>
+</ul>
+<ul>
+<li>o 输出格式，可选text/markdown/json/jsonv2</li>
+<li>t 交易个数</li>
+</ul>
+<ul>
+<li>solv 是指定solidity编译版本</li>
+</ul>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/slither/" data-toggle="tooltip" data-placement="top" title="slither工具">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/逆向分析初探/" data-toggle="tooltip" data-placement="top" title="逆向分析初探">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#符号执行以及Mythril工具"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">符号执行以及Mythril工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#引言"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">引言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#经典的符号执行技术"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">经典的符号执行技术</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#现代符号执行技术"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">现代符号执行技术</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#主要挑战"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">主要挑战</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#路径爆炸-Path-Explosion"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">路径爆炸(Path Explosion)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#约束求解"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">约束求解</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内存建模"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">内存建模</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Mythril工具"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Mythril工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Mythril-on-Ubuntu"><span class="toc-nav-number">1.5.1.1.</span> <span class="toc-nav-text">Mythril on Ubuntu</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Mythril-on-Docker"><span class="toc-nav-number">1.5.1.2.</span> <span class="toc-nav-text">Mythril on Docker</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Mythril工作原理"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">Mythril工作原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用方法"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">使用方法</span></a></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#static-analysis" title="static-analysis">static-analysis</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
