@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>抢跑机器人实现</title>
+      <link href="/frontRunningBot/"/>
+      <url>/frontRunningBot/</url>
+      
+        <content type="html"><![CDATA[<hr><pre><code>author：Thomas_Xu</code></pre><h1 id="抢跑机器人实现"><a href="#抢跑机器人实现" class="headerlink" title="抢跑机器人实现"></a>抢跑机器人实现</h1><p>在阅读本文前，请确保你知道区块链抢跑交易的原理和链上监听相关知识。</p><p><a href="https://thomasxu-blockchain.github.io/Front-Running/">Front-Running - Thomas_Xu (thomasxu-blockchain.github.io)</a></p><p><a href="https://thomasxu-blockchain.github.io/eventListen/">合约事件的监听 - Thomas_Xu (thomasxu-blockchain.github.io)</a></p><p>源码：</p><p><a href="https://github.com/ThomasXu-blockchain/FrontrunningBot" target="_blank" rel="noopener">ThomasXu-blockchain/FrontrunningBot (github.com)</a></p><blockquote><p>申明：此代码不做任何商业用途，不作为攻击手段，只作为个人练手使用。</p></blockquote><h2 id="实现原理："><a href="#实现原理：" class="headerlink" title="实现原理："></a>实现原理：</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获得交易以前的代币余额</span></span><br><span class="line">  <span class="keyword">let</span> tokenBalanceBefore = <span class="keyword">await</span> getTokenBalance(TUSD_TOKEN_ADDRESS);</span><br><span class="line">  <span class="comment">// 监控待处理交易</span></span><br><span class="line">  <span class="keyword">const</span> web3Ws = <span class="keyword">new</span> Web3(<span class="keyword">new</span> Web3.providers.WebsocketProvider(<span class="string">`wss://<span class="subst">$&#123;NETWORK&#125;</span>.g.alchemy.com/v2/<span class="subst">$&#123;PROJECT_ID&#125;</span>`</span>));</span><br><span class="line">  subscription = web3Ws.eth.subscribe(<span class="string">'pendingTransactions'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, result</span>) </span>&#123;</span><br><span class="line">  &#125;).on(<span class="string">"data"</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">transactionHash</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> transaction = <span class="keyword">await</span> web3.eth.getTransaction(transactionHash);</span><br><span class="line">    <span class="comment">// 过滤和进行抢跑</span></span><br><span class="line">    <span class="keyword">await</span> handleTransaction(transaction);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (succeed) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'\n'</span> + <span class="string">"Front-running attack succeed."</span>);</span><br><span class="line">      <span class="comment">// 出售 token</span></span><br><span class="line">      <span class="keyword">let</span> tokenBalanceAfter = <span class="keyword">await</span> getTokenBalance(TUSD_TOKEN_ADDRESS);</span><br><span class="line">      <span class="keyword">let</span> srcAmount = (tokenBalanceAfter - tokenBalanceBefore) / (<span class="number">10</span> ** TUSD_DECIMALS);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"Get "</span> + srcAmount + <span class="string">" Tokens."</span> + <span class="string">'\n'</span>);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"Begin selling the tokens."</span>);</span><br><span class="line">      <span class="keyword">await</span> performTrade(TUSD_TOKEN_ADDRESS, ETH_TOKEN_ADDRESS, srcAmount);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"End."</span>)</span><br><span class="line">      process.exit();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>其实这里最主要的就是<code>web3Ws.eth.subscribe</code>这个订阅事件的方法，这可以帮助我们获取到链上所有正在等待打包的交易信息，在得到交易哈希后使用<code>getTransaction</code>即可获得交易元数据。</p><p>之后进入<code>handleTransaction</code>函数进行交易过滤和抢跑，抢跑完成后出售token即可。</p><h3 id="handleTransaction（）"><a href="#handleTransaction（）" class="headerlink" title="handleTransaction（）"></a>handleTransaction（）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">handleTransaction</span>(<span class="params">transaction</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 选出对应的交易</span></span><br><span class="line">  <span class="keyword">if</span> (transaction.to == UNISWAP_ROUTER_ADDRESS &amp;&amp; <span class="keyword">await</span> isPending(transaction.hash)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Found pending uniswap network transaction"</span>, transaction);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 计算gas</span></span><br><span class="line">  <span class="keyword">let</span> gasPrice = <span class="built_in">parseInt</span>(transaction[<span class="string">'gasPrice'</span>]);</span><br><span class="line">  <span class="keyword">let</span> newGasPrice = gasPrice + ONE_GWEI;</span><br><span class="line">  <span class="keyword">if</span> (newGasPrice &gt; MAX_GAS_PRICE) &#123;</span><br><span class="line">    newGasPrice = MAX_GAS_PRICE;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 判断符合触发抢跑交易的条件后，再进行抢跑</span></span><br><span class="line">  <span class="keyword">if</span> (triggersFrontRun(transaction)) &#123;</span><br><span class="line">    <span class="comment">//取消注册</span></span><br><span class="line">    subscription.unsubscribe();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Perform front running attack...'</span>);</span><br><span class="line">    <span class="comment">//执行抢跑交易</span></span><br><span class="line">    <span class="keyword">await</span> performTrade(ETH_TOKEN_ADDRESS, TUSD_TOKEN_ADDRESS, ETH_QTY, newGasPrice);</span><br><span class="line">    <span class="comment">// 等待抢跑交易成功，并更改状态</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"wait until the honest transaction is done..."</span>);</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">await</span> isPending(transaction.hash)) &#123; &#125;</span><br><span class="line">    succeed = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在这里主要是筛选出router的交易，然后得到该交易的gas，并提高gas以备抢跑。</p><p>在<code>triggersFrontRun</code>里会检查是否是<code>swapExactETHForTokens</code>函数交易，之后就进入抢跑交易。</p><p>如何进行交易参考uniswap的sdk文档<a href="https://docs.uniswap.org/sdk/v2/guides/trading" target="_blank" rel="noopener">Trading | Uniswap</a></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在交易市场中，套利机器人是随时存在的，这对于维币对稳定有好处。</p><p>在实现中，最大的难点其实是和uniswap的sdk交互的地方，比较繁琐。因为只是一个简单实现，不考虑其他任何因素。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 杂谈 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 杂谈 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>符号执行以及Mythril工具</title>
       <link href="/Symbol-execution/"/>
       <url>/Symbol-execution/</url>
@@ -46,31 +71,6 @@
         <tags>
             
             <tag> static-analysis </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>抢跑机器人实现</title>
-      <link href="/frontRunningBot/"/>
-      <url>/frontRunningBot/</url>
-      
-        <content type="html"><![CDATA[<hr><pre><code>author：Thomas_Xu</code></pre><h1 id="抢跑机器人实现"><a href="#抢跑机器人实现" class="headerlink" title="抢跑机器人实现"></a>抢跑机器人实现</h1><p>在阅读本文前，请确保你知道区块链抢跑交易的原理和链上监听相关知识。</p><p><a href="https://thomasxu-blockchain.github.io/Front-Running/">Front-Running - Thomas_Xu (thomasxu-blockchain.github.io)</a></p><p><a href="https://thomasxu-blockchain.github.io/eventListen/">合约事件的监听 - Thomas_Xu (thomasxu-blockchain.github.io)</a></p><p>源码：</p><p><a href="https://github.com/ThomasXu-blockchain/FrontRunning-bot" target="_blank" rel="noopener">ThomasXu-blockchain/FrontRunning-bot (github.com)</a></p><h2 id="实现原理："><a href="#实现原理：" class="headerlink" title="实现原理："></a>实现原理：</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> 杂谈 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 杂谈 </tag>
             
         </tags>
       
