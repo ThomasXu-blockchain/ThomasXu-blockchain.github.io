@@ -290,6 +290,44 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge test</span><br></pre></td></tr></table></figure>
 <p>和hardhat类似，我们也可以通过路径去唯一指定test</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge test --match-contract testname</span><br></pre></td></tr></table></figure>
+<h5 id="影藏功能"><a href="#影藏功能" class="headerlink" title="影藏功能"></a>影藏功能</h5><p>test有很多隐藏功能<a href="https://book.getfoundry.sh/reference/forge/forge-test" target="_blank" rel="noopener">锻造测试 - 铸造手册 (getfoundry.sh)</a></p>
+<ul>
+<li><p>分叉</p>
+<ul>
+<li><p>可以通过 .<code>--fork-url &lt;URL&gt;</code></p>
+<p>当测试在分叉环境中运行时，您可以像访问分叉链的所有状态一样 如果已部署合同。<a href="https://book.getfoundry.sh/cheatcodes/" target="_blank" rel="noopener">备忘码</a>仍然可用。</p>
+<p>您还可以通过传递 来指定要从中分叉的块号。从 特定块，链数据缓存到 .如果您不想缓存链数据， 通过。<code>--fork-block-number &lt;BLOCK&gt;``~/.foundry/cache``--no-storage-caching</code></p>
+<p>在分叉环境中运行时无法由本地协定解码的跟踪（例如，调用 存在于主网上的合约，如代币）可以选择使用Etherscan进行解码。使用以太扫描 对于跟踪解码，请设置或传递 。<code>ETHERSCAN_API_KEY``--etherscan-api-key &lt;KEY&gt;</code></p>
+</li>
+</ul>
+</li>
+<li><p>—gas-report</p>
+<ul>
+<li><p>打印气体报告。</p>
+<p><img src="gas_report.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>-vvvv</p>
+<ul>
+<li><p>EVM 的详细程度。</p>
+<p>多次传递以增加详细程度（例如、、）。<code>-v``-vv``-vvv</code></p>
+<p>详细级别： - 2：打印所有测试的日志 - 3：打印失败测试的执行跟踪 - 4：打印所有测试的执行跟踪，以及失败测试的设置跟踪 - 5：<br>打印所有测试</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h4><p>foundry内置了一个强大的debug功能，使用如下命令 <code>$FUNC</code>是test模块的函数名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forge test --debug $FUNC</span><br></pre></td></tr></table></figure>
+<p>这是debugger的实际效果</p>
+<p>运行调试器时，将显示一个分为四个象限的终端：</p>
+<ul>
+<li><strong>象限 1</strong>：调试会话中的操作码，突出显示当前操作码。此外，还显示当前帐户的地址，程序计数器和累计的气体使用情况</li>
+<li><strong>象限 2</strong>：当前堆栈以及堆栈的大小</li>
+<li><strong>象限 3</strong>：源视图</li>
+<li><strong>象限 4</strong>：EVM 的当前内存</li>
+</ul>
+<p><img src="debugger.png" alt=""></p>
 <h3 id="Cast"><a href="#Cast" class="headerlink" title="Cast"></a>Cast</h3><p>Cast是一个CLI工具，用于对兼容以太坊虚拟机（EVM）的区块链进行RPC调用。使用<code>cast</code>，我们可以进行合约调用，查询数据，并处理编码和解码。<code>cast</code>有很多的子命令，所以要想获得完整的参考，请看Foundry书中的<a href="https://book.getfoundry.sh/reference/cast/" target="_blank" rel="noopener">cast</a>一节.</p>
 <p>cast给我们提供了一个很方便的和EVM交互的工具</p>
 <h3 id="Anvil"><a href="#Anvil" class="headerlink" title="Anvil"></a>Anvil</h3><p>Anvil是一个CLI工具，用于运行本地EVM区块链。它可以与ganache和hardhat节点相媲美，但好像更快。</p>
@@ -477,7 +515,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Foundry-很牛逼的框架"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Foundry-很牛逼的框架</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#为什么用Foundry？"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">为什么用Foundry？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry简介"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Foundry简介</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry安装"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Foundry安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Linux-Mac"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Linux&#x2F;Mac:</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry包含的组件"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Foundry包含的组件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#forge"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">forge</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#init"><span class="toc-nav-number">1.4.1.1.</span> <span class="toc-nav-text">init</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#install"><span class="toc-nav-number">1.4.1.2.</span> <span class="toc-nav-text">install</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#test"><span class="toc-nav-number">1.4.1.3.</span> <span class="toc-nav-text">test</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Cast"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">Cast</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Anvil"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">Anvil</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry作弊码"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Foundry作弊码</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Gas优化"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">Gas优化</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#部署和使用合约"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">部署和使用合约</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#用-Cast-与链上合约交互"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">用 Cast 与链上合约交互</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry编写Damn-Defi测试用例"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">Foundry编写Damn_Defi测试用例</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Foundry-很牛逼的框架"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Foundry-很牛逼的框架</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#为什么用Foundry？"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">为什么用Foundry？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry简介"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Foundry简介</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry安装"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Foundry安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Linux-Mac"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Linux&#x2F;Mac:</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry包含的组件"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Foundry包含的组件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#forge"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">forge</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#init"><span class="toc-nav-number">1.4.1.1.</span> <span class="toc-nav-text">init</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#install"><span class="toc-nav-number">1.4.1.2.</span> <span class="toc-nav-text">install</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#test"><span class="toc-nav-number">1.4.1.3.</span> <span class="toc-nav-text">test</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#影藏功能"><span class="toc-nav-number">1.4.1.3.1.</span> <span class="toc-nav-text">影藏功能</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#debug"><span class="toc-nav-number">1.4.1.4.</span> <span class="toc-nav-text">debug</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Cast"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">Cast</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Anvil"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">Anvil</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry作弊码"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Foundry作弊码</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Gas优化"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">Gas优化</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#部署和使用合约"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">部署和使用合约</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#用-Cast-与链上合约交互"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">用 Cast 与链上合约交互</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Foundry编写Damn-Defi测试用例"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">Foundry编写Damn_Defi测试用例</span></a></li></ol></li></ol>
             
           
           </div>

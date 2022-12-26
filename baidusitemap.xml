@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://thomasxu-blockchain.github.io/Proxy/</loc>
+    <lastmod>2022-12-26</lastmod>
+  </url>
+  <url>
+    <loc>https://thomasxu-blockchain.github.io/Foundry/</loc>
+    <lastmod>2022-12-24</lastmod>
+  </url>
+  <url>
     <loc>https://thomasxu-blockchain.github.io/frontRunningBot/</loc>
-    <lastmod>2022-12-22</lastmod>
+    <lastmod>2022-12-23</lastmod>
   </url>
   <url>
     <loc>https://thomasxu-blockchain.github.io/Symbol-execution/</loc>
@@ -59,10 +67,6 @@
   <url>
     <loc>https://thomasxu-blockchain.github.io/paradigm22-trapdoor/</loc>
     <lastmod>2022-11-15</lastmod>
-  </url>
-  <url>
-    <loc>https://thomasxu-blockchain.github.io/Foundry/</loc>
-    <lastmod>2022-11-09</lastmod>
   </url>
   <url>
     <loc>https://thomasxu-blockchain.github.io/OverflowAttack/</loc>
