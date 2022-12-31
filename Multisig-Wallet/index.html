@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          由BT钱包引发的多签钱包思考 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/Multisig-Wallet/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jp')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#钱包" title="钱包">钱包</a>
+                            
+                        </div>
+                        <h1>由BT钱包引发的多签钱包思考</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-12-27
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="由BT钱包引发的多签钱包思考"><a href="#由BT钱包引发的多签钱包思考" class="headerlink" title="由BT钱包引发的多签钱包思考"></a>由BT钱包引发的多签钱包思考</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>12月26日，Bitkeep钱包发生漏洞，造成约900w美元的损失。这也引起了我对钱包安全的关注，。此次Bitkeep钱包事件疑似因为部分APK包下载被黑客劫持，安装了黑客植入代码的包，用户下载或者更新的应用或许是被劫持的不明版本（非官方发布版本）。最终可能导致了下载黑客版本的APK用户私钥泄露。截至笔者发文，具体原因还未查明，大家可以持续关注Bitkeep官方twitter或慢雾区了解后续进展。</p>
+<p><a href="https://twitter.com/BitKeepOS/status/1607666330605604866" target="_blank" rel="noopener">(20) BitKeep Wallet 在 Twitter: “10/ All stolen tokens were swapped for USDT in the amount of about 8,989,011. BitKeep will keep tracking hacker’s criminal actions and do whatever it takes to protect the interest of our users. We will keep updating relevant information with our communities. Please stay tuned.” / Twitter</a></p>
+<p><a href="https://www.panewslab.com/zh/sqarticledetails/73b6rcf2.html" target="_blank" rel="noopener">BitKeep：用户资金被盗疑似因下载了被黑客劫持的APK版本 - PANews (panewslab.com)</a></p>
+<p>可以大概了解到此次事件是一个很典型的传统安全的攻击方式，这些对于硬件钱包来讲，是不可避免的。但是也许，多签钱包可以避免这次攻击的绝大部分损失。</p>
+<p>值得一提的是BK钱包已经是三个月来第二次出现漏洞了…</p>
+<h2 id="多签钱包"><a href="#多签钱包" class="headerlink" title="多签钱包"></a>多签钱包</h2><p>V神曾说过，多签钱包要比硬件钱包更加安全（<a href="https://twitter.com/VitalikButerin/status/1558886893995134978?s=20&amp;t=4WyoEWhwHNUtAuABEIlcRw" target="_blank" rel="noopener">推文</a>）。</p>
+<p><img src="V.png" alt=""></p>
+<p>多签钱包，顾名思义，就是需要多个人去签名执行某个操作的包。使用多签钱包进行转账，往往需要 &gt;= 1 个人去签名发送交易之后，转账操作才真正完成。使用多签钱包时，我们可以指定 m/n 的签名模式，就是 n 个人里面有 m 个人签名即可完成操作。可以根据自己的需求设置多签规则，例如：</p>
+<ul>
+<li>1/2多签模式：两个互相信任的朋友或自己的两个钱包，可以凭各自的私钥独立发起交易（类似于合伙账户）。</li>
+<li>2/2多签模式：金库中的资金需要2个管理员均同意才能动用这笔资金（需要两个私钥才能转移资金）。</li>
+<li>2/3多签模式：三个合伙人共同管理资金，为了规避私钥丢失的风险，其中两个私钥签名就可以转移资金。</li>
+</ul>
+<p>当然，还有1/3多签、3/6多签、5/8多签不同规则的多签方案，规则是按需的。多签钱包最大的特点是需由多个私钥持有者的授权才能进行钱包交易。</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>多签钱包最常见的应用场景是需求强安全性的个人，以及管理公共资产的投资机构、交易所以及项目方。</p>
+<h4 id="资金安全"><a href="#资金安全" class="headerlink" title="资金安全"></a>资金安全</h4><p>资金的安全也可以理解为私钥的安全，有一些常见的方案如使用硬件钱包来防止私钥泄露，使用助记词密盒来防止私钥遗忘等等，但依然存在“单点故障”的问题。</p>
+<p>在单签钱包中，加密资产的所有权和管理员是在单人手中，一但私钥泄露或遗忘就意味着失去了对钱包的控制权，与之关联的加密资产将完全丢失。而多签钱包的存在，就很大程度上降低了资产损失的风险。以2/3多签模式为例，在全部的3个私钥中，只要有2个私钥完成签名授权就能完成加密资产的转移。</p>
+<p>对于个人而言，可以通过一个多签钱包，关联多个钱包地址，分布在多处（类似异地多活、同城多机房），一个放在MetaMask浏览器扩展、一个安装在手机钱包App、一个在冷钱包，需要转移加密资产时只需要用其中的两个钱包共同签名即可。当然为了方便的话，可以使用1/3多签模式，这就类似于把同一个私钥记在三个助记词卡上放在多处一样，但这种方式仅仅是降低了密钥丢失的风险。</p>
+<h4 id="资金共管"><a href="#资金共管" class="headerlink" title="资金共管"></a>资金共管</h4><p>很多DeFi 协议/DAO 组织/区块链团队其实都有自己的金库，金库里的资产是不能由任何一个人直接动用的，每次动用都要经过多数人的同意或社区投票。这时使用多签钱包来保存金库资产是再合适不过了。</p>
+<h4 id="多签操作"><a href="#多签操作" class="headerlink" title="多签操作"></a>多签操作</h4><p>在目前这个发展阶段，很多去中心化协议其实都是有个管理员权限的，这个管理员权限往往可以更改协议的某些关键参数。行业普遍做法是把这个管理员权限交给一个多签钱包或时间锁，当需要更改参数时，需要多个人共同签署相关操作。</p>
+<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><p>在以太坊上的多签钱包其实是智能合约，属于合约钱包。下面我们写一个极简版多签钱包<code>MultisigWallet</code>合约，它的逻辑非常简单：</p>
+<ol>
+<li><p>设置多签人和门槛（链上）：部署多签合约时，我们需要初始化多签人列表和执行门槛（至少n个多签人签名授权后，交易才能执行）。Gnosis Safe多签钱包支持增加/删除多签人以及改变执行门槛，但在咱们的极简版中不考虑这一功能。</p>
+</li>
+<li><p>创建交易（链下）：一笔待授权的交易包含以下内容</p>
+<ul>
+<li><code>to</code>：目标合约。</li>
+<li><code>value</code>：交易发送的以太坊数量。</li>
+<li><code>data</code>：calldata，包含调用函数的选择器和参数。</li>
+<li><code>nonce</code>：初始为<code>0</code>，随着多签合约每笔成功执行的交易递增的值，可以防止签名重放攻击。</li>
+<li><code>chainid</code>：链id，防止不同链的签名重放攻击。</li>
+</ul>
+</li>
+<li><p>收集多签签名（链下）：将上一步的交易ABI编码并计算哈希，得到交易哈希，然后让多签人签名，并拼接到一起的到打包签名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">交易哈希: 0xc1b055cf8e78338db21407b425114a2e258b0318879327945b661bfdea570e66</span><br><span class="line"></span><br><span class="line">多签人A签名: 0xd6a56c718fc16f283512f90e16f2e62f888780a712d15e884e300c51e5b100de2f014ad71bcb6d97946ef0d31346b3b71eb688831abedaf41b33486b416129031c</span><br><span class="line"></span><br><span class="line">多签人B签名: 0x2184f70a17f14426865bda8ebe391508b8e3984d16ce6d90905ae8beae7d75fd435a7e51d837881d820414ebaf0ff16074204c75b33d66928edcf8dd398249861b</span><br><span class="line"></span><br><span class="line">打包签名：</span><br><span class="line">0xd6a56c718fc16f283512f90e16f2e62f888780a712d15e884e300c51e5b100de2f014ad71bcb6d97946ef0d31346b3b71eb688831abedaf41b33486b416129031c2184f70a17f14426865bda8ebe391508b8e3984d16ce6d90905ae8beae7d75fd435a7e51d837881d820414ebaf0ff16074204c75b33d66928edcf8dd398249861b</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>调用多签合约的执行函数，验证签名并执行交易（链上）。</li>
+</ol>
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><p><code>MultisigWallet</code>合约有<code>2</code>个事件，<code>ExecutionSuccess</code>和<code>ExecutionFailure</code>，分别在交易成功和失败时释放，参数为交易哈希。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event ExecutionSuccess(bytes32 txHash);    &#x2F;&#x2F; 交易成功事件</span><br><span class="line">event ExecutionFailure(bytes32 txHash);    &#x2F;&#x2F; 交易失败事件</span><br></pre></td></tr></table></figure>
+<h3 id="状态变量"><a href="#状态变量" class="headerlink" title="状态变量"></a>状态变量</h3><p><code>MultisigWallet</code>合约有<code>5</code>个状态变量：</p>
+<ol>
+<li><code>owners</code>：多签持有人数组</li>
+<li><code>isOwner</code>：<code>address =&gt; bool</code>的映射，记录一个地址是否为多签持有人。</li>
+<li><code>ownerCount</code>：多签持有人数量</li>
+<li><code>threshold</code>：多签执行门槛，交易至少有n个多签人签名才能被执行。</li>
+<li><code>nonce</code>：初始为<code>0</code>，随着多签合约每笔成功执行的交易递增的值，可以防止签名重放攻击。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">address[] public owners;                   <span class="comment">// 多签持有人数组 </span></span><br><span class="line">mapping(<span class="function"><span class="params">address</span> =&gt;</span> bool) public isOwner;   <span class="comment">// 记录一个地址是否为多签持有人</span></span><br><span class="line">uint256 public ownerCount;                 <span class="comment">// 多签持有人数量</span></span><br><span class="line">uint256 public threshold;                  <span class="comment">// 多签执行门槛，交易至少有n个多签人签名才能被执行。</span></span><br><span class="line">uint256 public nonce;                      <span class="comment">// nonce，防止签名重放攻击</span></span><br></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p><code>MultisigWallet</code>合约有<code>6</code>个函数：</p>
+<ol>
+<li><p>构造函数：调用<code>_setupOwners()</code>，初始化和多签持有人和执行门槛相关的变量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造函数，初始化owners, isOwner, ownerCount, threshold </span></span><br><span class="line"><span class="keyword">constructor</span>(        </span><br><span class="line">    address[] memory _owners,</span><br><span class="line">    uint256 _threshold</span><br><span class="line">) &#123;</span><br><span class="line">    _setupOwners(_owners, _threshold);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p><code>_setupOwners()</code>：在合约部署时被构造函数调用，初始化<code>owners</code>，<code>isOwner</code>，<code>ownerCount</code>，<code>threshold</code>状态变量。传入的参数中，执行门槛需大于等于<code>1</code>且小于等于多签人数；多签地址不能为<code>0</code>地址且不能重复。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// @dev 初始化owners, isOwner, ownerCount,threshold </span></span><br><span class="line"><span class="comment">/// @param _owners: 多签持有人数组</span></span><br><span class="line"><span class="comment">/// @param _threshold: 多签执行门槛，至少有几个多签人签署了交易</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_setupOwners</span>(<span class="params">address[] memory _owners, uint256 _threshold</span>) <span class="title">internal</span> </span>&#123;</span><br><span class="line">    <span class="comment">// threshold没被初始化过</span></span><br><span class="line">    <span class="built_in">require</span>(threshold == <span class="number">0</span>, <span class="string">"WTF5000"</span>);</span><br><span class="line">    <span class="comment">// 多签执行门槛 小于 多签人数</span></span><br><span class="line">    <span class="built_in">require</span>(_threshold &lt;= _owners.length, <span class="string">"WTF5001"</span>);</span><br><span class="line">    <span class="comment">// 多签执行门槛至少为1</span></span><br><span class="line">    <span class="built_in">require</span>(_threshold &gt;= <span class="number">1</span>, <span class="string">"WTF5002"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (uint256 i = <span class="number">0</span>; i &lt; _owners.length; i++) &#123;</span><br><span class="line">        address owner = _owners[i];</span><br><span class="line">        <span class="comment">// 多签人不能为0地址，本合约地址，不能重复</span></span><br><span class="line">        <span class="built_in">require</span>(owner != address(<span class="number">0</span>) &amp;&amp; owner != address(<span class="keyword">this</span>) &amp;&amp; !isOwner[owner], <span class="string">"WTF5003"</span>);</span><br><span class="line">        owners.push(owner);</span><br><span class="line">        isOwner[owner] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ownerCount = _owners.length;</span><br><span class="line">    threshold = _threshold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p><code>execTransaction()</code>：在收集足够的多签签名后，验证签名并执行交易。传入的参数为目标地址<code>to</code>，发送的以太坊数额<code>value</code>，数据<code>data</code>，以及打包签名<code>signatures</code>。打包签名就是将收集的多签人对交易哈希的签名，按多签持有人地址从小到大顺序，打包到一个[bytes]数据中。这一步调用了<code>encodeTransactionData()</code>编码交易，调用了<code>checkSignatures()</code>检验签名是否有效、数量是否达到执行门槛。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// @dev 在收集足够的多签签名后，执行交易</span></span><br><span class="line"><span class="comment">/// @param to 目标合约地址</span></span><br><span class="line"><span class="comment">/// @param value msg.value，支付的以太坊</span></span><br><span class="line"><span class="comment">/// @param data calldata</span></span><br><span class="line"><span class="comment">/// @param signatures 打包的签名，对应的多签地址由小到达，方便检查。 (&#123;bytes32 r&#125;&#123;bytes32 s&#125;&#123;uint8 v&#125;) (第一个多签的签名, 第二个多签的签名 ... )</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">execTransaction</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    address to,</span></span></span><br><span class="line"><span class="function"><span class="params">    uint256 value,</span></span></span><br><span class="line"><span class="function"><span class="params">    bytes memory data,</span></span></span><br><span class="line"><span class="function"><span class="params">    bytes memory signatures</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) <span class="title">public</span> <span class="title">payable</span> <span class="title">virtual</span> <span class="title">returns</span> (<span class="params">bool success</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 编码交易数据，计算哈希</span></span><br><span class="line">    bytes32 txHash = encodeTransactionData(to, value, data, nonce, block.chainid);</span><br><span class="line">    nonce++;  <span class="comment">// 增加nonce</span></span><br><span class="line">    checkSignatures(txHash, signatures); <span class="comment">// 检查签名</span></span><br><span class="line">    <span class="comment">// 利用call执行交易，并获取交易结果</span></span><br><span class="line">    (success, ) = to.call&#123;<span class="attr">value</span>: value&#125;(data);</span><br><span class="line">    <span class="built_in">require</span>(success , <span class="string">"WTF5004"</span>);</span><br><span class="line">    <span class="keyword">if</span> (success) emit ExecutionSuccess(txHash);</span><br><span class="line">    <span class="keyword">else</span> emit ExecutionFailure(txHash);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p><code>checkSignatures()</code>：检查签名和交易数据的哈希是否对应，数量是否达到门槛，若否，交易会revert。单个签名长度为65字节，因此打包签名的长度要长于<code>threshold * 65</code>。调用了<code>signatureSplit()</code>分离出单个签名。这个函数的大致思路：</p>
+<ul>
+<li>用ecdsa获取签名地址.</li>
+<li>利用 <code>currentOwner &gt; lastOwner</code> 确定签名来自不同多签（多签地址递增）。</li>
+<li>利用<code>isOwner[currentOwner]</code>确定签名者为多签持有人。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@dev </span>检查签名和交易数据是否对应。如果是无效签名，交易会revert</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>dataHash 交易数据哈希</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>signatures 几个多签签名打包在一起</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkSignatures</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    bytes32 dataHash,</span></span></span><br><span class="line"><span class="function"><span class="params">    bytes memory signatures</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) <span class="title">public</span> <span class="title">view</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 读取多签执行门槛</span></span><br><span class="line">    uint256 _threshold = threshold;</span><br><span class="line">    <span class="built_in">require</span>(_threshold &gt; <span class="number">0</span>, <span class="string">"WTF5005"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查签名长度足够长</span></span><br><span class="line">    <span class="built_in">require</span>(signatures.length &gt;= _threshold * <span class="number">65</span>, <span class="string">"WTF5006"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过一个循环，检查收集的签名是否有效</span></span><br><span class="line">    <span class="comment">// 大概思路：</span></span><br><span class="line">    <span class="comment">// 1. 用ecdsa先验证签名是否有效</span></span><br><span class="line">    <span class="comment">// 2. 利用 currentOwner &gt; lastOwner 确定签名来自不同多签（多签地址递增）</span></span><br><span class="line">    <span class="comment">// 3. 利用 isOwner[currentOwner] 确定签名者为多签持有人</span></span><br><span class="line">    address lastOwner = address(<span class="number">0</span>); </span><br><span class="line">    address currentOwner;</span><br><span class="line">    uint8 v;</span><br><span class="line">    bytes32 r;</span><br><span class="line">    bytes32 s;</span><br><span class="line">    uint256 i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; _threshold; i++) &#123;</span><br><span class="line">        (v, r, s) = signatureSplit(signatures, i);</span><br><span class="line">        <span class="comment">// 利用ecrecover检查签名是否有效</span></span><br><span class="line">        currentOwner = ecrecover(keccak256(abi.encodePacked(<span class="string">"\x19Ethereum Signed Message:\n32"</span>, dataHash)), v, r, s);</span><br><span class="line">        <span class="built_in">require</span>(currentOwner &gt; lastOwner &amp;&amp; isOwner[currentOwner], <span class="string">"WTF5007"</span>);</span><br><span class="line">        lastOwner = currentOwner;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p><code>signatureSplit()</code>：将单个签名从打包的签名分离出来，参数分别为打包签名<code>signatures</code>和要读取的签名位置<code>pos</code>。利用了内联汇编，将签名的<code>r</code>，<code>s</code>，和<code>v</code>三个值分离出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; 将单个签名从打包的签名分离出来</span><br><span class="line">&#x2F;&#x2F;&#x2F; @param signatures 打包签名</span><br><span class="line">&#x2F;&#x2F;&#x2F; @param pos 要读取的多签index.</span><br><span class="line">function signatureSplit(bytes memory signatures, uint256 pos)</span><br><span class="line">    internal</span><br><span class="line">    pure</span><br><span class="line">    returns (</span><br><span class="line">        uint8 v,</span><br><span class="line">        bytes32 r,</span><br><span class="line">        bytes32 s</span><br><span class="line">    )</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 签名的格式：&#123;bytes32 r&#125;&#123;bytes32 s&#125;&#123;uint8 v&#125;</span><br><span class="line">    assembly &#123;</span><br><span class="line">        let signaturePos :&#x3D; mul(0x41, pos)</span><br><span class="line">        r :&#x3D; mload(add(signatures, add(signaturePos, 0x20)))</span><br><span class="line">        s :&#x3D; mload(add(signatures, add(signaturePos, 0x40)))</span><br><span class="line">        v :&#x3D; and(mload(add(signatures, add(signaturePos, 0x41))), 0xff)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p><code>encodeTransactionData()</code>：将交易数据打包并计算哈希，利用了<code>abi.encode()</code>和<code>keccak256()</code>函数。这个函数可以计算出一个交易的哈希，然后在链下让多签人签名并收集，再调用<code>execTransaction()</code>函数执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; @dev 编码交易数据</span><br><span class="line">&#x2F;&#x2F;&#x2F; @param to 目标合约地址</span><br><span class="line">&#x2F;&#x2F;&#x2F; @param value msg.value，支付的以太坊</span><br><span class="line">&#x2F;&#x2F;&#x2F; @param data calldata</span><br><span class="line">&#x2F;&#x2F;&#x2F; @param _nonce 交易的nonce.</span><br><span class="line">&#x2F;&#x2F;&#x2F; @param chainid 链id</span><br><span class="line">&#x2F;&#x2F;&#x2F; @return 交易哈希bytes.</span><br><span class="line">function encodeTransactionData(</span><br><span class="line">    address to,</span><br><span class="line">    uint256 value,</span><br><span class="line">    bytes memory data,</span><br><span class="line">    uint256 _nonce,</span><br><span class="line">    uint256 chainid</span><br><span class="line">) public pure returns (bytes32) &#123;</span><br><span class="line">    bytes32 safeTxHash &#x3D;</span><br><span class="line">        keccak256(</span><br><span class="line">            abi.encode(</span><br><span class="line">                to,</span><br><span class="line">                value,</span><br><span class="line">                keccak256(data),</span><br><span class="line">                _nonce,</span><br><span class="line">                chainid</span><br><span class="line">            )</span><br><span class="line">        );</span><br><span class="line">    return safeTxHash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h2><ol>
+<li>部署多签合约，<code>2</code>个多签地址，交易执行门槛设为<code>2</code>。因为演示的必要，这里直接存入1 ether</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多签地址1: 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4</span><br><span class="line">多签地址2: 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2</span><br></pre></td></tr></table></figure>
+<p><img src="remix1.png" alt=""></p>
+<ol>
+<li>调用<code>encodeTransactionData()</code>，编码并计算向多签地址1转账<code>1 ETH</code>的交易哈希。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">参数</span><br><span class="line">to: 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4</span><br><span class="line">value: 1000000000000000000</span><br><span class="line">data: 0x</span><br><span class="line">_nonce: 0</span><br><span class="line">chainid: 1</span><br><span class="line"></span><br><span class="line">结果</span><br><span class="line">交易哈希： 0xb43ad6901230f2c59c3f7ef027c9a372f199661c61beeec49ef5a774231fc39b</span><br></pre></td></tr></table></figure>
+<p><img src="remix2.png" alt=""></p>
+<ol>
+<li>利用Remix中ACCOUNT旁边的笔记图案的按钮进行签名，内容输入上面的交易哈希，获得签名，两个钱包都要签。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">多签地址1的签名: 0x014db45aa753fefeca3f99c2cb38435977ebb954f779c2b6af6f6365ba4188df542031ace9bdc53c655ad2d4794667ec2495196da94204c56b1293d0fbfacbb11c</span><br><span class="line">多签地址2的签名: 0xbe2e0e6de5574b7f65cad1b7062be95e7d73fe37dd8e888cef5eb12e964ddc597395fa48df1219e7f74f48d86957f545d0fbce4eee1adfbaff6c267046ade0d81c</span><br><span class="line">将两个签名拼接到一起，得到打包签名: 0x014db45aa753fefeca3f99c2cb38435977ebb954f779c2b6af6f6365ba4188df542031ace9bdc53c655ad2d4794667ec2495196da94204c56b1293d0fbfacbb11cbe2e0e6de5574b7f65cad1b7062be95e7d73fe37dd8e888cef5eb12e964ddc597395fa48df1219e7f74f48d86957f545d0fbce4eee1adfbaff6c267046ade0d81c</span><br></pre></td></tr></table></figure>
+<ol>
+<li>调用<code>execTransaction()</code>函数执行交易，将第3步中的交易参数和打包签名作为参数传入。可以看到交易执行成功，<code>ETH</code>被转出多签。</li>
+</ol>
+<p><img src="remix3.png" alt=""></p>
+<p><img src="remix4.png" alt=""></p>
+<p>到此为止，我们走完了整个从签名到交易的流程，大家应该已经对多签钱包的机制有了一定的了解。</p>
+<h2 id="多签钱包相关安全事件"><a href="#多签钱包相关安全事件" class="headerlink" title="多签钱包相关安全事件"></a>多签钱包相关安全事件</h2><p>现目前多签钱包的应用有很多，最出名的应该是：</p>
+<p><strong>Gnosis Safe</strong> <a href="https://gnosis-safe.io/" target="_blank" rel="noopener">https://gnosis-safe.io/</a></p>
+<p><strong>Ownbit</strong> <a href="https://ownbit.pro/" target="_blank" rel="noopener">https://ownbit.pro/</a></p>
+<p>其中我分析一个发生在Gnosis Safe上的一次钓鱼攻击，这个攻击方式比较综合，同时也可以帮我们更好的理解多签。</p>
+<blockquote>
+<p>相关信息均来自于慢雾</p>
+</blockquote>
+<h3 id="相关信息"><a href="#相关信息" class="headerlink" title="相关信息"></a><strong>相关信息</strong></h3><p>攻击者地址 1：</p>
+<p>0x62a51ad133ca4a0f1591db5ae8c04851a9a4bf65</p>
+<p>攻击者地址 2：</p>
+<p>0x26a76f4fe7a21160274d060acb209f515f35429c</p>
+<p>恶意逻辑实现合约 ETH 地址：</p>
+<p>0x09afae029d38b76a330a1bdee84f6e03a4979359</p>
+<p>恶意合约 ETH 地址 MultiSendCallOnly 合约：</p>
+<p>0x3cb0652856d7eabe51f1e3cceda99c93b05d7cea</p>
+<p>受攻击的代理合约地址：</p>
+<p>0xc97f82c80df57c34e84491c0eda050ba924d7429</p>
+<p>逻辑合约地址：</p>
+<p>0x34cfac646f301356faa8b21e94227e3583fe3f5f</p>
+<p>MultiSendCall 合约 ETH 地址：</p>
+<p>0x40a2accbd92bca938b02010e17a5b8929b49130d</p>
+<p>攻击交易：</p>
+<p><a href="https://etherscan.io/tx/0x71c2d6d96a3fae4be39d9e571a2678d909b83ca97249140ce7027092aa77c74e" target="_blank" rel="noopener">https://etherscan.io/tx/0x71c2d6d96a3fae4be39d9e571a2678d909b83ca97249140ce7027092aa77c74e</a></p>
+<h3 id="攻击步骤"><a href="#攻击步骤" class="headerlink" title="攻击步骤"></a>攻击步骤</h3><p>第一步：攻击者先是在 9 天前部署了恶意 MultiSendCall，并且验证了合约代码让这个攻击合约看起来像之前真正的 MultiSendCall。</p>
+<p><img src="gnosis1.png" alt=""></p>
+<p>第二步：攻击者通过钓⻥⼿段构造了⼀个指向恶意地址 calldata 数据让⽤户进⾏签名。calldata ⾥⾯正确的 to 地址应该是 0x40a2accbd92bca938b02010e17a5b8929b49130d，现在被更改成了恶意合约 ETH 地址 MultiSendCallOnly 合约 0x3cb0652856d7eabe51f1e3cceda99c93b05d7cea。</p>
+<p>由于攻击者获取的签名数据是正确的，所以通过了验证多签的阶段，之后就开始执⾏了攻击合约的 multiSend 函数。</p>
+<p><img src="gnosis2.png" alt=""></p>
+<p><img src="gnosis3.png" alt=""></p>
+<p>这时候通过查看攻击合约我们发现此处的修饰器 Payable 有赋值的情况存在。这时候我们通过对源码的反编译发现：</p>
+<p><img src="gnosis4.png" alt=""></p>
+<p>当 payment.version &lt; VERSION 这个条件触发的时候每次调⽤的时候都会对 storage[0x00] 进⾏重新赋值。这个 storage[0x00] 是不是特别眼熟？没错我们来看下 Proxy 合约。</p>
+<p><img src="gnosis5.png" alt=""></p>
+<p>当这笔交易执⾏完毕时 Proxy 的 storage[0x00] 已经变成0x020014b037686d9ab0e73798<strong>09afae029d38b76a330a1bdee84f6e03a4979359</strong> 。</p>
+<p>由于 Proxy 合约执⾏的逻辑合约地址 masterCopy 是从 storage[0x00] 读取的，所以 Proxy 指向的逻辑合约会被攻击者更改为攻击合约。后续攻击者只需等待⽤户把⾜够的代币放⼊此合约，之后构造转账函数把钱取⾛即可。</p>
+<p>攻击者为了避免被发现，在攻击合约中的逻辑中还实现了保证⽤户依然能正常使⽤相关的功能。</p>
+<p>反编译攻击者的逻辑合约发现，在攻击合约的逻辑保证了攻击者动⼿前⽤户都可以正常使⽤多签功能。只有当攻击者⾃⼰调⽤的时候才会绕过验证直接把⽤户的钱取⾛。</p>
+<p><img src="gnosis6.png" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p><strong>本次攻击先是使⽤了钓⻥⼿段获取了⽤户的⼀次完整的多签数据，在利⽤了 delegatecall 调⽤外部合约的时候，如果外部合约有对数据进⾏更改的操作的话，会使⽤外部合约中变量存储所在对应的 slot 位置指向来影响当前合约同⼀个 slot 的数据。通过攻击合约把代理合约指向的逻辑指向⾃⼰的攻击合约。这样就可以随时绕过多签把合约的钱随时转⾛。</strong></p>
+<p><strong>经过分析本次的事件，⼤概率是⿊客团队针对 Gnosis Safe Multi-sig 应⽤的⽤户进⾏的钓⻥攻击， 0x34cfac64 这个正常的逻辑合约是 Gnosis Safe 官⽅的地址，攻击者将这个地址硬编码在恶意合约中，所以这⼀系列的操作是适⽤于攻击所有 Gnosis Safe Multi-sig 应⽤的⽤户。此次攻击可能还有其他受害者。</strong></p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/Proxy/" data-toggle="tooltip" data-placement="top" title="深入可升级合约">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/frontRunningBot/" data-toggle="tooltip" data-placement="top" title="抢跑机器人实现">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#由BT钱包引发的多签钱包思考"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">由BT钱包引发的多签钱包思考</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#引言"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">引言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#多签钱包"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">多签钱包</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#应用场景"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">应用场景</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#资金安全"><span class="toc-nav-number">1.2.1.1.</span> <span class="toc-nav-text">资金安全</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#资金共管"><span class="toc-nav-number">1.2.1.2.</span> <span class="toc-nav-text">资金共管</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#多签操作"><span class="toc-nav-number">1.2.1.3.</span> <span class="toc-nav-text">多签操作</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#简单实现"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">简单实现</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#事件"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">事件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#状态变量"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">状态变量</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#函数"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">函数</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#操作流程"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">操作流程</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#多签钱包相关安全事件"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">多签钱包相关安全事件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#相关信息"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">相关信息</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#攻击步骤"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">攻击步骤</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">总结</span></a></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#钱包" title="钱包">钱包</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2022 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
