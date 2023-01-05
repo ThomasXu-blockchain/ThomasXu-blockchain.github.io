@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Dao相关漏洞以及解决方案 - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/Dao-vulnerabilities/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jp')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#杂谈" title="杂谈">杂谈</a>
+                            
+                        </div>
+                        <h1>Dao相关漏洞以及解决方案</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2022-01-05
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Dao投票相关漏洞以及解决方案"><a href="#Dao投票相关漏洞以及解决方案" class="headerlink" title="Dao投票相关漏洞以及解决方案"></a>Dao投票相关漏洞以及解决方案</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>去中心化自治组织（DAO）在区块链中运作，由投票管理。 <code>Coin voting</code>是最受欢迎的一种：DAO 的成员提出建议，其他硬币持有者用代币表示认可。当达到提案的法定人数时，可以执行其脚本。</p>
+<p>有许多DAO使用硬币投票：基于<code>Aragon</code>的DAO，<code>X-DAO</code>，<code>Nexus Mututal</code>，<code>Showball Finance</code>，<code>Pickle Finance</code>，<code>Spirit Swap</code>，<code>Keep3r Network</code>等等。</p>
+<p>在本文中，我们将研究<code>Coin voting</code>中可能出现的技术漏洞，并检查它们是否存在于上述这些 DAO 中。</p>
+<h1 id="闪贷攻击"><a href="#闪贷攻击" class="headerlink" title="闪贷攻击"></a>闪贷攻击</h1><p>如果黑客可以在同一区块中投票并执行提案（例如通过紧急方法），则 DAO 可能容易受到攻击。这些漏洞以前在<a href="https://bean.money/blog/beanstalk-governance-exploit" target="_blank" rel="noopener">Beanstalk</a>和<a href="https://www.theblock.co/post/82721/makerdao-issues-warning-after-a-flash-loan-is-used-to-pass-a-governance-vote" target="_blank" rel="noopener">MakerDAO</a>等项目中遇到过。</p>
+<h2 id="Aragon"><a href="#Aragon" class="headerlink" title="Aragon"></a>Aragon</h2><p>Aragon使用<a href="https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol" target="_blank" rel="noopener">MiniMeToken的</a>balanceOfAt（）在创建提案之前计算用户余额的一个区块。这使得闪贷攻击变得不可能。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询特定_blockNumber处_owner的余额</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">balanceOfAt</span>(<span class="params">address _owner, uint _blockNumber</span>) <span class="title">public</span> <span class="title">constant</span> <span class="title">returns</span> (<span class="params">uint</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> ((balances[_owner].length == <span class="number">0</span>) || (balances[_owner][<span class="number">0</span>].fromBlock &gt; _blockNumber)) &#123;</span><br><span class="line">           <span class="keyword">if</span> (address(parentToken) != <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> parentToken.balanceOfAt(_owner, min(_blockNumber, parentSnapShotBlock));</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="comment">// Has no parent</span></span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 这将在正常情况下返回预期余额</span></span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="keyword">return</span> getValueAt(balances[_owner], _blockNumber);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="X-DAO"><a href="#X-DAO" class="headerlink" title="X-DAO"></a>X-DAO</h2><p><a href="https://github.com/xdao-app/xdao-contracts/blob/855c2d6aa4016d09ae357abaff945ceb8af82347/contracts/core/Dao.sol#L580" target="_blank" rel="noopener">X-DAO</a> 在转账时时恢revert:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">transfer</span>(<span class="params">address, uint256</span>) <span class="title">public</span> <span class="title">pure</span> <span class="title">override</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">    revert(<span class="string">"GT: transfer is prohibited"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，不可能借出代币或在DEX中出售代币以及借入或购买，因此闪电贷款攻击是不可能的。</p>
+<h2 id="Nexus-Mutual"><a href="#Nexus-Mutual" class="headerlink" title="Nexus Mutual"></a>Nexus Mutual</h2><p>Nexus Mutual中的提案分为只有顾问委员会才能投票的提案和普通成员可以投票的提案。在咨询委员会投票中，每个参与者的权重等于一个。成员投票是普通的<code>Coin voting</code>。我们的范围只是<code>Coin voting</code>。</p>
+<p>如果所有其他成员都已投票<a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L711" target="_blank" rel="noopener">[→]</a>，则可以在一次交易中投票并执行提案：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">canCloseProposal</span>(<span class="params">uint _proposalId</span>)</span></span><br><span class="line"><span class="function">    ...</span></span><br><span class="line"><span class="function">    <span class="title">if</span> (<span class="params">numberOfMembers == proposalVoteTally[_proposalId].voters</span></span></span><br><span class="line"><span class="function"><span class="params">      || dateUpdate.add(_closingTime</span>) &lt;= <span class="title">now</span>)</span></span><br><span class="line"><span class="function">      <span class="title">return</span> 1;</span></span><br></pre></td></tr></table></figure>
+<p>但有一个复杂的问题——用户转移代币的能力在每次投票后的 7 天内被锁定 <a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L911" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenInstance.lockForMemberVote(msg.sender, tokenHoldingTime);</span><br></pre></td></tr></table></figure>
+<p>因此，从技术上讲，黑客可以进行闪电贷款，从市场中提取NXM代币，在同一笔交易中投票和执行提案。但他们仍然需要归还贷款，这需要从执行的提案中获得不低于闪电贷款本身的利润。但是，由于发现<a href="https://medium.com/nexus-mutual/responsible-vulnerability-disclosure-ece3fe3bcefa" target="_blank" rel="noopener">calldata验证漏洞</a>后引入的各种限制，似乎很难提出成功的攻击。</p>
+<h2 id="Keep3r-Network"><a href="#Keep3r-Network" class="headerlink" title="Keep3r Network"></a>Keep3r Network</h2><p>该项目使用类似于<a href="https://github.com/keep3r-network/keep3r.network/blob/a6897007db6e656e0e310ed7ee4ad42904fe2794/contracts/Keep3r.sol#L633" target="_blank" rel="noopener">MiniMeToken</a>的令牌。它通过<code>getPriorVotes（）</code>在提案创建块之前的一个区块计算投票权。可以得出同样的结论。</p>
+<h1 id="不正确的重新投票"><a href="#不正确的重新投票" class="headerlink" title="不正确的重新投票"></a>不正确的重新投票</h1><p>如果合同允许用户对提案重新投票，但它错误地减去了用户的旧投票，则可能会出现漏洞。</p>
+<p>需要检查以下危险情况：</p>
+<ul>
+<li>投票支持不存在的提案;</li>
+<li>投票→转让→投票;</li>
+<li>在创建提案的同一区块中投票支持提案;</li>
+<li>使用损坏的参数投票，但使用相同的提案 ID;</li>
+<li>重播链下交易。</li>
+</ul>
+<p>这些类型的漏洞以前在MakerDAO和<a href="https://blog.openzeppelin.com/makerdao-critical-vulnerability/" target="_blank" rel="noopener">KP3R Network</a>等项目中遇到过。</p>
+<h2 id="Aragon-1"><a href="#Aragon-1" class="headerlink" title="Aragon"></a>Aragon</h2><p>可以在<code>Aragon</code>重新投票，但它可以正确添加/减去以前的投票权<a href="https://github.com/aragon/aragon-apps/blob/b72da2c6606a361d0160d5d78fb534018ba3ce91/apps/voting/contracts/Voting.sol#L316" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">uint256 voterStake = token.balanceOfAt(_voter, vote_.snapshotBlock);</span><br><span class="line">VoterState state = vote_.voters[_voter];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果投票者以前投票过，我们就减少计票。</span></span><br><span class="line"><span class="keyword">if</span> (state == VoterState.Yea) &#123;</span><br><span class="line">    vote_.yea = vote_.yea.sub(voterStake);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (state == VoterState.Nay) &#123;</span><br><span class="line">    vote_.nay = vote_.nay.sub(voterStake);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="为不存在的提案投票"><a href="#为不存在的提案投票" class="headerlink" title="为不存在的提案投票"></a>为不存在的提案投票</h3><p>投票方法上有一个 voteExists 修饰符，因此无法投票给不存在的提案 <a href="https://github.com/aragon/aragon-apps/blob/b72da2c6606a361d0160d5d78fb534018ba3ce91/apps/voting/contracts/Voting.sol#L154" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vote</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    uint256 _voteId, </span></span></span><br><span class="line"><span class="function"><span class="params">    bool _supports, </span></span></span><br><span class="line"><span class="function"><span class="params">    bool _executesIfDecided</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) <span class="title">external</span> <span class="title">voteExists</span>(<span class="params">_voteId</span>)</span></span><br></pre></td></tr></table></figure>
+<h3 id="其他可能情况"><a href="#其他可能情况" class="headerlink" title="其他可能情况"></a>其他可能情况</h3><p>用户的投票权不能转移和使用在同一提案中，因为Aragon在创建提案之前在一个区块中使用<code>MinimeToken</code>的余额。</p>
+<h2 id="X-DAO-1"><a href="#X-DAO-1" class="headerlink" title="X-DAO"></a>X-DAO</h2><p>X-DAO中的投票发生在链下，没有对同一提案重新投票的机制。如果用户签署了拒绝，他们仍然可以发出已签名的approve，并且approve将被计算在内。但不能反过来做——只计算赞成票<a href="https://github.com/xdao-app/xdao-contracts/blob/855c2d6aa4016d09ae357abaff945ceb8af82347/contracts/core/Dao.sol#L281" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (uint256 i = <span class="number">0</span>; i &lt; signers.length; i++) &#123;</span><br><span class="line">    share += balanceOf(signers[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (share * <span class="number">100</span> &lt; totalSupply() * quorum) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>签名的投票不能计算两次<a href="https://github.com/xdao-app/xdao-contracts/blob/855c2d6aa4016d09ae357abaff945ceb8af82347/contracts/core/Dao.sol#L278" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(!_hasDuplicate(signers), &quot;DAO: signatures are not unique.&quot;);</span><br></pre></td></tr></table></figure>
+<h3 id="重放攻击"><a href="#重放攻击" class="headerlink" title="重放攻击"></a>重放攻击</h3><p>要投票，用户签署一个提案，该提案只是一组数据：目标地址，调用数据，msg值，nonce，时间戳，block.chainid和X-DAO实例的地址。因此，既不可能在不同的以太坊链上重播用户的签名投票，也不可能在另一个 X-DAO 实例上重播，甚至不可能在另一个具有不同随机数 <a href="https://github.com/xdao-app/xdao-contracts/blob/855c2d6aa4016d09ae357abaff945ceb8af82347/contracts/core/Dao.sol#L240" target="_blank" rel="noopener">[→]</a> 的提案上重播：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTxHash</span></span></span><br><span class="line"><span class="function">...</span></span><br><span class="line"><span class="function"><span class="title">return</span></span></span><br><span class="line"><span class="function">    <span class="title">keccak256</span>(<span class="params">abi.encode(</span></span></span><br><span class="line"><span class="function"><span class="params">        address(this</span>),</span></span><br><span class="line"><span class="function">        <span class="title">_target</span>,</span></span><br><span class="line"><span class="function">        <span class="title">_data</span>,</span></span><br><span class="line"><span class="function">        <span class="title">_value</span>,</span></span><br><span class="line"><span class="function">        <span class="title">_nonce</span>,</span></span><br><span class="line"><span class="function">        <span class="title">_timestamp</span>,</span></span><br><span class="line"><span class="function">        <span class="title">block</span>.<span class="title">chainid</span></span></span><br><span class="line"><span class="function">    ));</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>提案也不能重播 <a href="https://github.com/xdao-app/xdao-contracts/blob/855c2d6aa4016d09ae357abaff945ceb8af82347/contracts/core/Dao.sol#L197" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(!executedTx[txHash], &quot;DAO: voting already executed.&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="Snowball-Finance"><a href="#Snowball-Finance" class="headerlink" title="Snowball Finance"></a>Snowball Finance</h2><p>用户不能为不存在的提案投票，但可以对同一提案重新投票。合同正确地减去了他们之前关于重新投票的决定。用户代币被锁定在托管合约中，无法转移。</p>
+<h2 id="Spirit-Swap"><a href="#Spirit-Swap" class="headerlink" title="Spirit Swap"></a>Spirit Swap</h2><p>用户只能选择和投票代币权重。用户可以每周投票一次，但无法重新投票。</p>
+<h2 id="Keep3r-Network-1"><a href="#Keep3r-Network-1" class="headerlink" title="Keep3r Network"></a>Keep3r Network</h2><p>Keep3r网络的行为与Aragon类似，但用户不能对同一提案进行两次投票。</p>
+<p>对不存在的提案进行投票不符合要求 <a href="https://github.com/keep3r-network/keep3r.network/blob/a6897007db6e656e0e310ed7ee4ad42904fe2794/contracts/Keep3rGovernance.sol#L473" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_castVote</span>...</span></span><br><span class="line"><span class="function">    ...</span></span><br><span class="line"><span class="function">    <span class="title">require</span>(<span class="params">state(proposalId</span>) == <span class="title">ProposalState</span>.<span class="title">Active</span>, "<span class="title">Governance</span>::<span class="title">_castVote</span>: <span class="title">voting</span> <span class="title">is</span> <span class="title">closed</span>.");</span></span><br></pre></td></tr></table></figure>
+<p>也不可能重新投票<a href="https://github.com/keep3r-network/keep3r.network/blob/a6897007db6e656e0e310ed7ee4ad42904fe2794/contracts/Keep3rGovernance.sol#L476" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(receipt.hasVoted &#x3D;&#x3D; false, &quot;Governance::_castVote: voter already voted.&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="Nexus-Mutual-1"><a href="#Nexus-Mutual-1" class="headerlink" title="Nexus Mutual"></a>Nexus Mutual</h2><p>不可能对不存在的提案进行投票，因为以下要求将失败<a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L282" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function submitVote(uint _proposalId, uint _solutionChosen) external &#123;</span><br><span class="line">    ...</span><br><span class="line">    require(allProposalData[_proposalId].propStatus &#x3D;&#x3D; uint(Governance.ProposalStatus.VotingStarted), &quot;Not allowed&quot;);</span><br></pre></td></tr></table></figure>
+<p>用户只能为提案投票一次 <a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L859" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function _submitVote(uint _proposalId, uint _solution) internal &#123;</span><br><span class="line">    ...</span><br><span class="line">    require(memberProposalVote[msg.sender][_proposalId] &#x3D;&#x3D; 0, &quot;Not allowed&quot;);</span><br><span class="line">    ...</span><br><span class="line">    memberProposalVote[msg.sender][_proposalId] &#x3D; totalVotes;</span><br></pre></td></tr></table></figure>
+<h1 id="缺少提案验证"><a href="#缺少提案验证" class="headerlink" title="缺少提案验证"></a>缺少提案验证</h1><p>如果提案属性未经过完全验证，那么黑客可能会有社会工程机会创建看起来良性的破坏性提案。</p>
+<p>解决以下问题：</p>
+<ol>
+<li>提案如何在网站上显示？</li>
+<li>黑客可以在提案中提供任意脚本或调用数据吗？</li>
+<li>黑客能否在恶意提案中提供任意良性描述？</li>
+<li>普通用户很难确定提案脚本的真正作用吗？</li>
+</ol>
+<p>在<a href="https://bean.money/blog/beanstalk-governance-exploit" target="_blank" rel="noopener">Beanstalk</a>和<a href="https://medium.com/nexus-mutual/responsible-vulnerability-disclosure-ece3fe3bcefa" target="_blank" rel="noopener">Nexus Mutual</a>等项目中，已经遇到过弱验证。</p>
+<h2 id="Aragon-2"><a href="#Aragon-2" class="headerlink" title="Aragon"></a>Aragon</h2><p><code>Aragon</code>的新提案采用任意执行脚本和元数据 <a href="https://github.com/aragon/aragon-apps/blob/b72da2c6606a361d0160d5d78fb534018ba3ce91/apps/voting/contracts/Voting.sol#L126" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function newVote(bytes _executionScript, string _metadata) external auth(CREATE_VOTES_ROLE) returns (uint256 voteId)</span><br></pre></td></tr></table></figure>
+<p>元数据被发出但不保存在存储中，因此暗示后端将解析区块链中的事件，以显示提案作者地址和描述 <a href="https://github.com/aragon/aragon-apps/blob/b72da2c6606a361d0160d5d78fb534018ba3ce91/apps/voting/contracts/Voting.sol#L298" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emit StartVote(voteId, msg.sender, _metadata);</span><br></pre></td></tr></table></figure>
+<p>因此，可以提供任意执行脚本。因此，核实数据的责任落在了选民身上。</p>
+<h2 id="X-DAO-2"><a href="#X-DAO-2" class="headerlink" title="X-DAO"></a>X-DAO</h2><p>在 X-DAO 中创建提案没有链上方法。</p>
+<p>可以在 <a href="https://www.xdao.app/137/ecosystem" target="_blank" rel="noopener">xdao.app</a> 上创建链下提案，有两点需要注意：</p>
+<ol>
+<li>默认情况下，目标地址及其呼叫数据处于隐藏状态，因此用户可能会错过恶意意图。请参阅<a href="https://www.xdao.app/137/dao/0x60620f047049511b6c7734bd6715800de22d3a73/votingPage/0x99455859248fc849abbed4363012657ce9c3646aed1e98e8b15db67484926360" target="_blank" rel="noopener">链接</a>中的提案示例</li>
+<li>可以为提案指定任意提案标题和描述：<a href="https://www.xdao.app/137/dao/0x60620f047049511b6c7734bd6715800de22d3a73/votingPage/0x99455859248fc849abbed4363012657ce9c3646aed1e98e8b15db67484926360" target="_blank" rel="noopener">链接</a></li>
+</ol>
+<p>因此，核实数据的责任落在了选民身上。</p>
+<h2 id="Snowball-Finance-1"><a href="#Snowball-Finance-1" class="headerlink" title="Snowball Finance"></a>Snowball Finance</h2><p>Snowball Finance 的一份新提案提出了以下参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function propose(</span><br><span class="line">    string calldata _title,</span><br><span class="line">    string calldata _metadata,</span><br><span class="line">    uint256 _votingPeriod,</span><br><span class="line">    address _target,</span><br><span class="line">    uint256 _value,</span><br><span class="line">    bytes memory _data</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>并将所有这些存储在合约的存储中，包括msg.sender。</p>
+<p>对调用数据没有限制。因此，核实数据的责任落在了选民身上。</p>
+<h2 id="Keep3r-Network-2"><a href="#Keep3r-Network-2" class="headerlink" title="Keep3r Network"></a>Keep3r Network</h2><p>Keep3r Network 中的新提案需要目标、msg 值、calldata 和其他元数据的列表 <a href="https://github.com/keep3r-network/keep3r.network/blob/a6897007db6e656e0e310ed7ee4ad42904fe2794/contracts/Keep3rGovernance.sol#L340" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function propose(</span><br><span class="line">    address[] memory targets,</span><br><span class="line">    uint256[] memory values,</span><br><span class="line">    string[] memory signatures,</span><br><span class="line">    bytes[] memory calldatas,</span><br><span class="line">    string memory description</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>攻击者仍可以提供任意调用数据。因此，核实数据的责任落在了选民身上。</p>
+<h1 id="无转移验证"><a href="#无转移验证" class="headerlink" title="无转移验证"></a>无转移验证</h1><p>令牌锁定机制应检查已批准的 transferFrom 调用（以及其他类似传输的方法）的返回值：</p>
+<ul>
+<li>如果对 transferFrom 函数的调用失败，则 Aragon Minime 令牌返回 false。</li>
+</ul>
+<p>这种类型的漏洞以前在<a href="https://halborn.com/explained-the-forcedao-hack-april-2021/" target="_blank" rel="noopener">ForceDAO</a>中遇到过。</p>
+<h2 id="Nexus-Mutual-2"><a href="#Nexus-Mutual-2" class="headerlink" title="Nexus Mutual"></a>Nexus Mutual</h2><p>Nexus Mutual 通过 tokenInstance.lockForMemberVote（） 方法锁定代币，而无需使用 transferFrom <a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/token/NXMToken.sol#L252" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function lockForMemberVote(</span><br><span class="line">    address _of, </span><br><span class="line">    uint _days</span><br><span class="line">) public onlyOperator &#123;</span><br><span class="line">    if (_days.add(now) &gt; isLockedForMV[_of])</span><br><span class="line">        isLockedForMV[_of] &#x3D; _days.add(now);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Snowball-Finance和Spirit-Swap"><a href="#Snowball-Finance和Spirit-Swap" class="headerlink" title="Snowball Finance和Spirit Swap"></a>Snowball Finance和Spirit Swap</h2><p>Snowball Finance和Spirit Swap正在使用类似的托管合约来锁定代币一段时间。两种检查传输都会导致 <a href="https://github.com/Layer3Org/spiritswap-core/blob/f730bcb4a96088f4878dffc6b578afdfe42db945/SpiritV2/contracts/SpiritV1/inSpirit.vy#L377" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">assert ERC20(self.token).transferFrom(_addr, self, _value)</span><br><span class="line">...</span><br><span class="line">assert ERC20(self.token).transfer(msg.sender, value)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Aragon，X-DAO和Keep3r网络均没有锁定机制。</p>
+</blockquote>
+<h1 id="投票窗口小"><a href="#投票窗口小" class="headerlink" title="投票窗口小"></a><strong>投票窗口小</strong></h1><p>投票窗口过小，会导致对某些提案持消极倾向的用户和否决权持有者可能没有时间作出反应。特别是当法定人数小于 50% 时。</p>
+<h2 id="Aragon-3"><a href="#Aragon-3" class="headerlink" title="Aragon"></a>Aragon</h2><p>投票和执行是开放的投票时间 <a href="https://github.com/aragon/aragon-apps/blob/b72da2c6606a361d0160d5d78fb534018ba3ce91/apps/voting/contracts/Voting.sol#L406" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_isVoteOpen</span>(<span class="params">Vote storage vote_</span>) <span class="title">internal</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getTimestamp64() &lt; vote_.startDate.add(voteTime) &amp;&amp; !vote_.executed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个全局参数，初始化一次。因此，投票窗口取决于特定项目的初始化。</p>
+<h2 id="X-DAO-3"><a href="#X-DAO-3" class="headerlink" title="X-DAO"></a>X-DAO</h2><p>投票和执行的有效期为3天<a href="https://github.com/xdao-app/xdao-contracts/blob/855c2d6aa4016d09ae357abaff945ceb8af82347/contracts/core/Dao.sol#L191" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uint32 public constant VOTING_DURATION &#x3D; 3 days;</span><br><span class="line">...</span><br><span class="line">require(</span><br><span class="line">    _timestamp + VOTING_DURATION &gt;&#x3D; block.timestamp,</span><br><span class="line">    &quot;DAO: voting is over.&quot;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>X-DAO认为，三天应该足以让 DAO 的积极参与者投票。</p>
+<h2 id="Snowball-Finance-2"><a href="#Snowball-Finance-2" class="headerlink" title="Snowball Finance"></a>Snowball Finance</h2><p>Snowball Finance 具有可变但有限的时间段，可由治理机构设置：</p>
+<ul>
+<li>投票期从1天到30天不等;</li>
+<li>执行延迟从 30 秒到 30 天不等;</li>
+<li>有效期为 14 天在<code>Snowball Finance</code>看来，这应该足以让 DAO 的积极参与者投票。</li>
+</ul>
+<h2 id="Spirit-Swap-1"><a href="#Spirit-Swap-1" class="headerlink" title="Spirit Swap"></a>Spirit Swap</h2><p>Spirit Swap 允许每周投票一次<a href="https://github.com/Layer3Org/spiritswap-core/blob/f730bcb4a96088f4878dffc6b578afdfe42db945/SpiritV2/contracts/SpiritV2/StableGaugeProxy.sol#L713" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">uint256 public voteDelay &#x3D; 604800;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">modifier hasVoted(address voter) &#123;</span><br><span class="line">    uint256 time &#x3D; block.timestamp - lastVote[voter];</span><br><span class="line">    require(time &gt; voteDelay, &quot;You voted in the last 7 days.&quot;);</span><br><span class="line">    _;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Spirit Swap</code>看来，这应该足以让 DAO 的积极参与者投票。</p>
+<h2 id="Nexus-Mutual-3"><a href="#Nexus-Mutual-3" class="headerlink" title="Nexus Mutual"></a>Nexus Mutual</h2><p>提案可以在_closingTime通过后关闭并执行 <a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L711" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function canCloseProposal(uint _proposalId)</span><br><span class="line">...</span><br><span class="line">if (numberOfMembers &#x3D;&#x3D; proposalVoteTally[_proposalId].voters</span><br><span class="line">  || dateUpdate.add(_closingTime) &lt;&#x3D; now)</span><br><span class="line">  return 1;</span><br></pre></td></tr></table></figure>
+<p>在网站上可以看到，根据提案类别的不同，此参数从 3 天到 7 天不等：<br><a href="https://app.nexusmutual.io/governance/categories" target="_blank" rel="noopener">https://app.nexusmutual.io/governance/categories</a></p>
+<p>这应该足以让 DAO 的积极参与者投票。</p>
+<h1 id="双重投票"><a href="#双重投票" class="headerlink" title="双重投票"></a>双重投票</h1><p>黑客可以对具有相同令牌的提案进行两次投票吗？</p>
+<p>建议检查：</p>
+<ul>
+<li>再次投票→转移→投票;</li>
+<li>再次投票→代表→投票;</li>
+<li>修改 vote（） 参数以增加额外的投票权;</li>
+<li>检查重入。</li>
+</ul>
+<h2 id="Aragon-4"><a href="#Aragon-4" class="headerlink" title="Aragon"></a>Aragon</h2><ul>
+<li>投票-转移-投票</li>
+</ul>
+<p>可以在用户之间移动代币，但只有在创建提案之前的区块才重要，因此没有人可以重复投票。</p>
+<ul>
+<li>投票-代表-投票</li>
+</ul>
+<p>默认的阿拉贡合同中没有授权机制。</p>
+<ul>
+<li>修改参数</li>
+</ul>
+<p>没什么可破坏的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function vote(</span><br><span class="line">    uint256 _voteId, </span><br><span class="line">    bool _supports, </span><br><span class="line">    bool _executesIfDecided</span><br><span class="line">) external voteExists(_voteId)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重入</li>
+</ul>
+<p>投票可以通过 _unsafeExecuteVote（） 导致外部调用，但代码遵循检查效果交互模式，因此不受重入的影响。</p>
+<h2 id="X-DAO-4"><a href="#X-DAO-4" class="headerlink" title="X-DAO"></a>X-DAO</h2><ul>
+<li>投票-转移-投票</li>
+</ul>
+<p>可以签署投票并将代币转移到另一个帐户，以便他们也可以签署另一次投票。但是execute（）方法只计算最终的令牌分发，因此黑客场景不适用。</p>
+<ul>
+<li>其他案例</li>
+</ul>
+<p>没有委托机制，也没有链上 vote（） 方法，因此没有什么可以破坏或尝试重新进入的。</p>
+<h2 id="Spirit-Swap-2"><a href="#Spirit-Swap-2" class="headerlink" title="Spirit Swap"></a>Spirit Swap</h2><p>Spirit Swap投票只能更改协议中的代币权重，并且它以与用户投票相同的方法应用更改。</p>
+<ul>
+<li>投票-转移-投票</li>
+</ul>
+<p>可以投票，等到代币在托管合约中解锁，将代币转移到另一个账户，再次锁定它们，然后投票支持同一个提案。但计算表明，如果代币在整个时间内被锁定，应用的总投票权将是相同的。没有好处。</p>
+<ul>
+<li>投票-代表-投票</li>
+</ul>
+<p>锁定在托管合同中的用户的投票权不能委托给其他用户。</p>
+<ul>
+<li>修改参数</li>
+</ul>
+<p>vote（） 方法采用一个令牌和权重数组，因此检查这些参数是否可以以某种方式修改以增加对某些令牌的额外投票权非常重要。如果两次传递具有相同令牌的数组会发生什么？</p>
+<p>投票方法似乎正确考虑了其所有参数，并且在数组中传递相同的标记不会影响计算的正确性，因为所有权重都除以数组中传递的总权重总和 <a href="https://github.com/Layer3Org/spiritswap-core/blob/f730bcb4a96088f4878dffc6b578afdfe42db945/SpiritV2/contracts/SpiritV2/StableGaugeProxy.sol#L834" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (uint256 i &#x3D; 0; i &lt; _tokenCnt; i++) &#123;</span><br><span class="line">    _totalVoteWeight &#x3D; _totalVoteWeight + _weights[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重入</li>
+</ul>
+<p>接下来要检查的是是否存在重入。vote（） 方法 <a href="https://github.com/Layer3Org/spiritswap-core/blob/f730bcb4a96088f4878dffc6b578afdfe42db945/SpiritV2/contracts/SpiritV2/StableGaugeProxy.sol#L792" target="_blank" rel="noopener">[→]</a> 中有一个外部调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IBribe(bribes[gauges[_token]])._withdraw(...);</span><br><span class="line">...</span><br><span class="line">IBribe(bribes[_gauge])._deposit(uint256(_tokenWeight), _owner);</span><br></pre></td></tr></table></figure>
+<p>IBribe 合约可以被认为是可信的，因此即使这里可能存在漏洞，它也不会构成威胁。</p>
+<h2 id="Snowball-Finance-3"><a href="#Snowball-Finance-3" class="headerlink" title="Snowball Finance"></a>Snowball Finance</h2><ul>
+<li>投票-转移-投票</li>
+</ul>
+<p>可以投票，等到代币在托管合约中解锁，将代币转移到另一个账户，再次锁定它们，然后投票支持相同的提案。但计算表明，如果代币在整个时间内被锁定，应用的总投票权将是相同的。没有好处。</p>
+<ul>
+<li>投票-代表-投票</li>
+</ul>
+<p>没有授权。</p>
+<ul>
+<li>修改参数</li>
+</ul>
+<p>没什么可破坏的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function vote(uint256 _proposalId, bool _support)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重入</li>
+</ul>
+<p>vote（） 方法中没有不受信任的外部调用。</p>
+<h2 id="Nexus-Mutual-4"><a href="#Nexus-Mutual-4" class="headerlink" title="Nexus Mutual"></a>Nexus Mutual</h2><ul>
+<li>投票-转移-投票</li>
+</ul>
+<p>这是不可能的，因为用户的传输在每次投票后都会被锁定 <a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L911" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function _setVoteTally(uint _proposalId, uint _solution, uint mrSequence) internal &#123;</span><br><span class="line">    ...</span><br><span class="line">    tokenInstance.lockForMemberVote(msg.sender, tokenHoldingTime);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>投票-代表-投票</li>
+</ul>
+<p>目前不允许委派 <a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L396" target="_blank" rel="noopener">[→]</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function delegateVote(address _add) external isMemberAndcheckPause checkPendingRewards &#123;</span><br><span class="line">    revert(&quot;Delegations are not allowed.&quot;);</span><br></pre></td></tr></table></figure>
+<p>但即使没有还原，还有另一个要求，即如果用户最近投票<a href="https://github.com/NexusMutual/smart-contracts/blob/283f40208ec5bc0fc529cedeacf307c19086ccde/contracts/modules/governance/Governance.sol#L414" target="_blank" rel="noopener">[→]</a>，则不能委托其投票权：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (allVotesByMember[msg.sender].length &gt; 0) &#123;    </span><br><span class="line">    require((allVotes[allVotesByMember[msg.sender][allVotesByMember[msg.sender].length - 1]].dateAdd).add(tokenHoldingTime) &lt; now);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改参数</li>
+</ul>
+<p>没什么可破坏的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function submitVote(uint _proposalId, uint _solutionChosen)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重入</li>
+</ul>
+<p>submitVote（） 方法代码遵循检查效果交互模式，因此没有重入。</p>
+<h2 id="Keep3r-Network-3"><a href="#Keep3r-Network-3" class="headerlink" title="Keep3r Network"></a>Keep3r Network</h2><ul>
+<li>投票-转移-投票</li>
+</ul>
+<p>Keep3r具有类似于Aragon的行为，并在创建提案之前检查用户在一个区块的投票权。因此，本案不适用。</p>
+<ul>
+<li>修改参数</li>
+</ul>
+<p>没什么可破坏的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function castVote(uint256 proposalId, bool support)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重入</li>
+</ul>
+<p>在 castVote（） 方法中没有不受信任的外部调用。</p>
+<h1 id="双重执行"><a href="#双重执行" class="headerlink" title="双重执行"></a>双重执行</h1><p>execute（） 方法中是否有重入？它可以在同一个块中调用两次吗？</p>
+<h2 id="Aragon，X-DAO，Nexus-Mutual和Keep3r网络"><a href="#Aragon，X-DAO，Nexus-Mutual和Keep3r网络" class="headerlink" title="Aragon，X-DAO，Nexus Mutual和Keep3r网络"></a>Aragon，X-DAO，Nexus Mutual和Keep3r网络</h2><p>Aragon，X-DAO和Keep3r网络使用检查效果交互模式，因此它们的执行方法不易受到重入的影响。</p>
+<h2 id="Snowball-Finance-4"><a href="#Snowball-Finance-4" class="headerlink" title="Snowball Finance"></a>Snowball Finance</h2><p>Snowball Finance 实现了非重入修饰符，其执行方法也不容易受到重入的影响。</p>
+<h2 id="Spirit-swap"><a href="#Spirit-swap" class="headerlink" title="Spirit swap"></a>Spirit swap</h2><p>Spirit swap 没有 execution（） 方法：它应用 vote（） 方法中的更改。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>区块链治理<br><a href="https://vitalik.ca/general/2017/12/17/voting.html" target="_blank" rel="noopener">https://vitalik.ca/general/2017/12/17/voting.html</a> 注意事项</li>
+<li>区块链投票在不知情的人中被高估，但在知情人士<br>中被低估 <a href="https://vitalik.ca/general/2021/05/25/voting2.html" target="_blank" rel="noopener">https://vitalik.ca/general/2021/05/25/voting2.html</a></li>
+<li>超越硬币投票治理<br><a href="https://vitalik.ca/general/2021/08/16/voting3.html" target="_blank" rel="noopener">https://vitalik.ca/general/2021/08/16/voting3.html</a></li>
+<li>2022 年 10 月 6 日，Mangata X 成为治理攻击的目标，导致攻击者获得了链上理事会<br><a href="https://blog.mangata.finance/blog/2022-10-08-council-incident-report/" target="_blank" rel="noopener">https://blog.mangata.finance/blog/2022-10-08-council-incident-report/</a> 的投票权</li>
+<li>2022年4月17日，肇事者利用闪贷利用Beanstalk治理机制<br><a href="https://bean.money/blog/beanstalk-governance-exploit" target="_blank" rel="noopener">https://bean.money/blog/beanstalk-governance-exploit</a></li>
+<li>波场基金会首席执行官贾斯汀·孙（Justin Sun）与大型加密货币交易所勾结，并利用其客户的硬币投票支持收购Steem网络，该网络遭到社区大多数人的强烈反对<br><a href="https://decrypt.co/38050/steem-steemit-tron-justin-sun-cryptocurrency-war" target="_blank" rel="noopener">https://decrypt.co/38050/steem-steemit-tron-justin-sun-cryptocurrency-war</a></li>
+<li>CarbonVote以太坊区块链投票实施<br><a href="https://gitlab.com/relyt29/votebuying-carbonvote" target="_blank" rel="noopener">https://gitlab.com/relyt29/votebuying-carbonvote</a> 的概念验证投票购买合约</li>
+<li>一个用于购买$TRIBE的单交换池 — 一种管理 Fei 协议<br><a href="https://info.uniswap.org/#/tokens/0xc7283b66eb1eb5fb86327f08e1b5816b0720212b" target="_blank" rel="noopener">https://info.uniswap.org/#/tokens/0xc7283b66eb1eb5fb86327f08e1b5816b0720212b</a> 的代币</li>
+<li>加密投票的费用是多少？<br><a href="https://www.placeholder.vc/blog/2020/1/7/how-much-does-a-crypto-vote-cost" target="_blank" rel="noopener">https://www.placeholder.vc/blog/2020/1/7/how-much-does-a-crypto-vote-cost</a></li>
+<li>呼吁暂时暂停 DAO<br>（发现了多个博弈论漏洞）<br><a href="https://hackingdistributed.com/2016/05/27/dao-call-for-moratorium/" target="_blank" rel="noopener">https://hackingdistributed.com/2016/05/27/dao-call-for-moratorium/</a></li>
+<li>MakerDAO在使用闪电贷款通过治理投票<br>后发出警告 <a href="https://www.theblock.co/post/82721/makerdao-issues-warning-after-a-flash-loan-is-used-to-pass-a-governance-vote" target="_blank" rel="noopener">https://www.theblock.co/post/82721/makerdao-issues-warning-after-a-flash-loan-is-used-to-pass-a-governance-vote</a></li>
+<li>MakerDAO治理<br><a href="https://blog.openzeppelin.com/makerdao-critical-vulnerability/" target="_blank" rel="noopener">https://blog.openzeppelin.com/makerdao-critical-vulnerability/</a> 中关键漏洞的技术描述</li>
+<li>KP3R 漏洞报告：Statemind 如何在 Keep3r 网络<br><a href="https://statemind.io/blog/2022/09/27/gauge-proxy-bug.html" target="_blank" rel="noopener">https://statemind.io/blog/2022/09/27/gauge-proxy-bug.html</a> 中发现一个两年前的漏洞</li>
+<li>Nexus Mutual – 呼叫数据验证错误<br><a href="https://medium.com/nexus-mutual/responsible-vulnerability-disclosure-ece3fe3bcefa" target="_blank" rel="noopener">https://medium.com/nexus-mutual/responsible-vulnerability-disclosure-ece3fe3bcefa</a></li>
+<li>2021 年 4 月 4 日，ForceDAO DeFi 聚合器被一名白帽黑客和四名黑帽黑客利用。恶意攻击者能够窃取 FORCE 代币。<br><a href="https://halborn.com/explained-the-forcedao-hack-april-2021/" target="_blank" rel="noopener">https://halborn.com/explained-the-forcedao-hack-april-2021/</a></li>
+</ol>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/ReentryAttack/" data-toggle="tooltip" data-placement="top" title="ReentryAttack">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Dao投票相关漏洞以及解决方案"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Dao投票相关漏洞以及解决方案</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#引言"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">引言</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#闪贷攻击"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">闪贷攻击</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Aragon"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Aragon</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#X-DAO"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">X-DAO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Nexus-Mutual"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Nexus Mutual</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Keep3r-Network"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">Keep3r Network</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#不正确的重新投票"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">不正确的重新投票</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Aragon-1"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Aragon</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#为不存在的提案投票"><span class="toc-nav-number">4.1.1.</span> <span class="toc-nav-text">为不存在的提案投票</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#其他可能情况"><span class="toc-nav-number">4.1.2.</span> <span class="toc-nav-text">其他可能情况</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#X-DAO-1"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">X-DAO</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#重放攻击"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">重放攻击</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Snowball-Finance"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">Snowball Finance</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Spirit-Swap"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">Spirit Swap</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Keep3r-Network-1"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">Keep3r Network</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Nexus-Mutual-1"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">Nexus Mutual</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#缺少提案验证"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">缺少提案验证</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Aragon-2"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Aragon</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#X-DAO-2"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">X-DAO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Snowball-Finance-1"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">Snowball Finance</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Keep3r-Network-2"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">Keep3r Network</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#无转移验证"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">无转移验证</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Nexus-Mutual-2"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">Nexus Mutual</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Snowball-Finance和Spirit-Swap"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">Snowball Finance和Spirit Swap</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#投票窗口小"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">投票窗口小</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Aragon-3"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">Aragon</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#X-DAO-3"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">X-DAO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Snowball-Finance-2"><span class="toc-nav-number">7.3.</span> <span class="toc-nav-text">Snowball Finance</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Spirit-Swap-1"><span class="toc-nav-number">7.4.</span> <span class="toc-nav-text">Spirit Swap</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Nexus-Mutual-3"><span class="toc-nav-number">7.5.</span> <span class="toc-nav-text">Nexus Mutual</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#双重投票"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">双重投票</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Aragon-4"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">Aragon</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#X-DAO-4"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">X-DAO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Spirit-Swap-2"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">Spirit Swap</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Snowball-Finance-3"><span class="toc-nav-number">8.4.</span> <span class="toc-nav-text">Snowball Finance</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Nexus-Mutual-4"><span class="toc-nav-number">8.5.</span> <span class="toc-nav-text">Nexus Mutual</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Keep3r-Network-3"><span class="toc-nav-number">8.6.</span> <span class="toc-nav-text">Keep3r Network</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#双重执行"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">双重执行</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Aragon，X-DAO，Nexus-Mutual和Keep3r网络"><span class="toc-nav-number">9.1.</span> <span class="toc-nav-text">Aragon，X-DAO，Nexus Mutual和Keep3r网络</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Snowball-Finance-4"><span class="toc-nav-number">9.2.</span> <span class="toc-nav-text">Snowball Finance</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Spirit-swap"><span class="toc-nav-number">9.3.</span> <span class="toc-nav-text">Spirit swap</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#参考链接"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">参考链接</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#杂谈" title="杂谈">杂谈</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
