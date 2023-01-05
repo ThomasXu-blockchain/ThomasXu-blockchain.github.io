@@ -253,8 +253,8 @@
 
                 <h1 id="Dao投票相关漏洞以及解决方案"><a href="#Dao投票相关漏洞以及解决方案" class="headerlink" title="Dao投票相关漏洞以及解决方案"></a>Dao投票相关漏洞以及解决方案</h1><hr>
 <pre><code>author：Thomas_Xu
-</code></pre><h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>去中心化自治组织（DAO）在区块链中运作，由投票管理。 <code>Coin voting</code>是最受欢迎的一种：DAO 的成员提出建议，其他硬币持有者用代币表示认可。当达到提案的法定人数时，可以执行其脚本。</p>
-<p>有许多DAO使用硬币投票：基于<code>Aragon</code>的DAO，<code>X-DAO</code>，<code>Nexus Mututal</code>，<code>Showball Finance</code>，<code>Pickle Finance</code>，<code>Spirit Swap</code>，<code>Keep3r Network</code>等等。</p>
+</code></pre><h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>去中心化自治组织（DAO）在区块链中运作，由投票管理。 <code>Coin voting</code>是最受欢迎的一种：DAO 的成员提出建议，其他token持有者用代币表示认可。当达到提案的法定人数时，可以执行其脚本。</p>
+<p>有许多DAO使用<code>Coin voting</code>：基于<code>Aragon</code>的DAO，<code>X-DAO</code>，<code>Nexus Mututal</code>，<code>Showball Finance</code>，<code>Pickle Finance</code>，<code>Spirit Swap</code>，<code>Keep3r Network</code>等等。</p>
 <p>在本文中，我们将研究<code>Coin voting</code>中可能出现的技术漏洞，并检查它们是否存在于上述这些 DAO 中。</p>
 <h1 id="闪贷攻击"><a href="#闪贷攻击" class="headerlink" title="闪贷攻击"></a>闪贷攻击</h1><p>如果黑客可以在同一区块中投票并执行提案（例如通过紧急方法），则 DAO 可能容易受到攻击。这些漏洞以前在<a href="https://bean.money/blog/beanstalk-governance-exploit" target="_blank" rel="noopener">Beanstalk</a>和<a href="https://www.theblock.co/post/82721/makerdao-issues-warning-after-a-flash-loan-is-used-to-pass-a-governance-vote" target="_blank" rel="noopener">MakerDAO</a>等项目中遇到过。</p>
 <h2 id="Aragon"><a href="#Aragon" class="headerlink" title="Aragon"></a>Aragon</h2><p>Aragon使用<a href="https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol" target="_blank" rel="noopener">MiniMeToken的</a>balanceOfAt（）在创建提案之前计算用户余额的一个区块。这使得闪贷攻击变得不可能。</p>
@@ -475,10 +475,10 @@
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li>区块链治理<br><a href="https://vitalik.ca/general/2017/12/17/voting.html" target="_blank" rel="noopener">https://vitalik.ca/general/2017/12/17/voting.html</a> 注意事项</li>
 <li>区块链投票在不知情的人中被高估，但在知情人士<br>中被低估 <a href="https://vitalik.ca/general/2021/05/25/voting2.html" target="_blank" rel="noopener">https://vitalik.ca/general/2021/05/25/voting2.html</a></li>
-<li>超越硬币投票治理<br><a href="https://vitalik.ca/general/2021/08/16/voting3.html" target="_blank" rel="noopener">https://vitalik.ca/general/2021/08/16/voting3.html</a></li>
+<li>超越Coin voting治理<br><a href="https://vitalik.ca/general/2021/08/16/voting3.html" target="_blank" rel="noopener">https://vitalik.ca/general/2021/08/16/voting3.html</a></li>
 <li>2022 年 10 月 6 日，Mangata X 成为治理攻击的目标，导致攻击者获得了链上理事会<br><a href="https://blog.mangata.finance/blog/2022-10-08-council-incident-report/" target="_blank" rel="noopener">https://blog.mangata.finance/blog/2022-10-08-council-incident-report/</a> 的投票权</li>
 <li>2022年4月17日，肇事者利用闪贷利用Beanstalk治理机制<br><a href="https://bean.money/blog/beanstalk-governance-exploit" target="_blank" rel="noopener">https://bean.money/blog/beanstalk-governance-exploit</a></li>
-<li>波场基金会首席执行官贾斯汀·孙（Justin Sun）与大型加密货币交易所勾结，并利用其客户的硬币投票支持收购Steem网络，该网络遭到社区大多数人的强烈反对<br><a href="https://decrypt.co/38050/steem-steemit-tron-justin-sun-cryptocurrency-war" target="_blank" rel="noopener">https://decrypt.co/38050/steem-steemit-tron-justin-sun-cryptocurrency-war</a></li>
+<li>波场基金会首席执行官贾斯汀·孙（Justin Sun）与大型加密货币交易所勾结，并利用其客户的Coin Voting支持收购Steem网络，该网络遭到社区大多数人的强烈反对<br><a href="https://decrypt.co/38050/steem-steemit-tron-justin-sun-cryptocurrency-war" target="_blank" rel="noopener">https://decrypt.co/38050/steem-steemit-tron-justin-sun-cryptocurrency-war</a></li>
 <li>CarbonVote以太坊区块链投票实施<br><a href="https://gitlab.com/relyt29/votebuying-carbonvote" target="_blank" rel="noopener">https://gitlab.com/relyt29/votebuying-carbonvote</a> 的概念验证投票购买合约</li>
 <li>一个用于购买$TRIBE的单交换池 — 一种管理 Fei 协议<br><a href="https://info.uniswap.org/#/tokens/0xc7283b66eb1eb5fb86327f08e1b5816b0720212b" target="_blank" rel="noopener">https://info.uniswap.org/#/tokens/0xc7283b66eb1eb5fb86327f08e1b5816b0720212b</a> 的代币</li>
 <li>加密投票的费用是多少？<br><a href="https://www.placeholder.vc/blog/2020/1/7/how-much-does-a-crypto-vote-cost" target="_blank" rel="noopener">https://www.placeholder.vc/blog/2020/1/7/how-much-does-a-crypto-vote-cost</a></li>
