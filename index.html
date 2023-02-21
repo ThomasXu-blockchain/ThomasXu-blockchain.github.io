@@ -320,9 +320,51 @@
 
     
 
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/code-analysis/">
+                <h2 class="post-title">
+                    go-ethereum-code-analysis
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    EVM源码分析（一）
+author：Thomas_Xu
+源码结构源码地址：https://github.com/ethereum/go-ethereum
+EVM的核心代码在core/vm下，
+以下为vm的目录结构：
+
+runtime 包下的文件在实际运行的geth客户端中并没有被调用到，只是作为开发人员测试使用。
+
+core/vm/runtime/env.go 设置evm运行环境，并返回新的......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2023-02-20
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#EVM" title="EVM">EVM</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -653,40 +695,6 @@ Mango Markets此次攻击发生在2022年10月12日。一个名为Mango Markets�
 
     
 
-    
-
-        <div class="post-preview">
-
-            <a href="/Compound-more/">
-                <h2 class="post-title">
-                    Compound系列（3）
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-author：Thomas_Xu
-Compound系列（3） More杠杆交易目前，借贷市场的强需求之一就是为了杠杆交易。但是，将 A 资产抵押到 Compound 再借出 B 资产，之后再到 DEX 平台（如 Uniswap）用 B 资产兑换成 A 资产，又重复投入 Compound，如此反复操作，对用户来说，是非常繁琐的，而且中间多次操作会消耗较多手续费。因此，直接提供杠杆交易服务的产......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-12-09
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#Coumpound" title="Coumpound">Coumpound</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
 
 
 <!-- Pager -->
@@ -780,6 +788,8 @@ Compound系列（3） More杠杆交易目前，借贷市场的强需求之一就
             
         
             
+            <a href="/tags/#EVM" title="EVM" rel="2">EVM</a>
+            
         
             
             <a href="/tags/#Coumpound" title="Coumpound" rel="3">Coumpound</a>
@@ -862,6 +872,10 @@ Compound系列（3） More杠杆交易目前，借贷市场的强需求之一就
     <ul>
       
         <li>
+          <a href="code-analysis/">go-ethereum-code-analysis</a>
+        </li>
+      
+        <li>
           <a href="Dao-vulnerabilities/">Dao投票相关漏洞以及解决方案</a>
         </li>
       
@@ -877,10 +891,6 @@ Compound系列（3） More杠杆交易目前，借贷市场的强需求之一就
           <a href="frontRunningBot/">抢跑机器人实现</a>
         </li>
       
-        <li>
-          <a href="Symbol-execution/">符号执行以及Mythril工具</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -893,7 +903,7 @@ Compound系列（3） More杠杆交易目前，借贷市场的强需求之一就
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/12/">十二月 2022</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/11/">十一月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/02/">二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/12/">十二月 2022</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/11/">十一月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>
@@ -1087,7 +1097,7 @@ Compound系列（3） More杠杆交易目前，借贷市场的强需求之一就
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
         
 
         <!-- background effects end -->
@@ -1097,21 +1107,6 @@ Compound系列（3） More杠杆交易目前，借贷市场的强需求之一就
     
         <script src="/js/ribbonDynamic.js"></script>
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

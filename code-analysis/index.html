@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          go-ethereum-code-analysis - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/code-analysis/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
+                            
+                        </div>
+                        <h1>go-ethereum-code-analysis</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2023-02-20
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="EVM源码分析（一）"><a href="#EVM源码分析（一）" class="headerlink" title="EVM源码分析（一）"></a>EVM源码分析（一）</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h2 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h2><p>源码地址：<a href="https://github.com/ethereum/go-ethereum" target="_blank" rel="noopener">https://github.com/ethereum/go-ethereum</a></p>
+<p>EVM的核心代码在core/vm下，</p>
+<p>以下为vm的目录结构：</p>
+<p><img src="code-analysis/vm.jpg" alt=""></p>
+<p>runtime 包下的文件在实际运行的geth客户端中并没有被调用到，只是作为开发人员测试使用。</p>
+<ul>
+<li><code>core/vm/runtime/env.go</code> 设置evm运行环境，并返回新的evm对象</li>
+<li><code>core/vm/runtime/fuzz.go</code> fuzz使得开发者可以随机测试evm代码，详见<code>go-fuzz</code>工具</li>
+<li><code>core/vm/runtime/runtime.go</code> 设置evm运行环境，并执行相应的evm代码</li>
+</ul>
+<p>下面的文件为实际的使用到的evm的代码文件</p>
+<ul>
+<li><code>core/vm/analysis.go</code> 分析指令跳转目标</li>
+<li><code>core/vm/common.go</code> 存放常用工具方法</li>
+<li><code>core/vm/contract.go</code> 合约数据结构</li>
+<li><code>core/vm/contracts.go</code> 存放预编译好的合约</li>
+<li><code>core/vm/errors.go</code> 定义一些常见错误</li>
+<li><code>core/vm/evm.go</code> evm对于解释器提供的一些操作接口</li>
+<li><code>core/vm/gas.go</code> 计算一级指令耗费gas</li>
+<li><code>core/vm/gas_table.go</code> 各种操作的gas消耗计算表</li>
+<li><code>core/vm/gen_structlog.go</code> 生成structlog的 序列化json和反序列化方法</li>
+<li><code>core/vm/instructions.go</code> 所有指令集的实现函数</li>
+<li><code>core/vm/interface.go</code> 定义常用操作接口</li>
+<li><code>core/vm/interpreter.go</code> evm 指令解释器</li>
+<li><code>core/vm/intpool.go</code> 常量池</li>
+<li><code>core/vm/jump_table.go</code> 指令跳转表</li>
+<li><code>core/vm/logger.go</code> 状态日志</li>
+<li><code>core/vm/logger_json.go</code> json形式日志</li>
+<li><code>core/vm/memory.go</code> evm 可操作内存</li>
+<li><code>core/vm/memory_table.go</code> evm内存操作表，衡量一些操作耗费内存大小</li>
+<li><code>core/vm/opcodes.go</code> 定义操作码的名称和编号</li>
+<li><code>core/vm/stacks.go</code> evm栈操作</li>
+<li><code>core/vm/stack_table.go</code> evm栈验证函数</li>
+</ul>
+<h2 id="contract-go"><a href="#contract-go" class="headerlink" title="contract.go"></a>contract.go</h2><p>结构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对合约支持对象的引用</span></span><br><span class="line">type ContractRef interface &#123;</span><br><span class="line">    Address() common.Address</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// AccountRef implements ContractRef.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//帐户引用在 EVM 初始化期间使用，并且它的主要用途是获取地址。删除此对象被证明是困难的，</span></span><br><span class="line"><span class="comment">//因为缓存的跳转目的地从父合约（即调用者）中获取，它是一个 ContractRef。</span></span><br><span class="line">type AccountRef common.Address</span><br><span class="line"></span><br><span class="line"><span class="comment">// Address 将 AccountRef 转换为地址</span></span><br><span class="line">func (ar AccountRef) Address() common.Address &#123; <span class="keyword">return</span> (common.Address)(ar) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表示状态数据库中的以太坊合约。它包含合约代码，调用参数。合约实现 ContractRef</span></span><br><span class="line">type Contract struct &#123;</span><br><span class="line">    <span class="comment">// CallerAddress是初始化这个合约的人。 如果是delegate，这个值被设置为调用者的调用者。</span></span><br><span class="line">    CallerAddress common.Address</span><br><span class="line">    caller        ContractRef</span><br><span class="line">    self          ContractRef</span><br><span class="line"></span><br><span class="line">    jumpdests destinations <span class="comment">// result of JUMPDEST analysis.  JUMPDEST指令的分析</span></span><br><span class="line"></span><br><span class="line">    Code     []byte  <span class="comment">//代码</span></span><br><span class="line">    CodeHash common.Hash  <span class="comment">//代码的HASH</span></span><br><span class="line">    CodeAddr *common.Address <span class="comment">//代码地址</span></span><br><span class="line">    Input    []byte     <span class="comment">// 入参</span></span><br><span class="line"></span><br><span class="line">    Gas   uint64        <span class="comment">// 合约还有多少Gas</span></span><br><span class="line">    value *big.Int      </span><br><span class="line"></span><br><span class="line">    Args []byte</span><br><span class="line"></span><br><span class="line">    DelegateCall bool  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构造</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// NewContract 表示状态数据库中的以太坊合约。它包含合约代码，调用参数。合约实现 ContractRef</span></span><br><span class="line">func NewContract(caller ContractRef, object ContractRef, value *big.Int, gas uint64) *Contract &#123;</span><br><span class="line">    c := &amp;Contract&#123;<span class="attr">CallerAddress</span>: caller.Address(), <span class="attr">caller</span>: caller, <span class="attr">self</span>: object, <span class="attr">Args</span>: nil&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> parent, <span class="attr">ok</span> := caller.(*Contract); ok &#123;</span><br><span class="line">        <span class="comment">// Reuse JUMPDEST analysis from parent context if available.</span></span><br><span class="line">        <span class="comment">// 如果 caller 是一个合约，说明是合约调用了我们。 jumpdests设置为caller的jumpdests</span></span><br><span class="line">        c.jumpdests = parent.jumpdests</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        c.jumpdests = make(destinations)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    c.Gas = gas</span><br><span class="line">    c.value = value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AsDelegate将合约设置为委托调用并返回当前合同（用于链式调用）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AsDelegate sets the contract to be a delegate call and returns the current</span></span><br><span class="line"><span class="comment">// contract (for chaining calls)</span></span><br><span class="line">func (c *Contract) AsDelegate() *Contract &#123;</span><br><span class="line">    c.DelegateCall = <span class="literal">true</span></span><br><span class="line">    <span class="comment">// <span class="doctag">NOTE:</span> caller must, at all times be a contract. It should never happen</span></span><br><span class="line">    <span class="comment">// that caller is something other than a Contract.</span></span><br><span class="line">    parent := c.caller.(*Contract)</span><br><span class="line">    c.CallerAddress = parent.CallerAddress</span><br><span class="line">    c.value = parent.value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>GetOp 用来获取下一跳指令</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetOp returns the n'th element in the contract's byte array</span></span><br><span class="line">func (c *Contract) GetOp(n uint64) OpCode &#123;</span><br><span class="line">    <span class="keyword">return</span> OpCode(c.GetByte(n))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GetByte returns the n'th byte in the contract's byte array</span></span><br><span class="line">func (c *Contract) GetByte(n uint64) byte &#123;</span><br><span class="line">    <span class="keyword">if</span> n &lt; uint64(len(c.Code)) &#123;</span><br><span class="line">        <span class="keyword">return</span> c.Code[n]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Caller returns the caller of the contract.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Caller will recursively call caller when the contract is a delegate</span></span><br><span class="line"><span class="comment">// call, including that of caller's caller.</span></span><br><span class="line">func (c *Contract) Caller() common.Address &#123;</span><br><span class="line">    <span class="keyword">return</span> c.CallerAddress</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>UseGas使用Gas。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// UseGas attempts the use gas and subtracts it and returns true on success</span></span><br><span class="line">func (c *Contract) UseGas(gas uint64) (ok bool) &#123;</span><br><span class="line">    <span class="keyword">if</span> c.Gas &lt; gas &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    c.Gas -= gas</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Address returns the contracts address</span></span><br><span class="line">func (c *Contract) Address() common.Address &#123;</span><br><span class="line">    <span class="keyword">return</span> c.self.Address()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Value returns the contracts value (sent to it from it's caller)</span></span><br><span class="line">func (c *Contract) Value() *big.Int &#123;</span><br><span class="line">    <span class="keyword">return</span> c.value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SetCode ，SetCallCode 设置代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SetCode sets the code to the contract</span></span><br><span class="line">func (self *Contract) SetCode(hash common.Hash, code []byte) &#123;</span><br><span class="line">    self.Code = code</span><br><span class="line">    self.CodeHash = hash</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// SetCallCode sets the code of the contract and address of the backing data</span></span><br><span class="line"><span class="comment">// object</span></span><br><span class="line">func (self *Contract) SetCallCode(addr *common.Address, hash common.Hash, code []byte) &#123;</span><br><span class="line">    self.Code = code</span><br><span class="line">    self.CodeHash = hash</span><br><span class="line">    self.CodeAddr = addr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>EVM.go</p>
+<p>结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 上下文为EVM提供辅助信息。 一旦提供，不应该修改。</span><br><span class="line">type Context struct &#123;</span><br><span class="line">    &#x2F;&#x2F; CanTransfer 函数返回账户是否有足够的ether用来转账</span><br><span class="line">    CanTransfer CanTransferFunc</span><br><span class="line">    &#x2F;&#x2F; Transfer transfers ether from one account to the other</span><br><span class="line">    &#x2F;&#x2F; Transfer 用来从一个账户给另一个账户转账</span><br><span class="line">    Transfer TransferFunc</span><br><span class="line">    &#x2F;&#x2F; GetHash returns the hash corresponding to n</span><br><span class="line">    &#x2F;&#x2F; GetHash用来返回入参n对应的hash值</span><br><span class="line">    GetHash GetHashFunc</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Message information</span><br><span class="line">    &#x2F;&#x2F; 用来提供Origin的信息 sender的地址</span><br><span class="line">    Origin   common.Address &#x2F;&#x2F; Provides information for ORIGIN</span><br><span class="line">    &#x2F;&#x2F; 用来提供GasPrice信息</span><br><span class="line">    GasPrice *big.Int       &#x2F;&#x2F; Provides information for GASPRICE</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Block information</span><br><span class="line">    Coinbase    common.Address &#x2F;&#x2F; Provides information for COINBASE</span><br><span class="line">    GasLimit    *big.Int       &#x2F;&#x2F; Provides information for GASLIMIT</span><br><span class="line">    BlockNumber *big.Int       &#x2F;&#x2F; Provides information for NUMBER</span><br><span class="line">    Time        *big.Int       &#x2F;&#x2F; Provides information for TIME</span><br><span class="line">    Difficulty  *big.Int       &#x2F;&#x2F; Provides information for DIFFICULTY</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; EVM is the Ethereum Virtual Machine base object and provides</span><br><span class="line">&#x2F;&#x2F; the necessary tools to run a contract on the given state with</span><br><span class="line">&#x2F;&#x2F; the provided context. It should be noted that any error</span><br><span class="line">&#x2F;&#x2F; generated through any of the calls should be considered a</span><br><span class="line">&#x2F;&#x2F; revert-state-and-consume-all-gas operation, no checks on</span><br><span class="line">&#x2F;&#x2F; specific errors should ever be performed. The interpreter makes</span><br><span class="line">&#x2F;&#x2F; sure that any errors generated are to be considered faulty code.</span><br><span class="line">&#x2F;&#x2F; EVM是以太坊虚拟机基础对象，并提供必要的工具，以使用提供的上下文运行给定状态的合约。</span><br><span class="line">&#x2F;&#x2F; 应该指出的是，任何调用产生的任何错误都应该被认为是一种回滚修改状态和消耗所有GAS操作，</span><br><span class="line">&#x2F;&#x2F; 不应该执行对具体错误的检查。 解释器确保生成的任何错误都被认为是错误的代码。</span><br><span class="line">&#x2F;&#x2F; The EVM should never be reused and is not thread safe.</span><br><span class="line">type EVM struct &#123;</span><br><span class="line">    &#x2F;&#x2F; Context provides auxiliary blockchain related information</span><br><span class="line">    Context</span><br><span class="line">    &#x2F;&#x2F; StateDB gives access to the underlying state</span><br><span class="line">    StateDB StateDB</span><br><span class="line">    &#x2F;&#x2F; Depth is the current call stack</span><br><span class="line">    &#x2F;&#x2F; 当前的调用堆栈</span><br><span class="line">    depth int</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; chainConfig contains information about the current chain</span><br><span class="line">    &#x2F;&#x2F; 包含了当前的区块链的信息</span><br><span class="line">    chainConfig *params.ChainConfig</span><br><span class="line">    &#x2F;&#x2F; chain rules contains the chain rules for the current epoch</span><br><span class="line">    chainRules params.Rules</span><br><span class="line">    &#x2F;&#x2F; virtual machine configuration options used to initialise the</span><br><span class="line">    &#x2F;&#x2F; evm.</span><br><span class="line">    vmConfig Config</span><br><span class="line">    &#x2F;&#x2F; global (to this context) ethereum virtual machine</span><br><span class="line">    &#x2F;&#x2F; used throughout the execution of the tx.</span><br><span class="line">    interpreter *Interpreter</span><br><span class="line">    &#x2F;&#x2F; abort is used to abort the EVM calling operations</span><br><span class="line">    &#x2F;&#x2F; NOTE: must be set atomically</span><br><span class="line">    abort int32</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构造函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; NewEVM retutrns a new EVM . The returned EVM is not thread safe and should</span><br><span class="line">&#x2F;&#x2F; only ever be used *once*.</span><br><span class="line">func NewEVM(ctx Context, statedb StateDB, chainConfig *params.ChainConfig, vmConfig Config) *EVM &#123;</span><br><span class="line">    evm :&#x3D; &amp;EVM&#123;</span><br><span class="line">        Context:     ctx,</span><br><span class="line">        StateDB:     statedb,</span><br><span class="line">        vmConfig:    vmConfig,</span><br><span class="line">        chainConfig: chainConfig,</span><br><span class="line">        chainRules:  chainConfig.Rules(ctx.BlockNumber),</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    evm.interpreter &#x3D; NewInterpreter(evm, vmConfig)</span><br><span class="line">    return evm</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Cancel cancels any running EVM operation. This may be called concurrently and</span><br><span class="line">&#x2F;&#x2F; it&#39;s safe to be called multiple times.</span><br><span class="line">func (evm *EVM) Cancel() &#123;</span><br><span class="line">    atomic.StoreInt32(&amp;evm.abort, 1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约创建 Create 会创建一个新的合约。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">func (evm *EVM) Create(caller ContractRef, code []byte, gas uint64, value *big.Int) (ret []byte, contractAddr common.Address, leftOverGas uint64, err error) &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Depth check execution. Fail if we&#39;re trying to execute above the</span><br><span class="line">    &#x2F;&#x2F; limit.</span><br><span class="line">    if evm.depth &gt; int(params.CallCreateDepth) &#123;</span><br><span class="line">        return nil, common.Address&#123;&#125;, gas, ErrDepth</span><br><span class="line">    &#125;</span><br><span class="line">    if !evm.CanTransfer(evm.StateDB, caller.Address(), value) &#123;</span><br><span class="line">        return nil, common.Address&#123;&#125;, gas, ErrInsufficientBalance</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Ensure there&#39;s no existing contract already at the designated address</span><br><span class="line">    &#x2F;&#x2F; 确保特定的地址没有合约存在</span><br><span class="line">    nonce :&#x3D; evm.StateDB.GetNonce(caller.Address())</span><br><span class="line">    evm.StateDB.SetNonce(caller.Address(), nonce+1)</span><br><span class="line"></span><br><span class="line">    contractAddr &#x3D; crypto.CreateAddress(caller.Address(), nonce)</span><br><span class="line">    contractHash :&#x3D; evm.StateDB.GetCodeHash(contractAddr)</span><br><span class="line">    if evm.StateDB.GetNonce(contractAddr) !&#x3D; 0 || (contractHash !&#x3D; (common.Hash&#123;&#125;) &amp;&amp; contractHash !&#x3D; emptyCodeHash) &#123; &#x2F;&#x2F;如果已经存在</span><br><span class="line">        return nil, common.Address&#123;&#125;, 0, ErrContractAddressCollision</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Create a new account on the state</span><br><span class="line">    snapshot :&#x3D; evm.StateDB.Snapshot()  &#x2F;&#x2F;创建一个StateDB的快照，以便回滚</span><br><span class="line">    evm.StateDB.CreateAccount(contractAddr) &#x2F;&#x2F;创建账户</span><br><span class="line">    if evm.ChainConfig().IsEIP158(evm.BlockNumber) &#123;</span><br><span class="line">        evm.StateDB.SetNonce(contractAddr, 1) &#x2F;&#x2F;设置nonce</span><br><span class="line">    &#125;</span><br><span class="line">    evm.Transfer(evm.StateDB, caller.Address(), contractAddr, value)  &#x2F;&#x2F;转账</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; initialise a new contract and set the code that is to be used by the</span><br><span class="line">    &#x2F;&#x2F; E The contract is a scoped evmironment for this execution context</span><br><span class="line">    &#x2F;&#x2F; only.</span><br><span class="line">    contract :&#x3D; NewContract(caller, AccountRef(contractAddr), value, gas)</span><br><span class="line">    contract.SetCallCode(&amp;contractAddr, crypto.Keccak256Hash(code), code)</span><br><span class="line"></span><br><span class="line">    if evm.vmConfig.NoRecursion &amp;&amp; evm.depth &gt; 0 &#123;</span><br><span class="line">        return nil, contractAddr, gas, nil</span><br><span class="line">    &#125;</span><br><span class="line">    ret, err &#x3D; run(evm, snapshot, contract, nil) &#x2F;&#x2F;执行合约的初始化代码</span><br><span class="line">    &#x2F;&#x2F; check whether the max code size has been exceeded</span><br><span class="line">    &#x2F;&#x2F; 检查初始化生成的代码的长度不超过限制</span><br><span class="line">    maxCodeSizeExceeded :&#x3D; evm.ChainConfig().IsEIP158(evm.BlockNumber) &amp;&amp; len(ret) &gt; params.MaxCodeSize</span><br><span class="line">    &#x2F;&#x2F; if the contract creation ran successfully and no errors were returned</span><br><span class="line">    &#x2F;&#x2F; calculate the gas required to store the code. If the code could not</span><br><span class="line">    &#x2F;&#x2F; be stored due to not enough gas set an error and let it be handled</span><br><span class="line">    &#x2F;&#x2F; by the error checking condition below.</span><br><span class="line">    &#x2F;&#x2F;如果合同创建成功并且没有错误返回，则计算存储代码所需的GAS。 如果由于没有足够的GAS而导致代码不能被存储设置错误，并通过下面的错误检查条件来处理。</span><br><span class="line">    if err &#x3D;&#x3D; nil &amp;&amp; !maxCodeSizeExceeded &#123;</span><br><span class="line">        createDataGas :&#x3D; uint64(len(ret)) * params.CreateDataGas</span><br><span class="line">        if contract.UseGas(createDataGas) &#123;</span><br><span class="line">            evm.StateDB.SetCode(contractAddr, ret)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            err &#x3D; ErrCodeStoreOutOfGas</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; When an error was returned by the EVM or when setting the creation code</span><br><span class="line">    &#x2F;&#x2F; above we revert to the snapshot and consume any gas remaining. Additionally</span><br><span class="line">    &#x2F;&#x2F; when we&#39;re in homestead this also counts for code storage gas errors.</span><br><span class="line">    &#x2F;&#x2F; 当错误返回我们回滚修改，</span><br><span class="line">    if maxCodeSizeExceeded || (err !&#x3D; nil &amp;&amp; (evm.ChainConfig().IsHomestead(evm.BlockNumber) || err !&#x3D; ErrCodeStoreOutOfGas)) &#123;</span><br><span class="line">        evm.StateDB.RevertToSnapshot(snapshot)</span><br><span class="line">        if err !&#x3D; errExecutionReverted &#123;</span><br><span class="line">            contract.UseGas(contract.Gas)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Assign err if contract code size exceeds the max while the err is still empty.</span><br><span class="line">    if maxCodeSizeExceeded &amp;&amp; err &#x3D;&#x3D; nil &#123;</span><br><span class="line">        err &#x3D; errMaxCodeSizeExceeded</span><br><span class="line">    &#125;</span><br><span class="line">    return ret, contractAddr, contract.Gas, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Call方法, 无论我们转账或者是执行合约代码都会调用到这里， 同时合约里面的call指令也会执行到这里。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Call executes the contract associated with the addr with the given input as</span><br><span class="line">&#x2F;&#x2F; parameters. It also handles any necessary value transfer required and takes</span><br><span class="line">&#x2F;&#x2F; the necessary steps to create accounts and reverses the state in case of an</span><br><span class="line">&#x2F;&#x2F; execution error or failed value transfer.</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Call 执行与给定的input作为参数与addr相关联的合约。 </span><br><span class="line">&#x2F;&#x2F; 它还处理所需的任何必要的转账操作，并采取必要的步骤来创建帐户</span><br><span class="line">&#x2F;&#x2F; 并在任意错误的情况下回滚所做的操作。</span><br><span class="line"></span><br><span class="line">func (evm *EVM) Call(caller ContractRef, addr common.Address, input []byte, gas uint64, value *big.Int) (ret []byte, leftOverGas uint64, err error) &#123;</span><br><span class="line">    if evm.vmConfig.NoRecursion &amp;&amp; evm.depth &gt; 0 &#123;</span><br><span class="line">        return nil, gas, nil</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Fail if we&#39;re trying to execute above the call depth limit</span><br><span class="line">    &#x2F;&#x2F;  调用深度最多1024</span><br><span class="line">    if evm.depth &gt; int(params.CallCreateDepth) &#123;</span><br><span class="line">        return nil, gas, ErrDepth</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Fail if we&#39;re trying to transfer more than the available balance</span><br><span class="line">    &#x2F;&#x2F; 查看我们的账户是否有足够的金钱。</span><br><span class="line">    if !evm.Context.CanTransfer(evm.StateDB, caller.Address(), value) &#123;</span><br><span class="line">        return nil, gas, ErrInsufficientBalance</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var (</span><br><span class="line">        to       &#x3D; AccountRef(addr)</span><br><span class="line">        snapshot &#x3D; evm.StateDB.Snapshot()</span><br><span class="line">    )</span><br><span class="line">    if !evm.StateDB.Exist(addr) &#123; &#x2F;&#x2F; 查看指定地址是否存在</span><br><span class="line">        &#x2F;&#x2F; 如果地址不存在，查看是否是 native go的合约， native go的合约在</span><br><span class="line">        &#x2F;&#x2F; contracts.go 文件里面</span><br><span class="line">        precompiles :&#x3D; PrecompiledContractsHomestead</span><br><span class="line">        if evm.ChainConfig().IsByzantium(evm.BlockNumber) &#123;</span><br><span class="line">            precompiles &#x3D; PrecompiledContractsByzantium</span><br><span class="line">        &#125;</span><br><span class="line">        if precompiles[addr] &#x3D;&#x3D; nil &amp;&amp; evm.ChainConfig().IsEIP158(evm.BlockNumber) &amp;&amp; value.Sign() &#x3D;&#x3D; 0 &#123;</span><br><span class="line">            &#x2F;&#x2F; 如果不是指定的合约地址， 并且value的值为0那么返回正常，而且这次调用没有消耗Gas</span><br><span class="line">            return nil, gas, nil</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; 负责在本地状态创建addr</span><br><span class="line">        evm.StateDB.CreateAccount(addr)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 执行转账</span><br><span class="line">    evm.Transfer(evm.StateDB, caller.Address(), to.Address(), value)</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; initialise a new contract and set the code that is to be used by the</span><br><span class="line">    &#x2F;&#x2F; E The contract is a scoped environment for this execution context</span><br><span class="line">    &#x2F;&#x2F; only.</span><br><span class="line">    contract :&#x3D; NewContract(caller, to, value, gas)</span><br><span class="line">    contract.SetCallCode(&amp;addr, evm.StateDB.GetCodeHash(addr), evm.StateDB.GetCode(addr))</span><br><span class="line"></span><br><span class="line">    ret, err &#x3D; run(evm, snapshot, contract, input)</span><br><span class="line">    &#x2F;&#x2F; When an error was returned by the EVM or when setting the creation code</span><br><span class="line">    &#x2F;&#x2F; above we revert to the snapshot and consume any gas remaining. Additionally</span><br><span class="line">    &#x2F;&#x2F; when we&#39;re in homestead this also counts for code storage gas errors.</span><br><span class="line">    if err !&#x3D; nil &#123;</span><br><span class="line">        evm.StateDB.RevertToSnapshot(snapshot)</span><br><span class="line">        if err !&#x3D; errExecutionReverted &#123; </span><br><span class="line">            &#x2F;&#x2F; 如果是由revert指令触发的错误，因为ICO一般设置了人数限制或者资金限制</span><br><span class="line">            &#x2F;&#x2F; 在大家抢购的时候很可能会触发这些限制条件，导致被抽走不少钱。这个时候</span><br><span class="line">            &#x2F;&#x2F; 又不能设置比较低的GasPrice和GasLimit。因为要速度快。</span><br><span class="line">            &#x2F;&#x2F; 那么不会使用剩下的全部Gas，而是只会使用代码执行的Gas</span><br><span class="line">            &#x2F;&#x2F; 不然会被抽走 GasLimit *GasPrice的钱，那可不少。</span><br><span class="line">            contract.UseGas(contract.Gas)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ret, contract.Gas, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>剩下的三个函数 CallCode, DelegateCall, 和 StaticCall，这三个函数不能由外部调用，只能由Opcode触发。</p>
+<p>CallCode</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; CallCode differs from Call in the sense that it executes the given address&#39;</span><br><span class="line">&#x2F;&#x2F; code with the caller as context.</span><br><span class="line">&#x2F;&#x2F; CallCode与Call不同的地方在于它使用caller的context来执行给定地址的代码。</span><br><span class="line"></span><br><span class="line">func (evm *EVM) CallCode(caller ContractRef, addr common.Address, input []byte, gas uint64, value *big.Int) (ret []byte, leftOverGas uint64, err error) &#123;</span><br><span class="line">    if evm.vmConfig.NoRecursion &amp;&amp; evm.depth &gt; 0 &#123;</span><br><span class="line">        return nil, gas, nil</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Fail if we&#39;re trying to execute above the call depth limit</span><br><span class="line">    if evm.depth &gt; int(params.CallCreateDepth) &#123;</span><br><span class="line">        return nil, gas, ErrDepth</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Fail if we&#39;re trying to transfer more than the available balance</span><br><span class="line">    if !evm.CanTransfer(evm.StateDB, caller.Address(), value) &#123;</span><br><span class="line">        return nil, gas, ErrInsufficientBalance</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var (</span><br><span class="line">        snapshot &#x3D; evm.StateDB.Snapshot()</span><br><span class="line">        to       &#x3D; AccountRef(caller.Address())  &#x2F;&#x2F;这里是最不同的地方 to的地址被修改为caller的地址了 而且没有转账的行为</span><br><span class="line">    )</span><br><span class="line">    &#x2F;&#x2F; initialise a new contract and set the code that is to be used by the</span><br><span class="line">    &#x2F;&#x2F; E The contract is a scoped evmironment for this execution context</span><br><span class="line">    &#x2F;&#x2F; only.</span><br><span class="line">    contract :&#x3D; NewContract(caller, to, value, gas)</span><br><span class="line">    contract.SetCallCode(&amp;addr, evm.StateDB.GetCodeHash(addr), evm.StateDB.GetCode(addr))</span><br><span class="line"></span><br><span class="line">    ret, err &#x3D; run(evm, snapshot, contract, input)</span><br><span class="line">    if err !&#x3D; nil &#123;</span><br><span class="line">        evm.StateDB.RevertToSnapshot(snapshot)</span><br><span class="line">        if err !&#x3D; errExecutionReverted &#123;</span><br><span class="line">            contract.UseGas(contract.Gas)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ret, contract.Gas, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DelegateCall</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; DelegateCall differs from CallCode in the sense that it executes the given address&#39;</span><br><span class="line">&#x2F;&#x2F; code with the caller as context and the caller is set to the caller of the caller.</span><br><span class="line">&#x2F;&#x2F; DelegateCall 和 CallCode不同的地方在于 caller被设置为 caller的caller</span><br><span class="line">func (evm *EVM) DelegateCall(caller ContractRef, addr common.Address, input []byte, gas uint64) (ret []byte, leftOverGas uint64, err error) &#123;</span><br><span class="line">    if evm.vmConfig.NoRecursion &amp;&amp; evm.depth &gt; 0 &#123;</span><br><span class="line">        return nil, gas, nil</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Fail if we&#39;re trying to execute above the call depth limit</span><br><span class="line">    if evm.depth &gt; int(params.CallCreateDepth) &#123;</span><br><span class="line">        return nil, gas, ErrDepth</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var (</span><br><span class="line">        snapshot &#x3D; evm.StateDB.Snapshot()</span><br><span class="line">        to       &#x3D; AccountRef(caller.Address()) </span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Initialise a new contract and make initialise the delegate values</span><br><span class="line">    &#x2F;&#x2F; 标识为AsDelete()</span><br><span class="line">    contract :&#x3D; NewContract(caller, to, nil, gas).AsDelegate() </span><br><span class="line">    contract.SetCallCode(&amp;addr, evm.StateDB.GetCodeHash(addr), evm.StateDB.GetCode(addr))</span><br><span class="line"></span><br><span class="line">    ret, err &#x3D; run(evm, snapshot, contract, input)</span><br><span class="line">    if err !&#x3D; nil &#123;</span><br><span class="line">        evm.StateDB.RevertToSnapshot(snapshot)</span><br><span class="line">        if err !&#x3D; errExecutionReverted &#123;</span><br><span class="line">            contract.UseGas(contract.Gas)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ret, contract.Gas, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; StaticCall executes the contract associated with the addr with the given input</span><br><span class="line">&#x2F;&#x2F; as parameters while disallowing any modifications to the state during the call.</span><br><span class="line">&#x2F;&#x2F; Opcodes that attempt to perform such modifications will result in exceptions</span><br><span class="line">&#x2F;&#x2F; instead of performing the modifications.</span><br><span class="line">&#x2F;&#x2F; StaticCall不允许执行任何修改状态的操作，</span><br><span class="line"></span><br><span class="line">func (evm *EVM) StaticCall(caller ContractRef, addr common.Address, input []byte, gas uint64) (ret []byte, leftOverGas uint64, err error) &#123;</span><br><span class="line">    if evm.vmConfig.NoRecursion &amp;&amp; evm.depth &gt; 0 &#123;</span><br><span class="line">        return nil, gas, nil</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Fail if we&#39;re trying to execute above the call depth limit</span><br><span class="line">    if evm.depth &gt; int(params.CallCreateDepth) &#123;</span><br><span class="line">        return nil, gas, ErrDepth</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Make sure the readonly is only set if we aren&#39;t in readonly yet</span><br><span class="line">    &#x2F;&#x2F; this makes also sure that the readonly flag isn&#39;t removed for</span><br><span class="line">    &#x2F;&#x2F; child calls.</span><br><span class="line">    if !evm.interpreter.readOnly &#123;</span><br><span class="line">        evm.interpreter.readOnly &#x3D; true</span><br><span class="line">        defer func() &#123; evm.interpreter.readOnly &#x3D; false &#125;()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var (</span><br><span class="line">        to       &#x3D; AccountRef(addr)</span><br><span class="line">        snapshot &#x3D; evm.StateDB.Snapshot()</span><br><span class="line">    )</span><br><span class="line">    &#x2F;&#x2F; Initialise a new contract and set the code that is to be used by the</span><br><span class="line">    &#x2F;&#x2F; EVM. The contract is a scoped environment for this execution context</span><br><span class="line">    &#x2F;&#x2F; only.</span><br><span class="line">    contract :&#x3D; NewContract(caller, to, new(big.Int), gas)</span><br><span class="line">    contract.SetCallCode(&amp;addr, evm.StateDB.GetCodeHash(addr), evm.StateDB.GetCode(addr))</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; When an error was returned by the EVM or when setting the creation code</span><br><span class="line">    &#x2F;&#x2F; above we revert to the snapshot and consume any gas remaining. Additionally</span><br><span class="line">    &#x2F;&#x2F; when we&#39;re in Homestead this also counts for code storage gas errors.</span><br><span class="line">    ret, err &#x3D; run(evm, snapshot, contract, input)</span><br><span class="line">    if err !&#x3D; nil &#123;</span><br><span class="line">        evm.StateDB.RevertToSnapshot(snapshot)</span><br><span class="line">        if err !&#x3D; errExecutionReverted &#123;</span><br><span class="line">            contract.UseGas(contract.Gas)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ret, contract.Gas, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/Dao-vulnerabilities/" data-toggle="tooltip" data-placement="top" title="Dao投票相关漏洞以及解决方案">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#EVM源码分析（一）"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">EVM源码分析（一）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#源码结构"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">源码结构</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#contract-go"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">contract.go</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>
