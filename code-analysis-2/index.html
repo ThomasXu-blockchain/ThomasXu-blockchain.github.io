@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          EVM源码分析（二） - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/code-analysis-2/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
+                            
+                        </div>
+                        <h1>EVM源码分析（二）</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2023-02-23
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="EVM源码分析（二）"><a href="#EVM源码分析（二）" class="headerlink" title="EVM源码分析（二）"></a>EVM源码分析（二）</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><p>在上一文中我们分析了EVM的代码架构以及主要的两个合约。</p>
+<p>这篇文章，我们将从交易入手，来看看EVM究竟是怎么处理交易的。</p>
+<h2 id="从Geth客户端收到交易开始："><a href="#从Geth客户端收到交易开始：" class="headerlink" title="从Geth客户端收到交易开始："></a>从Geth客户端收到交易开始：</h2><p>当一个geth客户端接收到其他节点提交的交易后，它会首先将这笔交易提交给evm进行处理。</p>
+<h3 id="commitTransaction"><a href="#commitTransaction" class="headerlink" title="commitTransaction"></a>commitTransaction</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  minner/worker.go</span></span><br><span class="line"></span><br><span class="line">func (w *worker) commitTransaction(tx *types.Transaction, coinbase common.Address) ([]*types.Log, error) &#123;</span><br><span class="line">   snap := w.current.state.Snapshot()</span><br><span class="line">	<span class="comment">//ApplyTransaction函数将一次交易的执行写入数据库，接下来会详细讲</span></span><br><span class="line">   receipt, _, <span class="attr">err</span> := core.ApplyTransaction(w.config, w.chain, &amp;coinbase, w.current.gasPool, w.current.state, w.current.header, tx, &amp;w.current.header.GasUsed, *w.chain.GetVMConfig())</span><br><span class="line">   <span class="keyword">if</span> err != nil &#123;</span><br><span class="line">      w.current.state.RevertToSnapshot(snap)</span><br><span class="line">      <span class="keyword">return</span> nil, err</span><br><span class="line">   &#125;</span><br><span class="line">   w.current.txs = append(w.current.txs, tx)</span><br><span class="line">   w.current.receipts = append(w.current.receipts, receipt)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> receipt.Logs, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一笔交易提交到EVM前的主要过程就是上述代码所描述的</p>
+<ol>
+<li>创建当前stateDB的<code>snapshot</code>， 创建<code>snapshot</code>其实就是将<code>leveldb</code>的<code>revisionId</code>自增1，然后将这个<code>revisionId</code>加入到<code>revisionId</code>列表里，然后返回创建的id。</li>
+<li>将交易发送到evm，执行交易， 这步骤后面会重点分析，这个就是我们这次文章主要分析的重点EVM的执行交易过程。</li>
+<li>判断执行结果是否出错，如果出错，则回滚snapshot。 首先找到在<code>revisionId</code>列表里面找到需要回滚的<code>revisionId</code>， 然后将此<code>revisionId</code>里面的所有<code>snapshot</code>依次回滚。</li>
+<li>将当前交易加入到交易列表</li>
+<li>将交易收据加入到交易收据列表</li>
+</ol>
+<h3 id="ApplyTransaction"><a href="#ApplyTransaction" class="headerlink" title="ApplyTransaction"></a>ApplyTransaction</h3><p>接下来我们主要分析ApplyTransaction函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core/state_processor.go</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ApplyTransaction 尝试将一次交易的执行写入数据库，并且为执行环境准备输入参数。它返回交易的收据。</span></span><br><span class="line"><span class="comment">// 如果gasg 使用完，或者交易执行出现error，则表示该块无效。</span></span><br><span class="line">func ApplyTransaction(config *params.ChainConfig, bc ChainContext, author *common.Address, gp *GasPool, statedb *state.StateDB, header *types.Header, tx *types.Transaction, usedGas *uint64, cfg vm.Config) (*types.Receipt, uint64, error) &#123;</span><br><span class="line">   msg, <span class="attr">err</span> := tx.AsMessage(types.MakeSigner(config, header.Number))</span><br><span class="line">   <span class="keyword">if</span> err != nil &#123;</span><br><span class="line">      <span class="keyword">return</span> nil, <span class="number">0</span>, err</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// 创建一个新的evm执行上下文环境</span></span><br><span class="line">   context := NewEVMContext(msg, header, bc, author)</span><br><span class="line">   <span class="comment">// 创建一个包含所有相关信息的新环境， 包括事务和调用机制</span></span><br><span class="line">   vmenv := vm.NewEVM(context, statedb, config, cfg)</span><br><span class="line">   <span class="comment">// 将事务应用于当前状态(包含在env中)</span></span><br><span class="line">   _, gas, failed, <span class="attr">err</span> := ApplyMessage(vmenv, msg, gp)</span><br><span class="line">   <span class="keyword">if</span> err != nil &#123;</span><br><span class="line">      <span class="keyword">return</span> nil, <span class="number">0</span>, err</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// Update the state with pending changes</span></span><br><span class="line">   <span class="keyword">var</span> root []byte</span><br><span class="line">   <span class="keyword">if</span> config.IsByzantium(header.Number) &#123;</span><br><span class="line">      statedb.Finalise(<span class="literal">true</span>)</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      root = statedb.IntermediateRoot(config.IsEIP158(header.Number)).Bytes()</span><br><span class="line">   &#125;</span><br><span class="line">   *usedGas += gas</span><br><span class="line"></span><br><span class="line">   <span class="comment">//创建一个新的收据为这笔交易，存储中间状态根和gas使用情况</span></span><br><span class="line">   <span class="comment">// based on the eip phase, we're passing whether the root touch-delete accounts.</span></span><br><span class="line">   receipt := types.NewReceipt(root, failed, *usedGas)</span><br><span class="line">   receipt.TxHash = tx.Hash()</span><br><span class="line">   receipt.GasUsed = gas</span><br><span class="line">   <span class="comment">//如果这笔交易是创建一个合约， 存储合约地址在收据里面</span></span><br><span class="line">   <span class="keyword">if</span> msg.To() == nil &#123;</span><br><span class="line">      receipt.ContractAddress = crypto.CreateAddress(vmenv.Context.Origin, tx.Nonce())</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// 设置收据日志和创建布隆过滤器</span></span><br><span class="line">   receipt.Logs = statedb.GetLogs(tx.Hash())</span><br><span class="line">   receipt.Bloom = types.CreateBloom(types.Receipts&#123;receipt&#125;)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> receipt, gas, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="AsMessage-函数"><a href="#AsMessage-函数" class="headerlink" title="AsMessage 函数"></a>AsMessage 函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core/types/transactions.go</span></span><br><span class="line">func (tx *Transaction) AsMessage(s Signer) (Message, error) &#123;</span><br><span class="line">   msg := Message&#123;</span><br><span class="line">      nonce:      tx.data.AccountNonce,</span><br><span class="line">      gasLimit:   tx.data.GasLimit,</span><br><span class="line">      gasPrice:   <span class="keyword">new</span>(big.Int).Set(tx.data.Price),</span><br><span class="line">      to:         tx.data.Recipient,</span><br><span class="line">      amount:     tx.data.Amount,</span><br><span class="line">      data:       tx.data.Payload,</span><br><span class="line">      checkNonce: <span class="literal">true</span>,</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> err error</span><br><span class="line">   msg.from, err = Sender(s, tx)</span><br><span class="line">   <span class="keyword">return</span> msg, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将tx 里面的数据填充到msg里面, 这个过程主要是将交易里面的form address 利用 ecrevoer函数恢复出来。</p>
+<h3 id="NewEVMContext-函数"><a href="#NewEVMContext-函数" class="headerlink" title="NewEVMContext 函数"></a>NewEVMContext 函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//core/vm/evm.go</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// NewEVMContext creates a new context for use in the EVM.</span></span><br><span class="line">func NewEVMContext(msg Message, header *types.Header, chain ChainContext, author *common.Address) vm.Context &#123;</span><br><span class="line">   <span class="comment">//如果不能得到一个明确的author,那就从区块头里面解析author</span></span><br><span class="line">   <span class="keyword">var</span> beneficiary common.Address</span><br><span class="line">   <span class="comment">//如果函数参数里面的author为nil,则从区块头里面解析author， 这里不叫coinbase 主要是为了区别ehthash与clique引擎</span></span><br><span class="line">    <span class="keyword">if</span> author == nil &#123;</span><br><span class="line">      beneficiary, _ = chain.Engine().Author(header) <span class="comment">// Ignore error, we're past header validation</span></span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      beneficiary = *author</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> vm.Context&#123;</span><br><span class="line">      CanTransfer: CanTransfer,</span><br><span class="line">      Transfer:    Transfer,</span><br><span class="line">      GetHash:     GetHashFn(header, chain),</span><br><span class="line">      Origin:      msg.From(),</span><br><span class="line">      Coinbase:    beneficiary,</span><br><span class="line">      BlockNumber: <span class="keyword">new</span>(big.Int).Set(header.Number),</span><br><span class="line">      Time:        <span class="keyword">new</span>(big.Int).Set(header.Time),</span><br><span class="line">      Difficulty:  <span class="keyword">new</span>(big.Int).Set(header.Difficulty),</span><br><span class="line">      GasLimit:    header.GasLimit,</span><br><span class="line">      GasPrice:    <span class="keyword">new</span>(big.Int).Set(msg.GasPrice()),</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>填充vm.Context的各项内容，并返回一个Context对象</p>
+<h3 id="NewEVM函数"><a href="#NewEVM函数" class="headerlink" title="NewEVM函数"></a>NewEVM函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">func NewEVM(ctx Context, statedb StateDB, chainConfig *params.ChainConfig, vmConfig Config) *EVM &#123;</span><br><span class="line">   evm := &amp;EVM&#123;</span><br><span class="line">      Context:      ctx,</span><br><span class="line">      StateDB:      statedb,</span><br><span class="line">      vmConfig:     vmConfig,</span><br><span class="line">      chainConfig:  chainConfig,</span><br><span class="line">      chainRules:   chainConfig.Rules(ctx.BlockNumber),</span><br><span class="line">      interpreters: make([]Interpreter, <span class="number">0</span>, <span class="number">1</span>),</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> chainConfig.IsEWASM(ctx.BlockNumber) &#123;</span><br><span class="line">      <span class="comment">// to be implemented by EVM-C and Wagon PRs.</span></span><br><span class="line">      <span class="comment">// if vmConfig.EWASMInterpreter != "" &#123;</span></span><br><span class="line">      <span class="comment">//  extIntOpts := strings.Split(vmConfig.EWASMInterpreter, ":")</span></span><br><span class="line">      <span class="comment">//  path := extIntOpts[0]</span></span><br><span class="line">      <span class="comment">//  options := []string&#123;&#125;</span></span><br><span class="line">      <span class="comment">//  if len(extIntOpts) &gt; 1 &#123;</span></span><br><span class="line">      <span class="comment">//    options = extIntOpts[1..]</span></span><br><span class="line">      <span class="comment">//  &#125;</span></span><br><span class="line">      <span class="comment">//  evm.interpreters = append(evm.interpreters, NewEVMVCInterpreter(evm, vmConfig, options))</span></span><br><span class="line">      <span class="comment">// &#125; else &#123;</span></span><br><span class="line">      <span class="comment">//     evm.interpreters = append(evm.interpreters, NewEWASMInterpreter(evm, vmConfig))</span></span><br><span class="line">      <span class="comment">// &#125;</span></span><br><span class="line">      panic(<span class="string">"No supported ewasm interpreter yet."</span>)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//vmConfig.EVMInterpreter 将会被使用在EVM-C， 这里不会使用。</span></span><br><span class="line">   <span class="comment">//因为我们希望内置的EVM作为出错转移的备用选项 </span></span><br><span class="line">   evm.interpreters = append(evm.interpreters, NewEVMInterpreter(evm, vmConfig))</span><br><span class="line">   evm.interpreter = evm.interpreters[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> evm</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ApplyMessage函数"><a href="#ApplyMessage函数" class="headerlink" title="ApplyMessage函数"></a>ApplyMessage函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ApplyMessage 通过给定的message计算新的DB状态，继而改变旧的DB状态</span></span><br><span class="line"><span class="comment">// ApplyMessage 返回EVM执行的返回结果和gas使用情况（包括gas refunds）和error(如果有错误出现)。</span></span><br><span class="line"><span class="comment">// 如果一个错误总是作为一个core error 出现，那么这个message将永远不会被这个区块所接受。</span></span><br><span class="line">func ApplyMessage(evm *vm.EVM, msg Message, gp *GasPool) ([]byte, uint64, bool, error) &#123;</span><br><span class="line">   <span class="keyword">return</span> NewStateTransition(evm, msg, gp).TransitionDb()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数的分为两个函数执行一个是NewStateTransition 函数，这个函数主要是设置一些交易执行的必要参数。</p>
+<p>TransitionDb 这个函数则是主要负责执行交易，影响Db状态。</p>
+<h3 id="TransitionDb-函数"><a href="#TransitionDb-函数" class="headerlink" title="TransitionDb 函数"></a>TransitionDb 函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core/state_transation.go</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// TransitionDB 函数通过 apply message 将会改变state 并且返回 包含gas使用情况的结果。</span></span><br><span class="line"><span class="comment">// 如果执行失败，将会返回一个error, 这个error代表一个共识错误。</span></span><br><span class="line">func (st *StateTransition) TransitionDb() (ret []byte, usedGas uint64, failed bool, err error) &#123;</span><br><span class="line">    <span class="comment">//进行最初的检查，</span></span><br><span class="line">   <span class="keyword">if</span> err = st.preCheck(); err != nil &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">   &#125;</span><br><span class="line">   msg := st.msg</span><br><span class="line">   sender := vm.AccountRef(msg.From())</span><br><span class="line">   homestead := st.evm.ChainConfig().IsHomestead(st.evm.BlockNumber)</span><br><span class="line">   contractCreation := msg.To() == nil</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Pay intrinsic gas</span></span><br><span class="line">   gas, <span class="attr">err</span> := IntrinsicGas(st.data, contractCreation, homestead)</span><br><span class="line">   <span class="keyword">if</span> err != nil &#123;</span><br><span class="line">      <span class="keyword">return</span> nil, <span class="number">0</span>, <span class="literal">false</span>, err</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> err = st.useGas(gas); err != nil &#123;</span><br><span class="line">      <span class="keyword">return</span> nil, <span class="number">0</span>, <span class="literal">false</span>, err</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> (</span><br><span class="line">      evm = st.evm</span><br><span class="line">      <span class="comment">// vm errors do not effect consensus and are therefor</span></span><br><span class="line">      <span class="comment">// not assigned to err, except for insufficient balance</span></span><br><span class="line">      <span class="comment">// error.</span></span><br><span class="line">      vmerr error</span><br><span class="line">   )</span><br><span class="line">   <span class="keyword">if</span> contractCreation &#123;</span><br><span class="line">      ret, _, st.gas, vmerr = evm.Create(sender, st.data, st.gas, st.value)</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// Increment the nonce for the next transaction</span></span><br><span class="line">      st.state.SetNonce(msg.From(), st.state.GetNonce(sender.Address())+<span class="number">1</span>)</span><br><span class="line">      ret, st.gas, vmerr = evm.Call(sender, st.to(), st.data, st.gas, st.value)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> vmerr != nil &#123;</span><br><span class="line">      log.Debug(<span class="string">"VM returned with error"</span>, <span class="string">"err"</span>, vmerr)</span><br><span class="line">      <span class="keyword">if</span> vmerr == vm.ErrInsufficientBalance &#123;</span><br><span class="line">         <span class="keyword">return</span> nil, <span class="number">0</span>, <span class="literal">false</span>, vmerr</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   st.refundGas()</span><br><span class="line">   st.state.AddBalance(st.evm.Coinbase, <span class="keyword">new</span>(big.Int).Mul(<span class="keyword">new</span>(big.Int).SetUint64(st.gasUsed()), st.gasPrice))</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> ret, st.gasUsed(), vmerr != nil, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>preCheck 函数主要进行执行交易前的检查，目前包含下面两个步骤</p>
+<p>1.1 检查msg 里面的nonce值与db里面存储的账户的nonce值是否一致。</p>
+<p>1.2 buyGas方法主要是判断交易账户是否可以支付足够的gas执行交易，如果可以支付，则设置stateTransaction 的gas值 和 initialGas 值。并且从交易执行账户扣除相应的gas值。</p>
+</li>
+<li><p>先获取固定交易的基础费用，根据当前分叉版本和交易类型来决定基础费用，如果是创建合约则是至少是53000gas,如果是普通交易则至少是21000gas ，如果data部分不为空，则具体来说是按字节收费：字节为0的收4gas，字节不为0收68gas，所以你会看到很多做合约优化的，目的就是减少数据中不为0的字节数量，从而降低油费消耗。具体代码如下</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//IntrinsicGas 计算给定数据的固定gas消耗</span></span><br><span class="line">func IntrinsicGas(data []byte, contractCreation, homestead bool) (uint64, error) &#123;</span><br><span class="line">   <span class="comment">// Set the starting gas for the raw transaction</span></span><br><span class="line">   <span class="keyword">var</span> gas uint64</span><br><span class="line">   <span class="keyword">if</span> contractCreation &amp;&amp; homestead &#123;</span><br><span class="line">      gas = params.TxGasContractCreation</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      gas = params.TxGas</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// 通过事务数据量增加所需的气体</span></span><br><span class="line">   <span class="keyword">if</span> len(data) &gt; <span class="number">0</span> &#123;</span><br><span class="line">      <span class="comment">// 零字节和非零字节的定价不同</span></span><br><span class="line">      <span class="keyword">var</span> nz uint64</span><br><span class="line">      <span class="comment">//获取非零字节的个数</span></span><br><span class="line">      <span class="keyword">for</span> _, <span class="attr">byt</span> := range data &#123;</span><br><span class="line">         <span class="keyword">if</span> byt != <span class="number">0</span> &#123;</span><br><span class="line">            nz++</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 防止所需gas超过最大限制</span></span><br><span class="line">      <span class="keyword">if</span> (math.MaxUint64-gas)/params.TxDataNonZeroGas &lt; nz &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="number">0</span>, vm.ErrOutOfGas</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//计算非0字节的gas消耗</span></span><br><span class="line">      gas += nz * params.TxDataNonZeroGas</span><br><span class="line"></span><br><span class="line">      z := uint64(len(data)) - nz</span><br><span class="line">      <span class="keyword">if</span> (math.MaxUint64-gas)/params.TxDataZeroGas &lt; z &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="number">0</span>, vm.ErrOutOfGas</span><br><span class="line">      &#125;</span><br><span class="line">      gas += z * params.TxDataZeroGas</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> gas, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/code-analysis/" data-toggle="tooltip" data-placement="top" title="EVM源码分析（一）">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#EVM源码分析（二）"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">EVM源码分析（二）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#从Geth客户端收到交易开始："><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">从Geth客户端收到交易开始：</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#commitTransaction"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">commitTransaction</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ApplyTransaction"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">ApplyTransaction</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#AsMessage-函数"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">AsMessage 函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#NewEVMContext-函数"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">NewEVMContext 函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#NewEVM函数"><span class="toc-nav-number">1.1.5.</span> <span class="toc-nav-text">NewEVM函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ApplyMessage函数"><span class="toc-nav-number">1.1.6.</span> <span class="toc-nav-text">ApplyMessage函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#TransitionDb-函数"><span class="toc-nav-number">1.1.7.</span> <span class="toc-nav-text">TransitionDb 函数</span></a></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#EVM" title="EVM">EVM</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
