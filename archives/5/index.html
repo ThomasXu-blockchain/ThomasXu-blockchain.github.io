@@ -20,56 +20,56 @@
         
     </title>
 
-    <link rel="canonical" href="https://thomasxu-blockchain.github.io/">
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/archives/5/">
 
     <!-- Bootstrap Core CSS -->
     
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
 
 
     <!-- Custom CSS --> 
     
         
-<link rel="stylesheet" href="css/dusign-light.css">
+<link rel="stylesheet" href="../../css/dusign-light.css">
 
         
-<link rel="stylesheet" href="css/dusign-common-light.css">
+<link rel="stylesheet" href="../../css/dusign-common-light.css">
 
         
-<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="../../css/font-awesome.css">
 
         
-<link rel="stylesheet" href="css/toc.css">
+<link rel="stylesheet" href="../../css/toc.css">
 
         <!-- background effects end -->
     
     
     <!-- Pygments Highlight CSS -->
     
-<link rel="stylesheet" href="css/highlight.css">
+<link rel="stylesheet" href="../../css/highlight.css">
 
 
     
-<link rel="stylesheet" href="css/widget.css">
+<link rel="stylesheet" href="../../css/widget.css">
 
 
     
-<link rel="stylesheet" href="css/rocket.css">
+<link rel="stylesheet" href="../../css/rocket.css">
 
 
     
-<link rel="stylesheet" href="css/signature.css">
+<link rel="stylesheet" href="../../css/signature.css">
 
 
     
-<link rel="stylesheet" href="css/fonts.googleapis.css">
+<link rel="stylesheet" href="../../css/fonts.googleapis.css">
 
 
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <!-- photography -->
     
-<link rel="stylesheet" href="css/photography.css">
+<link rel="stylesheet" href="../../css/photography.css">
 
 
     <!-- ga & ba script hoook -->
@@ -334,361 +334,27 @@
 
         <div class="post-preview">
 
-            <a href="/code-analysis3/">
+            <a href="/ReentryAttack/">
                 <h2 class="post-title">
-                    EVM源码分析（三）
+                    ReentryAttack
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    EVM源码分析（二）
+                    重入攻击分析
 author：Thomas_Xu
-上一章我们分析了Geth客户端接收到交易后处理的一系列过程，接着上一章的TransitionDB函数讲，从这里开始将进入到EVM处理。
-12345678910111213141516171819202122232425262728293031323334353637383940414243// core/state_transation......
+漏洞概述在以太坊中，智能合约能够调用其他外部合约的代码，由于智能合约可以调用外部合约或者发送以太币，这些操作需要合约提交外部的调用，所以这些合约外部的调用就可以被攻击者利用造成攻击劫持，使得被攻击合约在任意位置重新执行(回调)，绕过原代码中的限制条件，从而发生重入攻击。重入攻击本质上与编程里的递归调用类似，所以当合约将以太币发送到未知地址时就可......
                 </div>
             </a>
             
                 <p class="post-meta" style="margin: 10px 0;">
                     Posted by Thomas_Xu on
-                    2023-02-24
+                    2022-06-15
                 </p>
                 <div class="tags">
                     
-                      <a href="/tags/#EVM" title="EVM">EVM</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/code-analysis-2/">
-                <h2 class="post-title">
-                    EVM源码分析（二）
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    EVM源码分析（二）
-author：Thomas_Xu
-在上一文中我们分析了EVM的代码架构以及主要的两个合约。
-这篇文章，我们将从交易入手，来看看EVM究竟是怎么处理交易的。
-从Geth客户端收到交易开始：当一个geth客户端接收到其他节点提交的交易后，它会首先将这笔交易提交给evm进行处理。
-commitTransaction123456789101112131415//  minner......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2023-02-23
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#EVM" title="EVM">EVM</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/code-analysis/">
-                <h2 class="post-title">
-                    EVM源码分析（一）
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    EVM源码分析（一）
-author：Thomas_Xu
-源码结构源码地址：https://github.com/ethereum/go-ethereum
-EVM的核心代码在core/vm下，
-以下为vm的目录结构：
-
-runtime 包下的文件在实际运行的geth客户端中并没有被调用到，只是作为开发人员测试使用。
-
-core/vm/runtime/env.go 设置evm运行环境，并返回新的......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2023-02-20
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#EVM" title="EVM">EVM</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/Dao-vulnerabilities/">
-                <h2 class="post-title">
-                    Dao投票相关漏洞以及解决方案
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Dao投票相关漏洞以及解决方案
-author：Thomas_Xu
-引言去中心化自治组织（DAO）在区块链中运作，由投票管理。 Coin voting是最受欢迎的一种：DAO 的成员提出建议，其他token持有者用代币表示认可。当达到提案的法定人数时，可以执行其脚本。
-有许多DAO使用Coin voting：基于Aragon的DAO，X-DAO，Nexus Mututal，Showball F......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2023-01-05
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#杂谈" title="杂谈">杂谈</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/Multisig-Wallet/">
-                <h2 class="post-title">
-                    由BT钱包引发的多签钱包思考
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    由BT钱包引发的多签钱包思考
-author：Thomas_Xu
-引言12月26日，Bitkeep钱包发生漏洞，造成约900w美元的损失。这也引起了我对钱包安全的关注，。此次Bitkeep钱包事件疑似因为部分APK包下载被黑客劫持，安装了黑客植入代码的包，用户下载或者更新的应用或许是被劫持的不明版本（非官方发布版本）。最终可能导致了下载黑客版本的APK用户私钥泄露。截至笔者发文，具体原因还未查......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-12-30
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#钱包" title="钱包">钱包</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/Proxy/">
-                <h2 class="post-title">
-                    深入可升级合约
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    深入可升级合约
-author：Thomas_Xu
-引言Solidity合约部署在链上之后，代码是不可变的（immutable）。这样既有优点，也有缺点：
-
-优点：安全，用户知道会发生什么（大部分时候）。
-坏处：就算合约中存在bug，也不能修改或升级，只能部署新合约。但是新合约的地址与旧的不一样，且合约的数据也需要花费大量gas进行迁移。
-
-有没有办法在合约部署后进行修改或升级呢？答案是有的，......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-12-27
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#杂谈" title="杂谈">杂谈</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/frontRunningBot/">
-                <h2 class="post-title">
-                    抢跑机器人实现
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-author：Thomas_Xu
-抢跑机器人实现在阅读本文前，请确保你了解区块链抢跑交易的原理和链上监听相关知识。
-Front-Running - Thomas_Xu (thomasxu-blockchain.github.io)
-合约事件的监听 - Thomas_Xu (thomasxu-blockchain.github.io)
-源码：
-ThomasXu-blockchain/Fron......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-12-23
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#杂谈" title="杂谈">杂谈</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/Symbol-execution/">
-                <h2 class="post-title">
-                    符号执行以及Mythril工具
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-author：Thomas_Xu
-符号执行以及Mythril工具引言符号执行是一种程序静态分析的技术，被认为非常有前途。近年利用符号执行进行分析的论文在安全的顶会中出现也较为频繁，还是非常值得去学习的。
-那么今天先从静态分析说起：
-程序静态分析（Program Static Analysis）是指在不运行代码的方式下，通过词法分析、语法分析、控制流、数据流分析等技术对程序代码进行扫描，验证......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-12-21
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#static-analysis" title="static-analysis">static-analysis</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/slither/">
-                <h2 class="post-title">
-                    slither工具
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-author：Thomas_Xu
-slither工具使用记录最近对静态分析很感兴趣，先从工具入手，今天先试一试Slither—一款静态智能合约分析工具。
-概述slither使用python3编写的智能合约静态分析框架，整体环境比较好，提供如下功能：
-
-自动化漏洞检测。提供超60多项的漏洞检查模型，模型列表详见：https://github.com/crytic/slither#detect......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-12-18
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#static-analysis" title="static-analysis">static-analysis</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/逆向分析初探/">
-                <h2 class="post-title">
-                    逆向分析初探
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-author：Thomas_Xu
-逆向分析区块链上所有的数据都是公开透明的，所以合约的代码也都是公开的。但是其实它公开的都是经过编译的OPCODE，真正的源代码公开与否就得看发布合约的人了。
-如果要真正的掌握一个合约会干什么，就得从OPCODE逆向成solidity代码。
-工欲善其事，必先利其器solidity智能合约逆向工具推荐：https://ethervm.io/decompile
-......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by Thomas_Xu on
-                    2022-12-17
-                </p>
-                <div class="tags">
-                    
-                      <a href="/tags/#逆向分析" title="逆向分析">逆向分析</a>
+                      <a href="/tags/#基础漏洞" title="基础漏洞">基础漏洞</a>
                     
                 </div>
             
@@ -704,10 +370,10 @@ author：Thomas_Xu
 
 <ul class="pager">
     
-    
-        <li class="next">
-            <a href="/archives/2/">Older Posts &rarr;</a>
+        <li class="previous">
+            <a href="/archives/4/">&larr; Newer Posts</a>
         </li>
+    
     
 </ul>
 
@@ -875,23 +541,23 @@ author：Thomas_Xu
     <ul>
       
         <li>
-          <a href="code-analysis3/">EVM源码分析（三）</a>
+          <a href="../../code-analysis3/">EVM源码分析（三）</a>
         </li>
       
         <li>
-          <a href="code-analysis-2/">EVM源码分析（二）</a>
+          <a href="../../code-analysis-2/">EVM源码分析（二）</a>
         </li>
       
         <li>
-          <a href="code-analysis/">EVM源码分析（一）</a>
+          <a href="../../code-analysis/">EVM源码分析（一）</a>
         </li>
       
         <li>
-          <a href="Dao-vulnerabilities/">Dao投票相关漏洞以及解决方案</a>
+          <a href="../../Dao-vulnerabilities/">Dao投票相关漏洞以及解决方案</a>
         </li>
       
         <li>
-          <a href="Multisig-Wallet/">由BT钱包引发的多签钱包思考</a>
+          <a href="../../Multisig-Wallet/">由BT钱包引发的多签钱包思考</a>
         </li>
       
     </ul>
@@ -906,7 +572,7 @@ author：Thomas_Xu
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/02/">二月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/12/">十二月 2022</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/11/">十一月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2023/02/">二月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/12/">十二月 2022</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/11/">十一月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>
@@ -1009,22 +675,22 @@ author：Thomas_Xu
 
 <!-- jQuery -->
 
-<script src="js/jquery.min.js"></script>
+<script src="../../js/jquery.min.js"></script>
 
 
 <!-- Bootstrap Core JavaScript -->
 
-<script src="js/bootstrap.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
 
 
 <!-- Custom Theme JavaScript -->
 
-<script src="js/hux-blog.min.js"></script>
+<script src="../../js/hux-blog.min.js"></script>
 
 
 <!-- Search -->
 
-<script src="js/search.js"></script>
+<script src="../../js/search.js"></script>
 
 
 <!-- async load function -->
