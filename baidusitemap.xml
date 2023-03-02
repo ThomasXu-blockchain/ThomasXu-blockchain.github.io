@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://thomasxu-blockchain.github.io/code-analysis/</loc>
+    <lastmod>2023-03-02</lastmod>
+  </url>
+  <url>
+    <loc>https://thomasxu-blockchain.github.io/code-analysis-2/</loc>
+    <lastmod>2023-03-02</lastmod>
+  </url>
+  <url>
     <loc>https://thomasxu-blockchain.github.io/EKO-Trickster&LostKitty/</loc>
     <lastmod>2023-03-01</lastmod>
   </url>
@@ -23,14 +31,6 @@
   <url>
     <loc>https://thomasxu-blockchain.github.io/code-analysis3/</loc>
     <lastmod>2023-02-24</lastmod>
-  </url>
-  <url>
-    <loc>https://thomasxu-blockchain.github.io/code-analysis-2/</loc>
-    <lastmod>2023-02-22</lastmod>
-  </url>
-  <url>
-    <loc>https://thomasxu-blockchain.github.io/code-analysis/</loc>
-    <lastmod>2023-02-22</lastmod>
   </url>
   <url>
     <loc>https://thomasxu-blockchain.github.io/Dao-vulnerabilities/</loc>
