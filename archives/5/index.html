@@ -338,9 +338,45 @@
 
     
 
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/delegatecall/">
+                <h2 class="post-title">
+                    Delegatecall
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Solidity之DelegateCall
+author：Thomas_Xu
+在Solidity中，如果只是为了代码复用，我们会把公共代码抽出来，部署到一个library中，后面就可以像调用C库、Java库一样使用了。但是library中不允许定义任何storage类型的变量，这就意味着library不能修改合约的状态。如果需要修改合约状态，我们需要部署一个新的合约，这就涉及到合约调用合约的......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by Thomas_Xu on
+                    2022-06-22
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#杂谈" title="杂谈">杂谈</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -700,6 +736,8 @@ author：Thomas_Xu
             <a href="/tags/#EKO" title="EKO" rel="5">EKO</a>
             
         
+            
+        
     </div>
 </section>
 
@@ -769,6 +807,10 @@ author：Thomas_Xu
     <ul>
       
         <li>
+          <a href="../../Nomad/">Nomad</a>
+        </li>
+      
+        <li>
           <a href="../../0ctf-2022-NFTMarket/">0ctf-2022-NFTMarket</a>
         </li>
       
@@ -784,10 +826,6 @@ author：Thomas_Xu
           <a href="../../EKO-Pelusa/">CTF-EKO-Pelusa</a>
         </li>
       
-        <li>
-          <a href="../../EKO-MetaverseSupermarket/">CTF-EKO-MetaverseSupermarket</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -800,7 +838,7 @@ author：Thomas_Xu
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2023/03/">三月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2023/02/">二月 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/12/">十二月 2022</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/11/">十一月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2023/03/">三月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2023/02/">二月 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/12/">十二月 2022</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/11/">十一月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/10/">十月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/09/">九月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2022/06/">六月 2022</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>
@@ -840,6 +878,8 @@ author：Thomas_Xu
           <a href="categories/#钱包"><li>钱包</li></a>
         
           <a href="categories/#EKO"><li>EKO</li></a>
+        
+          <a href="categories/#bridge"><li>bridge</li></a>
         
       </ul>
     </div>
@@ -996,7 +1036,7 @@ author：Thomas_Xu
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🍰&quot;,&quot;当大潮褪去，才知道谁在裸泳&quot;,&quot;🍭&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
         
 
         <!-- background effects end -->
@@ -1006,21 +1046,6 @@ author：Thomas_Xu
     
         <script src="/js/ribbonDynamic.js"></script>
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

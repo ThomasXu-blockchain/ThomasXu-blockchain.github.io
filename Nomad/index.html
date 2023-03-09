@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Thomas_Xu&#39;s Bolg">
+    <meta name="keyword"  content="Thomas_Xu, BlockChain">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Nomad - Thomas_Xu
+        
+    </title>
+
+    <link rel="canonical" href="https://thomasxu-blockchain.github.io/Nomad/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('Iron-Man-3.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#bridge" title="bridge">bridge</a>
+                            
+                        </div>
+                        <h1>Nomad</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Thomas_Xu on
+                            2023-03-09
+                        </span>
+
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Thomas_Xu&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Nomad跨链桥被黑事件分析"><a href="#Nomad跨链桥被黑事件分析" class="headerlink" title="Nomad跨链桥被黑事件分析"></a>Nomad跨链桥被黑事件分析</h1><hr>
+<pre><code>author：Thomas_Xu
+</code></pre><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>笔者最近对跨链桥特别感兴趣，于是开始研究跨链桥上的安全事件，其中最典型的非Nomad莫属。Nomad桥于2022年8月初遭遇到了Web3有史以来最混乱的一次攻击，有非常多的散户参与到了这次攻击。总共损失了1.9亿美元，当然，有一种说法是Nomad方面发现事态失控后，也参与了“对自己的攻击”。</p>
+<p>简单的来说，这是一个类似于交易重放的攻击。这也是为什么有很多技术上造诣不深的散客也能参与其中的原因。</p>
+<h2 id="Nomad"><a href="#Nomad" class="headerlink" title="Nomad"></a>Nomad</h2><p>在对漏洞进行分析之前，我们先来解析一下Nomad协议的原理。</p>
+<p><img src="Nomad/image-20230309195649740.png" alt="image-20230309195649740"></p>
+<p>简单的来讲就是Chain1在确认收到了eth1后会生成一个Message，Chain2这边会去检查这个Message的真实性，随后会进行换币的一系列操作。</p>
+<p>可问题就出在这里，chain2在检查Message的时候出现了一个非常非常严重的漏洞，导致这个Message可以被伪造从而通过chain2的检查。</p>
+<p><img src="Nomad_system.png" alt=""></p>
+<p>从上图可以发现：Nomad主要包括Home、Replica合约两部分。其中，Home合约主要负责跨链消息Message的格式化、维护Message默克尔消息树和默克尔树root值队列；Replica合约是所有想要接收跨链消息的区块链都必须部署的，主要负责维护与Home合约对应的默克尔消息树和root值队列、Message的验证和执行。<strong>Nomad与其他一对一的跨链通信模型不同，其允许一对N的广播通信。</strong>其中，Home合约负责消息生成，而任何希望复制该消息状态或从Home合约接收消息的目标链都必须部署一个与该Home合约对应的Replica合约。</p>
+<p>而问题，就出在了Replica合约上。</p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p><a href="https://dashboard.tenderly.co/tx/mainnet/0xa5fe9d044e4f3e5aa5bc4c0709333cd2190cba0f4e7f16bcf73f49f83e4a5460/contracts" target="_blank" rel="noopener">0xa5fe9d044e4f3e5aa5bc4c0709333cd2190cba0f4e7f16bcf73f49f83e4a5460 | Tenderly</a></p>
+<p>这里我们直接定位到出问题的Replica合约上。</p>
+<p><img src="Nomad/image-20230309201952091.png" alt=""></p>
+<p>process函数会检查我们之前提到的message，而<code>messages</code>是一个mapping结构，mapping在空字段上的返回值是0。那也就是说如果<code>acceptableRoot()</code>函数能够接收一个0的输入而返回true即可。</p>
+<p>在这个require后，我们的换币操作将畅通无阻。</p>
+<p>让我们进入到<code>acceptableRoot()</code>函数中：</p>
+<p><img src="Nomad/image-20230309203804819.png" alt="image-20230309203804819"></p>
+<p>这里只需要time &gt; 0即可，而问题的关键就出现在confirmAt这个mapping在初始化的时候，项目方传入的<code>_committedRoot</code>是0。</p>
+<p><img src="Nomad/image-20230309203942414.png" alt="image-20230309203942414"></p>
+<p>那这不就巧了嘛，前前后后的各个环节都能对应上。到这里我们已经成功的解决的了message的验证这个事儿。</p>
+<p>而为了完成交易，攻击者只需要监控Nomad上的交易，将交易的其他参数直接copy过来，把message和收款地址一换，就大功告成了。</p>
+<p><img src="Nomad/image-20230309204716542.png" alt="image-20230309204716542"></p>
+<p>这也是为什么大部分的攻击交易的金额都是一样的原因。</p>
+<h2 id="散户为什么能得到消息参与攻击？"><a href="#散户为什么能得到消息参与攻击？" class="headerlink" title="散户为什么能得到消息参与攻击？"></a>散户为什么能得到消息参与攻击？</h2><p>在这次事件中，最让人惊讶的是非常多的散户参与到了这次攻击事件中。由于这次攻击需要的技术含量不高，按理来说他们确实有条件参与攻击。</p>
+<p>但问题是？他们哪来的消息？</p>
+<p>答案是现在各大链都有一些MEV BOT，MEV会尝试跑链上的交易，一旦MEV发现这个交易执行的时候能够盈利，MEV就会自动的执行这个操作。</p>
+<p>这样的MEV也叫做搜索机器人。</p>
+<h2 id="审计报告提到过？"><a href="#审计报告提到过？" class="headerlink" title="审计报告提到过？"></a>审计报告提到过？</h2><p>非常非常讽刺的是，在<code>Quantstamp</code>给Nomad的审计报告中，提到过这个漏洞，只不过当时<code>Quantstamp</code>给了这个漏洞low的评级，可能并没有引起项目方的重视。</p>
+<p>我猜测<code>Quantstamp</code>可能认为Nomad项目方不会再init的时候将<code>_committedRoot</code>设置为0。可是…万万没想到发生了这样的事。</p>
+<p><img src="Nomad/image-20230309205441599.png" alt="image-20230309205441599"></p>
+<p>审计报告链接：</p>
+<p><a href="https://github.com/nomad-xyz/docs/blob/1ff0c55dba2a842c811468c57793ff9a6542ef0f/docs/public/Nomad-Audit.pdf" target="_blank" rel="noopener">docs/Nomad-Audit.pdf at 1ff0c55dba2a842c811468c57793ff9a6542ef0f ·Nomad-XYZ/docs (github.com)</a></p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/0ctf-2022-NFTMarket/" data-toggle="tooltip" data-placement="top" title="0ctf-2022-NFTMarket">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+                <div class="comment_notes_blank"></div>
+                <div class="visitor_notice">
+                    <img 
+                        src="/img/notice.png" 
+                        alt="notice"
+                        title="notice"/>
+                    <p class="notice">
+                        true
+                    </p>
+                </div>
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/music-player/utill.js"></script>
+
+
+<script src="../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Nomad跨链桥被黑事件分析"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Nomad跨链桥被黑事件分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#背景"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Nomad"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Nomad</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#漏洞分析"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">漏洞分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#散户为什么能得到消息参与攻击？"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">散户为什么能得到消息参与攻击？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#审计报告提到过？"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">审计报告提到过？</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#bridge" title="bridge">bridge</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ThomasXu-blockchain">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Thomas_Xu 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://thomasxu-blockchain.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🍰&#34;,&#34;当大潮褪去，才知道谁在裸泳&#34;,&#34;🍭&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>
